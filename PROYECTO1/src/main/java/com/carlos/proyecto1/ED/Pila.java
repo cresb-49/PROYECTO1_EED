@@ -15,7 +15,7 @@ public class Pila {
      * Inicializa la pila con un objeto al inicio
      */
     public Pila(Object objeto) {
-        Nodod nuevo = new Nodo(objeto);
+        Nodo nuevo = new Nodo(objeto);
         this.raiz = nuevo;
     }
 
@@ -54,10 +54,16 @@ public class Pila {
     }
 
     public void imprimirPila(){
-        Nodo tmp = this.raiz;
-        while (tmp!=null) {
-            System.out.println(tmp.getContenido().toString());
-            tmp = tmp.getSiguiente();
+        if(this.raiz==null){
+
+        }else{
+            System.out.println("-----------------------");
+            Nodo tmp = this.raiz;
+            while (tmp!=null) {
+                System.out.println(tmp.getContenido().toString());
+                tmp = tmp.getSiguiente();
+            }
+            System.out.println("-----------------------");
         }
     }
 }

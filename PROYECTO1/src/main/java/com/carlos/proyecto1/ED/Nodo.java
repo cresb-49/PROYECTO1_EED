@@ -1,7 +1,5 @@
 package com.carlos.proyecto1.ED;
 
-import javax.xml.crypto.dsig.SignedInfo;
-
 public class Nodo {
     private int index;
     private Object contenido;

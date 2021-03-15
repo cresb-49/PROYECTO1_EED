@@ -60,11 +60,13 @@ public class Cola {
         if(raiz==null){
             System.out.println("Cola vacia");
         }else{
+            System.out.println("-----------------------");
             Nodo tmp = raiz;
             while (tmp!=null) {
                 System.out.println(tmp.getContenido().toString());
                 tmp = tmp.getSiguiente();
             }
+            System.out.println("-----------------------");
         }
     }
     
