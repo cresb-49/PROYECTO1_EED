@@ -1,0 +1,47 @@
+package com.carlos.proyecto1.Analizadores.Parser;
+import com.carlos.proyecto1.Analizadores.Lexer.userLexer;
+import com.carlos.proyecto1.ED.Cola;
+import com.carlos.proyecto1.ED.Pila;
+
+class parserUsuario;
+
+parser code {:
+        
+    private Cola errores = new Cola();    
+    private Pila usuarios = new Pila();
+    
+    public parserUsuario(userLexer lex){
+        super(lex);
+    }
+
+    public void report_error(String message, Object info){
+        System.out.println("reporterror");
+    }
+    public void report_fatal_error(String message, Object info){
+        System.out.println("reportfatal");
+    }
+
+    /*
+    public void syntax_error(Symbol cur_token){
+
+    }*/
+
+    protected int error_sync_size() {
+        return 1;
+    }
+
+    public Cola getErrores(){
+        return errores;
+    }
+
+    public Pila getUsuarios(){
+        return usuarios;
+    }
+
+:}
+
+terminal    NUM;
+non terminal s;
+
+s   ::= NUM
+    ;
