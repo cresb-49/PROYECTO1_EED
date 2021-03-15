@@ -4,8 +4,11 @@
 
 package com.carlos.proyecto1.Analizadores.Lexer;
 import com.carlos.proyecto1.Analizadores.Parser.parserUsuarioSym;
+import static com.carlos.proyecto1.Analizadores.Parser.parserUsuarioSym.USER;
 import com.carlos.proyecto1.ED.Cola;
+import com.carlos.proyecto1.Tokens.token;
 import java_cup.runtime.Symbol;
+
 
 // See https://github.com/jflex-de/jflex/issues/222
 @SuppressWarnings("FallThrough")
@@ -64,8 +67,8 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\2\0\1\3\22\0\1\1\133\0"+
-    "\1\3\u0183\0";
+    "\11\0\1\1\1\2\2\0\1\3\22\0\1\1\17\0"+
+    "\12\4\7\0\32\4\6\0\32\4\1\0\1\3\u0183\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[512];
@@ -92,10 +95,10 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\3\2";
+    "\1\0\1\1\3\2\1\3";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[5];
+    int [] result = new int[6];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -120,10 +123,10 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\4\0\10\0\14\0\20";
+    "\0\0\0\5\0\12\0\17\0\24\0\31";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[5];
+    int [] result = new int[6];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -146,11 +149,11 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\4\1\5\5\0\2\3\2\0\1\3"+
-    "\1\4\1\5\2\0\2\5";
+    "\1\2\1\3\1\4\1\5\1\6\6\0\2\3\3\0"+
+    "\1\3\1\4\1\5\3\0\2\5\5\0\1\6";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[20];
+    int [] result = new int[30];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -193,10 +196,10 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\3\1";
+    "\1\0\1\11\4\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[5];
+    int [] result = new int[6];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -699,12 +702,18 @@ public class userLexer implements java_cup.runtime.Scanner {
             { error(yytext());
             }
             // fall through
-          case 3: break;
+          case 4: break;
           case 2:
             { /*Do nothing*/
             }
             // fall through
-          case 4: break;
+          case 5: break;
+          case 3:
+            { System.out.println("Nombre de usuario encontrado: "+yytext());
+            return new Symbol (USER,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            }
+            // fall through
+          case 6: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

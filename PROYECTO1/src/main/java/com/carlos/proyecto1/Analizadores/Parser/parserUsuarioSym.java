@@ -8,13 +8,21 @@ package com.carlos.proyecto1.Analizadores.Parser;
 /** CUP generated class containing symbol constants. */
 public class parserUsuarioSym {
   /* terminals */
-  public static final int NUM = 2;
+  public static final int COMA = 5;
+  public static final int ID = 3;
+  public static final int D_DOT = 4;
+  public static final int DOT_COMA = 6;
   public static final int error = 1;
+  public static final int USER = 2;
   public static final int EOF = 0;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "NUM"
+  "USER",
+  "ID",
+  "D_DOT",
+  "COMA",
+  "DOT_COMA"
   };
 }
 

@@ -41,8 +41,8 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\004\000\004\004\004\001\002\000\004\002\001\001" +
-    "\002\000\004\002\006\001\002\000\004\002\000\001\002" +
+    "\000\004\000\004\004\005\001\002\000\004\002\006\001" +
+    "\002\000\004\002\001\001\002\000\004\002\000\001\002" +
     "" });
 
   /** Access to parse-action table. */
@@ -51,7 +51,7 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\004\000\004\002\004\001\001\000\002\001\001\000" +
+    "\000\004\000\004\002\003\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
@@ -150,7 +150,7 @@ class CUP$parserUsuario$actions {
       switch (CUP$parserUsuario$act_num)
         {
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // s ::= NUM 
+          case 0: // s ::= USER 
             {
               Object RESULT =null;
 

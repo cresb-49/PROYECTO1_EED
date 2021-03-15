@@ -40,8 +40,8 @@ parser code {:
 
 :}
 
-terminal    NUM;
+terminal    USER,ID,D_DOT,COMA,DOT_COMA;
 non terminal s;
 
-s   ::= NUM
+s   ::= USER
     ;
