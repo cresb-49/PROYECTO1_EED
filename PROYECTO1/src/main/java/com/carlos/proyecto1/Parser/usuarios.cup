@@ -1,3 +1,7 @@
+
+
+class parserUsuario;
+
 parser code {:
         
     private Cola errores = new Cola();    
