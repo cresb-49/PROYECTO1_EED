@@ -66,7 +66,7 @@ public class NodoArbol {
     
     public NodoArbol buscarNodo(int asignacion){
         NodoArbol tmp=null;
-        if(this.contenido==contenido){
+        if(this.asignacion == asignacion){
             tmp =this;
         }else{
             if(asignacion>this.asignacion){
