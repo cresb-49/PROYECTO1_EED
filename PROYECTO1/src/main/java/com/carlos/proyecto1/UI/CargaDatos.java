@@ -5,6 +5,21 @@
  */
 package com.carlos.proyecto1.UI;
 
+import com.carlos.proyecto1.Analizadores.Lexer.capasLexer;
+import com.carlos.proyecto1.Analizadores.Lexer.imagenLexer;
+import com.carlos.proyecto1.Analizadores.Lexer.userLexer;
+import com.carlos.proyecto1.Analizadores.Parser.parserCapas;
+import com.carlos.proyecto1.Analizadores.Parser.parserImagenes;
+import com.carlos.proyecto1.Analizadores.Parser.parserUsuario;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilterReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -43,9 +58,9 @@ public class CargaDatos extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnCargarCapas = new javax.swing.JButton();
+        btnCargarImg = new javax.swing.JButton();
+        btnCargarUsers = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -91,16 +106,26 @@ public class CargaDatos extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setText("Cargar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarCapas.setText("Cargar");
+        btnCargarCapas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCargarCapasActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cargar");
+        btnCargarImg.setText("Cargar");
+        btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarImgActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Cargar");
+        btnCargarUsers.setText("Cargar");
+        btnCargarUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarUsersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,20 +134,20 @@ public class CargaDatos extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnCargarCapas)
+                    .addComponent(btnCargarImg)
+                    .addComponent(btnCargarUsers))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnCargarCapas)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnCargarImg)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnCargarUsers)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -196,20 +221,82 @@ public class CargaDatos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCargarCapasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCapasActionPerformed
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .cap", "cap");
         chooser.setFileFilter(filtro);
         int retorno = chooser.showOpenDialog(this);
         if(retorno == JFileChooser.APPROVE_OPTION){
-            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+            leerCapas(chooser.getSelectedFile());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCargarCapasActionPerformed
 
+    private void btnCargarImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImgActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .im", "im");
+        chooser.setFileFilter(filtro);
+        int retorno = chooser.showOpenDialog(this);
+        if(retorno == JFileChooser.APPROVE_OPTION){
+            leerImagenes(chooser.getSelectedFile());
+        }
+    }//GEN-LAST:event_btnCargarImgActionPerformed
+
+    private void btnCargarUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarUsersActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .usr", "usr");
+        chooser.setFileFilter(filtro);
+        int retorno = chooser.showOpenDialog(this);
+        if(retorno == JFileChooser.APPROVE_OPTION){
+            leerUsuarios(chooser.getSelectedFile());
+        }
+    }//GEN-LAST:event_btnCargarUsersActionPerformed
+    
+    public void leerCapas(File archivo){
+        System.out.println("You chose to open this file: " + archivo.getName());
+        try {
+            capasLexer lex = new capasLexer(new BufferedReader(new FileReader(archivo)));
+            parserCapas parser = new parserCapas(lex);
+            parser.parse();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    public void leerImagenes(File archivo){
+        System.out.println("You chose to open this file: " + archivo.getName());
+        
+        try {
+            
+            imagenLexer lex = new imagenLexer(new BufferedReader(new FileReader(archivo)));
+            parserImagenes parser = new parserImagenes(lex);
+            parser.parse();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void leerUsuarios(File archivo){
+        System.out.println("You chose to open this file: " + archivo.getName());
+        try {
+            userLexer lex = new userLexer(new BufferedReader(new FileReader(archivo)));
+            parserUsuario parser = new parserUsuario(lex);
+            parser.parse();
+            
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCargarCapas;
+    private javax.swing.JButton btnCargarImg;
+    private javax.swing.JButton btnCargarUsers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
