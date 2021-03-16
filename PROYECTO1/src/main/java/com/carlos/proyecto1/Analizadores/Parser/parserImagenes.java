@@ -115,7 +115,6 @@ public class parserImagenes extends java_cup.runtime.lr_parser {
     public void report_fatal_error(String message, Object info){
         System.out.println("reportfatal");
     }
-
     /*
     public void syntax_error(Symbol cur_token){
 

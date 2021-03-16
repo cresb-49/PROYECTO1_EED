@@ -50,22 +50,22 @@ numero = [0-9]+
 <YYINITIAL>{
     "{"
         {
-            System.out.println("Nombre de usuario encontrado: "+yytext());
+            System.out.println("Llave apertura: "+yytext());
             return new Symbol (L_A,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     "}"
         {
-            System.out.println("Nombre de usuario encontrado: "+yytext());
+            System.out.println("Lave Cierre: "+yytext());
             return new Symbol (L_C,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     ","
         {
-            System.out.println("Nombre de usuario encontrado: "+yytext());
+            System.out.println("Coma: "+yytext());
             return new Symbol (COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {numero}
         {
-            System.out.println("Nombre de usuario encontrado: "+yytext());
+            System.out.println("Indentificador: "+yytext());
             return new Symbol (NUM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {LineTerminator}

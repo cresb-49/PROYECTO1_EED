@@ -30,7 +30,7 @@ import java_cup.runtime.Symbol;
 /*EXPRECIONES REGULARES*/
 LineTerminator = [\r|\n|\r\n]+
 WhiteSpace = [ \t\n]+
-alfanumerico = ([0-9]|[a-zA-Z])+
+usuario = ([a-zA-Z])+([0-9])*
 id = [0-9]+
 
 %{
@@ -49,10 +49,30 @@ id = [0-9]+
 
 /*LEXIX RULES*/
 <YYINITIAL>{
-    {alfanumerico}
+    {usuario}
         {
             System.out.println("Nombre de usuario encontrado: "+yytext());
             return new Symbol (USER,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+        }
+    {id}   
+        {
+            System.out.println("Identificador: "+yytext());
+            return new Symbol (ID,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+        }
+    ":"
+        {
+            System.out.println("Dos puntos: "+yytext());
+            return new Symbol (D_DOT,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+        }
+    ","
+        {
+            System.out.println("Coma: "+yytext());
+            return new Symbol (COMA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+        }
+    ";"
+        {
+            System.out.println("Punto y coma: "+yytext());
+            return new Symbol (DOT_COMA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {LineTerminator}
         {

@@ -4,7 +4,7 @@
 
 package com.carlos.proyecto1.Analizadores.Lexer;
 import com.carlos.proyecto1.Analizadores.Parser.parserUsuarioSym;
-import static com.carlos.proyecto1.Analizadores.Parser.parserUsuarioSym.USER;
+import static com.carlos.proyecto1.Analizadores.Parser.parserUsuarioSym.*;
 import com.carlos.proyecto1.ED.Cola;
 import com.carlos.proyecto1.Tokens.token;
 import java_cup.runtime.Symbol;
@@ -67,8 +67,9 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\2\0\1\3\22\0\1\1\17\0"+
-    "\12\4\7\0\32\4\6\0\32\4\1\0\1\3\u0183\0";
+    "\11\0\1\1\1\2\2\0\1\3\22\0\1\1\13\0"+
+    "\1\4\3\0\12\5\1\6\1\7\5\0\32\10\6\0"+
+    "\32\10\1\0\1\3\u0183\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[512];
@@ -95,10 +96,10 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\3\2\1\3";
+    "\1\0\1\1\3\2\1\3\1\4\1\5\1\6\2\7";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[6];
+    int [] result = new int[11];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -123,10 +124,11 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\5\0\12\0\17\0\24\0\31";
+    "\0\0\0\11\0\22\0\33\0\44\0\11\0\55\0\11"+
+    "\0\11\0\66\0\77";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[6];
+    int [] result = new int[11];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -149,11 +151,13 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\4\1\5\1\6\6\0\2\3\3\0"+
-    "\1\3\1\4\1\5\3\0\2\5\5\0\1\6";
+    "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11"+
+    "\1\12\12\0\2\3\7\0\1\3\1\4\1\5\7\0"+
+    "\2\5\12\0\1\7\10\0\1\13\2\0\1\12\5\0"+
+    "\1\13\3\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[30];
+    int [] result = new int[72];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -196,10 +200,10 @@ public class userLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\4\1";
+    "\1\0\1\11\3\1\1\11\1\1\2\11\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[6];
+    int [] result = new int[11];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -702,18 +706,42 @@ public class userLexer implements java_cup.runtime.Scanner {
             { error(yytext());
             }
             // fall through
-          case 4: break;
+          case 8: break;
           case 2:
             { /*Do nothing*/
             }
             // fall through
-          case 5: break;
+          case 9: break;
           case 3:
+            { System.out.println("Coma: "+yytext());
+            return new Symbol (COMA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            }
+            // fall through
+          case 10: break;
+          case 4:
+            { System.out.println("Identificador: "+yytext());
+            return new Symbol (ID,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            }
+            // fall through
+          case 11: break;
+          case 5:
+            { System.out.println("Dos puntos: "+yytext());
+            return new Symbol (D_DOT,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            }
+            // fall through
+          case 12: break;
+          case 6:
+            { System.out.println("Punto y coma: "+yytext());
+            return new Symbol (DOT_COMA,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            }
+            // fall through
+          case 13: break;
+          case 7:
             { System.out.println("Nombre de usuario encontrado: "+yytext());
             return new Symbol (USER,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
-          case 6: break;
+          case 14: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

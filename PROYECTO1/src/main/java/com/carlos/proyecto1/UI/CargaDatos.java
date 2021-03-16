@@ -268,11 +268,9 @@ public class CargaDatos extends javax.swing.JDialog {
         System.out.println("You chose to open this file: " + archivo.getName());
         
         try {
-            
             imagenLexer lex = new imagenLexer(new BufferedReader(new FileReader(archivo)));
             parserImagenes parser = new parserImagenes(lex);
             parser.parse();
-            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -284,9 +282,6 @@ public class CargaDatos extends javax.swing.JDialog {
             userLexer lex = new userLexer(new BufferedReader(new FileReader(archivo)));
             parserUsuario parser = new parserUsuario(lex);
             parser.parse();
-            
-            
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

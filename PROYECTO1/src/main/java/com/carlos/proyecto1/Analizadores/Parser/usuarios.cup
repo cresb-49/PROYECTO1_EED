@@ -41,7 +41,22 @@ parser code {:
 :}
 
 terminal    USER,ID,D_DOT,COMA,DOT_COMA;
-non terminal s;
+non terminal s,sp,cont,cont2,contenido;
 
-s   ::= USER
+s   ::= USER D_DOT contenido DOT_COMA sp
     ;
+
+sp  ::= s
+    |
+    ;
+
+contenido ::=   cont
+            |   
+            ;
+
+cont    ::= ID cont2
+        ;
+
+cont2   ::= COMA cont
+        |
+        ;
