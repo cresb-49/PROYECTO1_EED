@@ -13,13 +13,7 @@ import com.carlos.proyecto1.Analizadores.Parser.parserImagenes;
 import com.carlos.proyecto1.Analizadores.Parser.parserUsuario;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FilterReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
