@@ -2,26 +2,27 @@ package com.carlos.proyecto1.ED;
 
 public class NodoArbol {
 
-    private int asignacion;
+    private String tag;
     private Object contenido;
 
+    private NodoArbol padre;
     private NodoArbol izquierda;
     private NodoArbol derecha;
 
     public NodoArbol() {
     }
 
-    public NodoArbol(int asignacion, Object contenido) {
-        this.asignacion = asignacion;
+    public NodoArbol(String tag, Object contenido) {
+        this.tag = tag;
         this.contenido = contenido;
     }
 
-    public int getAsignacion() {
-        return asignacion;
+    public String getTag() {
+        return tag;
     }
 
-    public void setAsignacion(int asignacion) {
-        this.asignacion = asignacion;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public Object getContenido() {
@@ -48,43 +49,21 @@ public class NodoArbol {
         this.derecha = derecha;
     }
 
-    public void agregarNodo(NodoArbol nodo) {
-        if (nodo.getAsignacion()>this.asignacion) {
-            if (this.derecha == null) {
-                this.derecha = nodo;
-            } else {
-                this.derecha.agregarNodo(nodo);
-            }
-        } else {
-            if (this.izquierda == null) {
-                this.izquierda = nodo;
-            } else {
-                this.izquierda.agregarNodo(nodo);
-            }
-        }
+    public NodoArbol getPadre() {
+        return padre;
+    }
+
+    public void setPadre(NodoArbol padre) {
+        this.padre = padre;
     }
     
-    public NodoArbol buscarNodo(int asignacion){
-        NodoArbol tmp=null;
-        if(this.asignacion == asignacion){
-            tmp =this;
-        }else{
-            if(asignacion>this.asignacion){
-                if(this.derecha!=null){
-                    tmp = this.derecha.buscarNodo(asignacion);
-                }
-            }else{
-                if(this.izquierda!=null){
-                    tmp = this.izquierda.buscarNodo(asignacion);
-                }
-            }
-        }
-        return tmp;
+    public String imprimirNodo(){
+        return "{" + "tag=" + tag + ", contenido=" + contenido +", padre="+((padre==null)?"null":padre.getTag())+'}';
     }
-    
 
     @Override
     public String toString() {
-        return "NodoArbol{" + "asignacion=" + asignacion + ", contenido=" + contenido + ", izquierda=" + izquierda + ", derecha=" + derecha + '}';
+        return "NodoArbol{" + "tag=" + tag + ", contenido=" + contenido + ", padre=" + padre + ", izquierda=" + izquierda + ", derecha=" + derecha + '}';
     }
+
 }
