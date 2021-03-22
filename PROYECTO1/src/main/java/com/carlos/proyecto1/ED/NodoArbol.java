@@ -8,6 +8,8 @@ public class NodoArbol {
     private NodoArbol padre;
     private NodoArbol izquierda;
     private NodoArbol derecha;
+    
+    private int factorEquilibrio;
 
     public NodoArbol() {
     }
@@ -61,9 +63,19 @@ public class NodoArbol {
         return "{" + "tag=" + tag + ", contenido=" + contenido +", padre="+((padre==null)?"null":padre.getTag())+'}';
     }
 
+    public int getFactorEquilibrio() {
+        return factorEquilibrio;
+    }
+
+    public void setFactorEquilibrio(int factorEquilibrio) {
+        this.factorEquilibrio = factorEquilibrio;
+    }
+
     @Override
     public String toString() {
-        return "NodoArbol{" + "tag=" + tag + ", contenido=" + contenido + ", padre=" + padre + ", izquierda=" + izquierda + ", derecha=" + derecha + '}';
+        return "NodoArbol{" + "tag=" + tag + ", contenido=" + contenido + ", padre=" + padre + ", izquierda=" + izquierda + ", derecha=" + derecha + ", factorEquilibrio=" + factorEquilibrio + '}';
     }
+    
+    
 
 }
