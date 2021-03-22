@@ -34,13 +34,25 @@ public class AVL {
                 this.agregarNodo(padre.getDerecha(), nuevo);
             }
             int factor = this.alturaArbol(padre.getDerecha())-this.alturaArbol(padre.getIzquierda());
+            padre.setFactorEquilibrio(factor);
             if (factor == 2) {
                 //System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
                 this.vueltaSimpleDerecha(padre);
+                
+                if(((padre.getDerecha()==null)?1:padre.getDerecha().getFactorEquilibrio())<0){
+                    System.out.println("Vuelta doble derecha");
+                }else{
+                    System.out.println("Vuelta simple derecha");
+                }
             }
             if (factor == -2) {
                 //System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
                 this.vueltaSimpleIzquierda(padre);
+                if(((padre.getDerecha()==null)?-1:padre.getDerecha().getFactorEquilibrio())>0){
+                    System.out.println("Vuelta doble izquierda");
+                }else{
+                    System.out.println("Vuelta simple izquierda");
+                }
             }
         } else if (nuevo.getTag().compareTo(padre.getTag()) < 0) {
             if (padre.getIzquierda() == null) {
@@ -184,7 +196,6 @@ public class AVL {
         if (nodo.getDerecha() != null) {
             this.preOrden(nodo.getDerecha());
         }
-
     }
 
 }
