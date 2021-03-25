@@ -1,7 +1,7 @@
 package com.carlos.proyecto1.ED;
 
 public class Nodo {
-    private int index;
+    private String tag;
     private Object contenido;
     
     private Nodo anterior;
@@ -10,8 +10,8 @@ public class Nodo {
     public Nodo() {
     }
 
-    public Nodo(int index, Object contenido) {
-        this.index = index;
+    public Nodo(String tag, Object contenido) {
+        this.tag = tag;
         this.contenido = contenido;
     }
 
@@ -19,12 +19,12 @@ public class Nodo {
         this.contenido=contenido;
     }
 
-    public int getIndex() {
-        return index;
+    public String getTag() {
+        return tag;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public Object getContenido() {
@@ -50,9 +50,19 @@ public class Nodo {
     public void setSiguiente(Nodo siguiente) {
         this.siguiente = siguiente;
     }
+    
+    public String imprimirNodo(){
+        return "Nodo{" + "tag=" + tag + ", contenido=" + contenido + ", anterior=" + anterior.getTag() + ", siguiente=" + siguiente.getTag() + '}';
+    }
+    
+    public String imprimirNodoSimple(){
+        return "Nodo{" + "tag=" + tag + ", contenido=" + contenido + ", siguiente=" + ((siguiente ==null)?"null":siguiente.getTag()) + '}';
+    }
 
     @Override
     public String toString() {
-        return "nodoLista{" + "index=" + index + ", contenido=" + contenido + ", anterior=" + anterior + ", siguiente=" + siguiente + '}';
+        return "Nodo{" + "tag=" + tag + ", contenido=" + contenido + ", anterior=" + anterior + ", siguiente=" + siguiente + '}';
     }
+
+    
 }

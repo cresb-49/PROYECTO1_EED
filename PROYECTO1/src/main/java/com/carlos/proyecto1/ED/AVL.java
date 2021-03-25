@@ -33,25 +33,25 @@ public class AVL {
             } else {
                 this.agregarNodo(padre.getDerecha(), nuevo);
             }
-            int factor = this.alturaArbol(padre.getDerecha())-this.alturaArbol(padre.getIzquierda());
+            int factor = this.alturaArbol(padre.getDerecha()) - this.alturaArbol(padre.getIzquierda());
             padre.setFactorEquilibrio(factor);
             if (factor == 2) {
                 //System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
                 this.vueltaSimpleDerecha(padre);
-                
-                if(((padre.getDerecha()==null)?1:padre.getDerecha().getFactorEquilibrio())<0){
-                    System.out.println("Vuelta doble derecha");
-                }else{
-                    System.out.println("Vuelta simple derecha");
+
+                if (((padre.getDerecha() == null) ? 1 : padre.getDerecha().getFactorEquilibrio()) < 0) {
+                    //System.out.println("Vuelta doble derecha");
+                } else {
+                    //System.out.println("Vuelta simple derecha");
                 }
             }
             if (factor == -2) {
                 //System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
                 this.vueltaSimpleIzquierda(padre);
-                if(((padre.getDerecha()==null)?-1:padre.getDerecha().getFactorEquilibrio())>0){
-                    System.out.println("Vuelta doble izquierda");
-                }else{
-                    System.out.println("Vuelta simple izquierda");
+                if (((padre.getDerecha() == null) ? -1 : padre.getDerecha().getFactorEquilibrio()) > 0) {
+                    //System.out.println("Vuelta doble izquierda");
+                } else {
+                    //System.out.println("Vuelta simple izquierda");
                 }
             }
         } else if (nuevo.getTag().compareTo(padre.getTag()) < 0) {
@@ -61,8 +61,8 @@ public class AVL {
             } else {
                 this.agregarNodo(padre.getIzquierda(), nuevo);
             }
-            
-            int factor = this.alturaArbol(padre.getDerecha())-this.alturaArbol(padre.getIzquierda());
+
+            int factor = this.alturaArbol(padre.getDerecha()) - this.alturaArbol(padre.getIzquierda());
             if (factor == 2) {
                 //System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
                 this.vueltaSimpleDerecha(padre);
@@ -77,7 +77,7 @@ public class AVL {
     }
 
     private void vueltaSimpleDerecha(NodoArbol nodo) {
-        NodoArbol tmp,tmp2;
+        NodoArbol tmp, tmp2;
         if (nodo.equals(this.raiz)) {
             tmp = this.raiz;
             tmp2 = tmp.getDerecha().getIzquierda();
@@ -86,7 +86,7 @@ public class AVL {
             this.raiz.setIzquierda(tmp);
             tmp.setDerecha(tmp2);
             tmp.setPadre(this.raiz);
-            if(tmp2!=null){
+            if (tmp2 != null) {
                 tmp2.setPadre(tmp);
             }
         } else {
@@ -98,14 +98,14 @@ public class AVL {
             tmp.setIzquierda(nodo);
             nodo.setPadre(tmp);
             nodo.setDerecha(tmp2);
-            if(tmp2!=null){
+            if (tmp2 != null) {
                 tmp2.setPadre(nodo);
             }
         }
     }
 
     private void vueltaSimpleIzquierda(NodoArbol nodo) {
-        NodoArbol tmp,tmp2;
+        NodoArbol tmp, tmp2;
         if (nodo.equals(this.raiz)) {
             tmp = this.raiz;
             tmp2 = tmp.getIzquierda().getDerecha();
@@ -114,7 +114,7 @@ public class AVL {
             this.raiz.setDerecha(tmp);
             tmp.setIzquierda(tmp2);
             tmp.setPadre(this.raiz);
-            if(tmp2!=null){
+            if (tmp2 != null) {
                 tmp2.setPadre(tmp);
             }
         } else {
@@ -126,15 +126,13 @@ public class AVL {
             tmp.setDerecha(nodo);
             nodo.setPadre(tmp);
             nodo.setIzquierda(tmp2);
-            if(tmp2!=null){
+            if (tmp2 != null) {
                 tmp2.setPadre(nodo);
             }
         }
 
     }
-    
-    
-    
+
     private int alturaArbol(NodoArbol nodo) {
         int izquierda = 0, derecha = 0;
         if (nodo != null) {
@@ -150,7 +148,23 @@ public class AVL {
     }
 
     public NodoArbol buscarNodo(String tag) {
-        return null;
+        NodoArbol nodo = null;
+        nodo = this.buscarNodo(this.raiz, tag);
+        return nodo;
+    }
+
+    private NodoArbol buscarNodo(NodoArbol nodo, String tag) {
+        NodoArbol tmp = null;
+        if (nodo != null) {
+            if (tag.compareTo(nodo.getTag()) > 0) {
+                tmp = this.buscarNodo(nodo.getDerecha(), tag);
+            } else if (tag.compareTo(nodo.getTag()) < 0) {
+                tmp = this.buscarNodo(nodo.getIzquierda(), tag);
+            } else if (tag.compareTo(nodo.getTag()) == 0) {
+                tmp = nodo;
+            }
+        }
+        return tmp;
     }
 
     public void inOrden() {
