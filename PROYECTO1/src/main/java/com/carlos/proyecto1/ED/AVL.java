@@ -211,5 +211,10 @@ public class AVL {
             this.preOrden(nodo.getDerecha());
         }
     }
-
+    
+    private void eliminar(String tag){
+        
+    }
+    
+    
 }

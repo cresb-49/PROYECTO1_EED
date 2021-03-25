@@ -81,4 +81,8 @@ public class ListaDobleEnlazada {
         System.out.println("--------------------------");
     }
 
+    @Override
+    public String toString() {
+        return "ListaDobleEnlazada{" + "raiz=" + raiz.imprimirNodo() + '}';
+    }
 }
