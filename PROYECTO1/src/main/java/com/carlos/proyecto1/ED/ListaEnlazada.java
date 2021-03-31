@@ -1,5 +1,7 @@
 package com.carlos.proyecto1.ED;
 
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
+
 public class ListaEnlazada {
 
     private Nodo raiz;
@@ -8,7 +10,7 @@ public class ListaEnlazada {
 
     }
 
-    public void add(Nodo nodo) {
+    public void add(Nodo nodo) throws CloneNodeException{
 
         if (this.buscar(nodo.getTag()) == null) {
             if (raiz == null) {
@@ -21,7 +23,7 @@ public class ListaEnlazada {
                 tmp.setSiguiente(nodo);
             }
         } else {
-            System.out.println("Ya existe un elemento con la tag: " + nodo.getTag());
+            throw new CloneNodeException("Ya existe un elemento con la tag: " + nodo.getTag());
         }
 
     }

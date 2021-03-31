@@ -1,5 +1,8 @@
 package com.carlos.proyecto1.ED;
 
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
+import com.carlos.proyecto1.Exepciones.NotFoundNodeException;
+
 public class ListaDobleEnlazada {
 
     private Nodo raiz;
@@ -11,7 +14,7 @@ public class ListaDobleEnlazada {
         this.raiz = raiz;
     }
 
-    public void agregar(Nodo nuevo) {
+    public void agregar(Nodo nuevo) throws CloneNodeException{
         if (this.raiz == null) {
             this.raiz = nuevo;
         } else {
@@ -25,7 +28,7 @@ public class ListaDobleEnlazada {
                     tmp = tmp.getSiguiente();
                 }
             } else {
-                System.out.println("Ya existe un elemento con tag: " + nuevo.getTag());
+                throw new CloneNodeException("Ya existe un elemento con tag: " + nuevo.getTag());
             }
         }
     }
@@ -43,7 +46,7 @@ public class ListaDobleEnlazada {
         return null;
     }
 
-    public void eliminar(String tag) {
+    public void eliminar(String tag) throws NotFoundNodeException{
 
         if (this.buscar(tag) != null) {
             Nodo tmp = this.raiz;
@@ -67,7 +70,7 @@ public class ListaDobleEnlazada {
                 tmp = tmp.getSiguiente();
             }
         } else {
-            System.out.println("No existe un elemento con tag: " + tag);
+            throw new NotFoundNodeException("No existe un elemento con tag: " + tag);
         }
     }
 

@@ -1,5 +1,8 @@
 package com.carlos.proyecto1.ED;
 
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
+import com.carlos.proyecto1.Exepciones.NotFoundNodeException;
+
 public class ListaDobleEnlazadaCircular {
 
     private Nodo raiz;
@@ -12,7 +15,7 @@ public class ListaDobleEnlazadaCircular {
      *
      * @param nuevo
      */
-    public void addOrden(Nodo nuevo) {
+    public void addOrden(Nodo nuevo) throws CloneNodeException{
         if (raiz == null) {
             raiz = nuevo;
             raiz.setSiguiente(raiz);
@@ -41,7 +44,7 @@ public class ListaDobleEnlazadaCircular {
                     insertarUltimo(nuevo);
                 }
             } else {
-                System.out.println("Ya existe elemento con la etiqueta: " + nuevo.getTag());
+                throw new CloneNodeException("Ya existe elemento con la etiqueta: " + nuevo.getTag());
             }
 
         }
@@ -94,7 +97,7 @@ public class ListaDobleEnlazadaCircular {
         return null;
     }
 
-    public void eliminar(String tag) {
+    public void eliminar(String tag) throws NotFoundNodeException{
         if (this.buscar(tag) != null) {
             boolean eliminado = false;
             Nodo tmp = this.raiz;
@@ -118,7 +121,7 @@ public class ListaDobleEnlazadaCircular {
                 tmp = tmp.getSiguiente();
             } while (!eliminado);
         } else {
-            System.out.println("No existe un elemento con el tag: " + tag);
+            throw new NotFoundNodeException("No existe un elemento con el tag: " + tag);
         }
     }
 }

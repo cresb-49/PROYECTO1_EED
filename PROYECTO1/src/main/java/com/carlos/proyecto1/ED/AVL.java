@@ -1,5 +1,7 @@
 package com.carlos.proyecto1.ED;
 
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
+
 /**
  * CLASE ARBOL BINARIO DE BUSQUEDA, ESTABLECE LAS ACCIONES DE LOS OBJETOS
  * NodoArbol
@@ -17,7 +19,7 @@ public class AVL {
         this.raiz = raiz;
     }
 
-    public void agregar(NodoArbol nodo) {
+    public void agregar(NodoArbol nodo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nodo;
         } else {
@@ -25,7 +27,7 @@ public class AVL {
         }
     }
 
-    private void agregarNodo(NodoArbol padre, NodoArbol nuevo) {
+    private void agregarNodo(NodoArbol padre, NodoArbol nuevo) throws CloneNodeException{
         if (nuevo.getTag().compareTo(padre.getTag()) > 0) {
             if (padre.getDerecha() == null) {
                 padre.setDerecha(nuevo);
@@ -72,7 +74,7 @@ public class AVL {
                 this.vueltaSimpleIzquierda(padre);
             }
         } else {
-            System.out.println("Ya existe un nodo con el mismo tag");
+            throw new CloneNodeException("Ya existe un nodo con tag: "+nuevo.getTag());
         }
     }
 
