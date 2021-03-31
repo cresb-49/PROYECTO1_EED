@@ -1,0 +1,27 @@
+digraph html{
+    image[shape=none, margin=0,label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="20">
+        <TR>
+            <TD BGCOLOR="#FF0303">   </TD>
+            <TD BGCOLOR="#FF0303">   </TD>
+            <TD BGCOLOR="#FF0303">   </TD>
+            <TD BGCOLOR="#FF0303">   </TD>
+            <TD BGCOLOR="#FF0303">   </TD>
+        </TR>
+        <TR>
+            <TD BGCOLOR="#53FF03">   </TD>
+            <TD BGCOLOR="#53FF03">   </TD>
+            <TD BGCOLOR="#53FF03">   </TD>
+            <TD BGCOLOR="#53FF03">   </TD>
+            <TD BGCOLOR="#53FF03">   </TD>
+        </TR>
+        <TR>
+            <TD BGCOLOR="#03FFA3">   </TD>
+            <TD BGCOLOR="#03FFA3">   </TD>
+            <TD BGCOLOR="#03FFA3">   </TD>
+            <TD BGCOLOR="#03FFA3">   </TD>
+            <TD BGCOLOR="#03FFA3">   </TD>
+        </TR>
+        
+    </TABLE>>];
+}
