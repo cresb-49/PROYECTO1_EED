@@ -33,7 +33,7 @@ WhiteSpace = [ \t\n]+
 numero = [0-9]+
 hex = ([0-9]|[ABCDEF])
 hex2 = ([0-9]|[abcdef])
-colorHex = [#]({hex}|{hex2}){6}
+colorHex = [#]({hex}{6}|{hex2}{6})
 
 %{
     private void error(String lexeme) {
@@ -53,32 +53,32 @@ colorHex = [#]({hex}|{hex2}){6}
 <YYINITIAL>{
     "{"
         {
-            System.out.println("Llave apertura: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+           //System.out.println("Llave apertura: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (L_A,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     "}"
         {
-            System.out.println("Llave cierre: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            //System.out.println("Llave cierre: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (L_C,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     ";"
         {
-            System.out.println("Punto y coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            //System.out.println("Punto y coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (DOT_COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     ","
         {
-            System.out.println("Coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            //System.out.println("Coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {numero}
         {
-            System.out.println("Numero : "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            //System.out.println("Numero : "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (NUM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {colorHex}
         {
-            System.out.println("Color: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            //System.out.println("Color: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (COLOR,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
         }
     {LineTerminator}

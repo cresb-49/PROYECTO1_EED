@@ -16,9 +16,12 @@ import java.util.logging.Logger;
 public class main {
 
     public static void main(String[] args) {
+        
+        FramePrincipal principal = new FramePrincipal();
+        /*
         try {
-            //FramePrincipal principal = new FramePrincipal();
-            /*
+            
+            
             ListaDobleEnlazadaCircular listaCircularDoble = new ListaDobleEnlazadaCircular();
             
             listaCircularDoble.addOrden(new Nodo("3", "3"));
@@ -33,7 +36,7 @@ public class main {
             listaCircularDoble.imprimir();
             listaCircularDoble.addOrden(new Nodo("2", "2"));
             listaCircularDoble.imprimir();
-            */
+            
             
             MatrizDispersa matriz = new MatrizDispersa();
             matriz.agregarNodo(1, 2, "12");
@@ -61,6 +64,8 @@ public class main {
         } catch (InvalidStructureException ex) {
             System.out.println(ex.getMessage());
         }
+
+        */
         
 
     }

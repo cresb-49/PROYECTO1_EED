@@ -22,6 +22,7 @@ public class AVL {
     public void agregar(NodoArbol nodo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nodo;
+            System.out.println("Se agrego con exito el dato con tag: "+nodo.getTag());
         } else {
             this.agregarNodo(this.raiz, nodo);
         }
@@ -32,6 +33,7 @@ public class AVL {
             if (padre.getDerecha() == null) {
                 padre.setDerecha(nuevo);
                 nuevo.setPadre(padre);
+                System.out.println("Se agrego con exito el dato con tag: "+nuevo.getTag());
             } else {
                 this.agregarNodo(padre.getDerecha(), nuevo);
             }
@@ -60,6 +62,7 @@ public class AVL {
             if (padre.getIzquierda() == null) {
                 padre.setIzquierda(nuevo);
                 nuevo.setPadre(padre);
+                System.out.println("Se agrego con exito el dato con tag: "+nuevo.getTag());
             } else {
                 this.agregarNodo(padre.getIzquierda(), nuevo);
             }

@@ -1,14 +1,14 @@
-package com.carlos.proyecto1.Analizadores.Parser;
 import com.carlos.proyecto1.Analizadores.Lexer.capasLexer;
-import com.carlos.proyecto1.ED.Cola;
-import com.carlos.proyecto1.ED.Pila;
-
+import com.carlos.proyecto1.ED.*;
+import com.carlos.proyecto1.Exepciones.*;
+import com.carlos.proyecto1.Tokens.token;
+import java_cup.runtime.Symbol;
 class parserCapas;
 
 parser code {:
         
-    private Cola errores = new Cola();    
-    private Pila usuarios = new Pila();
+    private Pila errores = new Pila();    
+    private AVL arbolCapas = new AVL();
     
     public parserCapas(capasLexer lex){
         super(lex);
@@ -21,21 +21,22 @@ parser code {:
         System.out.println("reportfatal");
     }
 
-    /*
     public void syntax_error(Symbol cur_token){
-
-    }*/
+        token tok = ((token)cur_token.value);
+        System.out.println("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
+        errores.push("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
+    }
 
     protected int error_sync_size() {
         return 1;
     }
 
-    public Cola getErrores(){
+    public Pila getErrores(){
         return errores;
     }
 
-    public Pila getUsuarios(){
-        return usuarios;
+    public AVL getArbolCapas() {
+        return arbolCapas;
     }
 
 :}
@@ -43,14 +44,55 @@ parser code {:
 terminal    NUM,COM,DOT_COM,L_A,L_C,COLOR;
 non terminal s,sp,cont,cont2;
 
-s   ::= NUM L_A cont L_C sp
+s   ::= NUM:e1 L_A cont:e2 L_C sp
+    {:
+        if(e2!=null){
+            MatrizDispersa tmp = (MatrizDispersa)e2;
+            String tag = ((token)e1).getLexeme();
+            try {
+                arbolCapas.agregar(new NodoArbol(tag, tmp));
+            } catch (CloneNodeException ex) {
+                System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+            }
+        }else{
+            System.out.println("Errores previos en lectura de la matriz: "+((token)e1).getLexeme()+", Corrija e intente de nuevo, Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+            errores.push("Errores previos en lectura de la matriz: "+((token)e1).getLexeme()+", Corrija e intente de nuevo, Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+        }
+    :}
+    |   error
     ;
 
-cont ::= NUM COM NUM COM COLOR DOT_COM cont2
-    ;
+cont    ::= NUM:e1 COM NUM:e2 COM COLOR:e3 DOT_COM cont2:e4
+        {:
+            if(e4!=null){
+                MatrizDispersa tmp = (MatrizDispersa)e4;
+                try {
+                    int x = Integer.parseInt(((token)e2).getLexeme());
+                    int y = Integer.parseInt(((token)e1).getLexeme());
+                    
+                    tmp.agregarNodo(x, y, ((token)e3).getLexeme());
 
-cont2   ::= cont
+                    RESULT = e4;
+                    
+                } catch (InvalidIndexException | CloneNodeException | InvalidStructureException ex) {
+                    System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                    errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+                }
+            }
+            
+        :}
+        |   error
+        ;
+
+cont2   ::= cont:e1
+        {:
+            RESULT = e1;
+        :}
         |
+        {:
+            RESULT = new MatrizDispersa();
+        :}
         ;
 
 sp  ::= s

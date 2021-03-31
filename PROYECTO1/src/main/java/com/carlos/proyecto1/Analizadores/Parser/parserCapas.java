@@ -6,8 +6,10 @@
 package com.carlos.proyecto1.Analizadores.Parser;
 
 import com.carlos.proyecto1.Analizadores.Lexer.capasLexer;
-import com.carlos.proyecto1.ED.Cola;
-import com.carlos.proyecto1.ED.Pila;
+import com.carlos.proyecto1.ED.*;
+import com.carlos.proyecto1.Exepciones.*;
+import com.carlos.proyecto1.Tokens.token;
+import java_cup.runtime.Symbol;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -33,9 +35,9 @@ public class parserCapas extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\007\000\002\002\007\000\002\002\004\000\002\004" +
-    "\011\000\002\005\003\000\002\005\002\000\002\003\003" +
-    "\000\002\003\002" });
+    "\000\011\000\002\002\007\000\002\002\004\000\002\002" +
+    "\003\000\002\004\011\000\002\004\003\000\002\005\003" +
+    "\000\002\005\002\000\002\003\003\000\002\003\002" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -43,15 +45,16 @@ public class parserCapas extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\021\000\004\004\004\001\002\000\004\007\007\001" +
-    "\002\000\004\002\006\001\002\000\004\002\000\001\002" +
-    "\000\004\004\011\001\002\000\004\010\021\001\002\000" +
-    "\004\005\012\001\002\000\004\004\013\001\002\000\004" +
-    "\005\014\001\002\000\004\011\015\001\002\000\004\006" +
-    "\016\001\002\000\006\004\011\010\ufffd\001\002\000\004" +
-    "\010\ufffe\001\002\000\004\010\uffff\001\002\000\006\002" +
-    "\ufffb\004\004\001\002\000\004\002\ufffc\001\002\000\004" +
-    "\002\001\001\002" });
+    "\000\023\000\006\003\005\004\004\001\002\000\004\007" +
+    "\010\001\002\000\004\002\uffff\001\002\000\004\002\007" +
+    "\001\002\000\004\002\000\001\002\000\006\003\013\004" +
+    "\011\001\002\000\004\005\017\001\002\000\004\010\014" +
+    "\001\002\000\004\010\ufffd\001\002\000\010\002\ufff9\003" +
+    "\005\004\004\001\002\000\004\002\ufffa\001\002\000\004" +
+    "\002\001\001\002\000\004\004\020\001\002\000\004\005" +
+    "\021\001\002\000\004\011\022\001\002\000\004\006\023" +
+    "\001\002\000\010\003\013\004\011\010\ufffb\001\002\000" +
+    "\004\010\ufffc\001\002\000\004\010\ufffe\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -59,13 +62,13 @@ public class parserCapas extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\021\000\004\002\004\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\004\007\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
-    "\004\016\005\017\001\001\000\002\001\001\000\002\001" +
-    "\001\000\006\002\021\003\022\001\001\000\002\001\001" +
-    "\000\002\001\001" });
+    "\000\023\000\004\002\005\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\004\011\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\006\002\014\003\015\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\006\004\023" +
+    "\005\024\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -105,8 +108,8 @@ public class parserCapas extends java_cup.runtime.lr_parser {
 
 
         
-    private Cola errores = new Cola();    
-    private Pila usuarios = new Pila();
+    private Pila errores = new Pila();    
+    private AVL arbolCapas = new AVL();
     
     public parserCapas(capasLexer lex){
         super(lex);
@@ -119,21 +122,22 @@ public class parserCapas extends java_cup.runtime.lr_parser {
         System.out.println("reportfatal");
     }
 
-    /*
     public void syntax_error(Symbol cur_token){
-
-    }*/
+        token tok = ((token)cur_token.value);
+        System.out.println("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
+        errores.push("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
+    }
 
     protected int error_sync_size() {
         return 1;
     }
 
-    public Cola getErrores(){
+    public Pila getErrores(){
         return errores;
     }
 
-    public Pila getUsuarios(){
-        return usuarios;
+    public AVL getArbolCapas() {
+        return arbolCapas;
     }
 
 
@@ -166,7 +170,27 @@ class CUP$parserCapas$actions {
           case 0: // s ::= NUM L_A cont L_C sp 
             {
               Object RESULT =null;
-
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).value;
+		
+        if(e2!=null){
+            MatrizDispersa tmp = (MatrizDispersa)e2;
+            String tag = ((token)e1).getLexeme();
+            try {
+                arbolCapas.agregar(new NodoArbol(tag, tmp));
+            } catch (CloneNodeException ex) {
+                System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+            }
+        }else{
+            System.out.println("Errores previos en lectura de la matriz: "+((token)e1).getLexeme()+", Corrija e intente de nuevo, Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+            errores.push("Errores previos en lectura de la matriz: "+((token)e1).getLexeme()+", Corrija e intente de nuevo, Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+        }
+    
               CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
             }
           return CUP$parserCapas$result;
@@ -186,34 +210,88 @@ class CUP$parserCapas$actions {
           return CUP$parserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // cont ::= NUM COM NUM COM COLOR DOT_COM cont2 
+          case 2: // s ::= error 
             {
               Object RESULT =null;
 
+              CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
+            }
+          return CUP$parserCapas$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // cont ::= NUM COM NUM COM COLOR DOT_COM cont2 
+            {
+              Object RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-6)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-6)).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-6)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-4)).value;
+		int e3left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).left;
+		int e3right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).right;
+		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-2)).value;
+		int e4left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()).left;
+		int e4right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()).right;
+		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.peek()).value;
+		
+            if(e4!=null){
+                MatrizDispersa tmp = (MatrizDispersa)e4;
+                try {
+                    int x = Integer.parseInt(((token)e2).getLexeme());
+                    int y = Integer.parseInt(((token)e1).getLexeme());
+                    
+                    tmp.agregarNodo(x, y, ((token)e3).getLexeme());
+
+                    RESULT = e4;
+                    
+                } catch (InvalidIndexException | CloneNodeException | InvalidStructureException ex) {
+                    System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                    errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+                }
+            }
+            
+        
               CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("cont",2, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-6)), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
             }
           return CUP$parserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // cont2 ::= cont 
+          case 4: // cont ::= error 
             {
               Object RESULT =null;
 
+              CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("cont",2, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
+            }
+          return CUP$parserCapas$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // cont2 ::= cont 
+            {
+              Object RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserCapas$stack.peek()).value;
+		
+            RESULT = e1;
+        
               CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
             }
           return CUP$parserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // cont2 ::= 
+          case 6: // cont2 ::= 
             {
               Object RESULT =null;
-
+		
+            RESULT = new MatrizDispersa();
+        
               CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
             }
           return CUP$parserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // sp ::= s 
+          case 7: // sp ::= s 
             {
               Object RESULT =null;
 
@@ -222,7 +300,7 @@ class CUP$parserCapas$actions {
           return CUP$parserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // sp ::= 
+          case 8: // sp ::= 
             {
               Object RESULT =null;
 

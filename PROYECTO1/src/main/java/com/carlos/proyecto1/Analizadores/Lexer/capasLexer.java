@@ -69,7 +69,7 @@ public class capasLexer implements java_cup.runtime.Scanner {
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\2\0\1\3\22\0\1\1\2\0"+
     "\1\4\10\0\1\5\3\0\12\6\1\0\1\7\5\0"+
-    "\6\10\32\0\6\10\24\0\1\11\1\3\1\12\u0182\0";
+    "\6\10\32\0\6\11\24\0\1\12\1\3\1\13\u0182\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[512];
@@ -97,10 +97,10 @@ public class capasLexer implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\3\2\1\1\1\3\1\4\1\5\1\6"+
-    "\1\7\5\0\1\10";
+    "\1\7\17\0\1\10";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[17];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -125,12 +125,13 @@ public class capasLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\13\0\26\0\41\0\54\0\67\0\13\0\102"+
-    "\0\13\0\13\0\13\0\115\0\130\0\143\0\156\0\171"+
-    "\0\13";
+    "\0\0\0\14\0\30\0\44\0\60\0\74\0\14\0\110"+
+    "\0\14\0\14\0\14\0\124\0\140\0\154\0\170\0\204"+
+    "\0\220\0\234\0\250\0\264\0\300\0\314\0\330\0\344"+
+    "\0\360\0\374\0\14";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[17];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -154,14 +155,20 @@ public class capasLexer implements java_cup.runtime.Scanner {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11"+
-    "\1\2\1\12\1\13\14\0\2\3\11\0\1\3\1\4"+
-    "\1\5\11\0\2\5\15\0\1\14\1\0\1\14\10\0"+
-    "\1\10\12\0\1\15\1\0\1\15\10\0\1\16\1\0"+
-    "\1\16\10\0\1\17\1\0\1\17\10\0\1\20\1\0"+
-    "\1\20\10\0\1\21\1\0\1\21\2\0";
+    "\2\2\1\12\1\13\15\0\2\3\12\0\1\3\1\4"+
+    "\1\5\12\0\2\5\16\0\1\14\1\0\1\15\1\16"+
+    "\10\0\1\10\13\0\1\17\1\0\1\20\1\21\10\0"+
+    "\1\20\1\0\1\20\11\0\1\21\2\0\1\21\10\0"+
+    "\1\22\1\0\1\23\1\24\10\0\1\23\1\0\1\23"+
+    "\11\0\1\24\2\0\1\24\10\0\1\25\1\0\1\26"+
+    "\1\27\10\0\1\26\1\0\1\26\11\0\1\27\2\0"+
+    "\1\27\10\0\1\30\1\0\1\31\1\32\10\0\1\31"+
+    "\1\0\1\31\11\0\1\32\2\0\1\32\10\0\1\33"+
+    "\1\0\2\33\10\0\1\33\1\0\1\33\11\0\1\33"+
+    "\2\0\1\33\2\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[132];
+    int [] result = new int[264];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -204,10 +211,10 @@ public class capasLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\4\1\1\11\1\1\3\11\5\0\1\11";
+    "\1\0\1\11\4\1\1\11\1\1\3\11\17\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[17];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -717,37 +724,37 @@ public class capasLexer implements java_cup.runtime.Scanner {
             // fall through
           case 10: break;
           case 3:
-            { System.out.println("Coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 11: break;
           case 4:
-            { System.out.println("Numero : "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Numero : "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (NUM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 12: break;
           case 5:
-            { System.out.println("Punto y coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Punto y coma: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (DOT_COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 13: break;
           case 6:
-            { System.out.println("Llave apertura: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Llave apertura: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (L_A,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 14: break;
           case 7:
-            { System.out.println("Llave cierre: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Llave cierre: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (L_C,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 15: break;
           case 8:
-            { System.out.println("Color: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            { //System.out.println("Color: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
             return new Symbol (COLOR,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
