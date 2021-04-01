@@ -314,11 +314,13 @@ public class CargaDatos extends javax.swing.JDialog {
         
         try {
             imagenLexer lex = new imagenLexer(new BufferedReader(new FileReader(archivo)));
-            parserImagenes parser = new parserImagenes(lex);
+            parserImagenes parser = new parserImagenes(lex,this.datosPrograma.getArbolCapas());
             parser.parse();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        
+        System.out.println("Ya termine la operacion");
     }
     
     public void leerUsuarios(File archivo){
