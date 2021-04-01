@@ -32,6 +32,18 @@ public class Pila {
             this.raiz = nodo;
         }
     }
+    
+    
+    public void push(Object objeto,String tag){
+        Nodo nodo = new Nodo(tag, objeto);
+        if(this.raiz==null){
+            this.raiz=nodo;
+        }else{
+            nodo.setSiguiente(this.raiz);
+            this.raiz = nodo;
+        }
+    }
+    
 
     /**
      * Retorna el objeto superior en la pila sin sacarlo
@@ -51,6 +63,27 @@ public class Pila {
         Object cont = tmp.getContenido();
         tmp=null;
         return cont;
+    }
+    
+    public Object buscar(String tag){
+        Nodo tmp = this.raiz;
+        
+        while (tmp!=null) {            
+            if(tmp.getTag().equals(tag)){
+                return tmp.getContenido();
+            }
+            tmp = tmp.getSiguiente();
+        }
+        
+        return null;
+    }
+    
+    public boolean isEmpty(){
+        if(this.raiz==null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void imprimirPila(){

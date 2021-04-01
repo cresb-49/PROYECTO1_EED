@@ -1,31 +1,32 @@
 package com.carlos.proyecto1.Objetos;
 
-import com.carlos.proyecto1.ED.ListaEnlazada;
+import com.carlos.proyecto1.ED.*;
 
 public class Imagen {
-    private int id;
-    private ListaEnlazada capas;
+    private String id;
+    private ListaDobleEnlazada capas;
 
     public Imagen() {
     }
 
-    public Imagen(int id) {
+    public Imagen(String id, ListaDobleEnlazada capas) {
         this.id = id;
+        this.capas = capas;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public ListaEnlazada getCapas() {
+    public ListaDobleEnlazada getCapas() {
         return capas;
     }
 
-    public void setCapas(ListaEnlazada capas) {
+    public void setCapas(ListaDobleEnlazada capas) {
         this.capas = capas;
     }
 

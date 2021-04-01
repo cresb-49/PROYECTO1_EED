@@ -1,7 +1,10 @@
+package com.carlos.proyecto1.Analizadores.Parser;
+
 import com.carlos.proyecto1.Analizadores.Lexer.capasLexer;
 import com.carlos.proyecto1.ED.*;
 import com.carlos.proyecto1.Exepciones.*;
 import com.carlos.proyecto1.Tokens.token;
+import com.carlos.proyecto1.Objetos.*;
 import java_cup.runtime.Symbol;
 class parserCapas;
 
@@ -50,7 +53,9 @@ s   ::= NUM:e1 L_A cont:e2 L_C sp
             MatrizDispersa tmp = (MatrizDispersa)e2;
             String tag = ((token)e1).getLexeme();
             try {
-                arbolCapas.agregar(new NodoArbol(tag, tmp));
+                Capa nueva = new Capa(tag, tmp);
+                arbolCapas.agregar(new NodoArbol(tag,nueva));
+                
             } catch (CloneNodeException ex) {
                 System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
                 errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
@@ -72,14 +77,13 @@ cont    ::= NUM:e1 COM NUM:e2 COM COLOR:e3 DOT_COM cont2:e4
                     int y = Integer.parseInt(((token)e1).getLexeme());
                     
                     tmp.agregarNodo(x, y, ((token)e3).getLexeme());
-
-                    RESULT = e4;
                     
                 } catch (InvalidIndexException | CloneNodeException | InvalidStructureException ex) {
                     System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
                     errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
                 }
             }
+            RESULT = e4;
             
         :}
         |   error

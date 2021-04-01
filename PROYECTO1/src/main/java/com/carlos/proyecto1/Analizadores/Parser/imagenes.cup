@@ -1,17 +1,21 @@
 package com.carlos.proyecto1.Analizadores.Parser;
 import com.carlos.proyecto1.Analizadores.Lexer.imagenLexer;
-import com.carlos.proyecto1.ED.Cola;
-import com.carlos.proyecto1.ED.Pila;
+import com.carlos.proyecto1.ED.*;
+import com.carlos.proyecto1.Tokens.token;
+import com.carlos.proyecto1.Objetos.*;
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
 
 class parserImagenes;
 
 parser code {:
         
-    private Cola errores = new Cola();    
-    private Pila usuarios = new Pila();
+    private Pila errores = new Pila();    
+    private AVL arbolCapas = new AVL();
+    private ListaDobleEnlazadaCircular listaCircularImagenes = new ListaDobleEnlazadaCircular();
     
-    public parserImagenes(imagenLexer lex){
+    public parserImagenes(imagenLexer lex,AVL capas){
         super(lex);
+        this.arbolCapas=capas;
     }
 
     public void report_error(String message, Object info){
@@ -29,12 +33,12 @@ parser code {:
         return 1;
     }
 
-    public Cola getErrores(){
+    public Pila getErrores(){
         return errores;
     }
 
-    public Pila getUsuarios(){
-        return usuarios;
+    public ListaDobleEnlazadaCircular getImagenes(){
+        return listaCircularImagenes;
     }
 
 :}
@@ -42,17 +46,76 @@ parser code {:
 terminal    NUM,COM,L_A,L_C;
 non terminal s,sp,cont,cont2;
 
-s   ::= NUM L_A cont L_C sp
+s   ::= NUM:e1 L_A cont:e2 L_C sp
+    {:
+        if(e2!=null){
+            Pila tmp = (Pila)e2;
+            String id = ((token)e1).getLexeme();
+            ListaDobleEnlazada tmpCapas = new ListaDobleEnlazada();
+            Capa tmpCapa =null;
+            while(!tmp.isEmpty()){
+                tmpCapa = (Capa)tmp.pop();
+                try{
+                    tmpCapas.agregar(new Nodo(tmpCapa.getId(),tmpCapa));
+                }catch(CloneNodeException ex){
+                    System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                    errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+                }
+            }
+
+            try{
+                Imagen nuevaImg = new Imagen(id, tmpCapas);
+                listaCircularImagenes.addOrden(new Nodo(id, nuevaImg));
+            }catch(CloneNodeException ex){
+                System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
+                errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
+            }
+        }
+    :}
+    |   error
     ;
 
 sp  ::= s
     |   
     ;
 
-cont    ::= NUM cont2
+cont    ::= NUM:e1 cont2:e2
+        {:
+            if(e2!=null){
+
+                Pila tmp = (Pila)e2;
+                NodoArbol tmpNodo = arbolCapas.buscarNodo(((token)e1).getLexeme());
+
+                if(tmpNodo == null){
+                    System.out.println("No existe un capa \""+((token)e1).getLexeme()+"\" ,Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+                    errores.push("No existe un capa \""+((token)e1).getLexeme()+"\" ,Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+                }else{
+                    if(tmp.buscar(((token)e1).getLexeme())==null){
+                        System.out.println("Ya habia asignado una capa:  \""+((token)e1).getLexeme()+"\" a la imagen,Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+                        errores.push("Ya habia asignado una capa:  \""+((token)e1).getLexeme()+"\" a la imagen,Linea: "+((token)e1).getLine()+" ,Columna: "+((token)e1).getColumn());
+                    }else{
+                        Capa tmpCapa = (Capa)tmpNodo.getContenido();
+                        tmp.push(tmpCapa,tmpCapa.getId());
+                    }
+                }
+            }
+            RESULT = e2;
+        :}
+        |
+        {:
+            RESULT = new Pila();
+        :}
+        |   error
         ;
 
-cont2   ::= COM cont
+cont2   ::= COM cont:e1
+        {:
+            RESULT = e1;
+        :}
         |
+        {:
+            RESULT = new Pila();
+        :}
+        |   error
         ;
 

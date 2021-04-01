@@ -220,4 +220,12 @@ public class AVL {
     private void eliminar(String tag){
         
     }
+    
+    public boolean isEmpty(){
+        if(this.raiz==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

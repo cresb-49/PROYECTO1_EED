@@ -18,8 +18,8 @@ public class main {
 
     public static void main(String[] args) {
         
-        //FramePrincipal principal = new FramePrincipal();
-
+        FramePrincipal principal = new FramePrincipal();
+         /*
         try {
             GraficarImagen imagen = new GraficarImagen();
             MatrizDispersa matriz = new MatrizDispersa();
@@ -41,7 +41,7 @@ public class main {
         } catch (InvalidStructureException ex) {
             System.out.println(ex.getMessage());
         }
-        
+        */
 
     }
 

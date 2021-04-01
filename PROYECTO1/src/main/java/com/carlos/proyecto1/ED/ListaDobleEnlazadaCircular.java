@@ -49,7 +49,15 @@ public class ListaDobleEnlazadaCircular {
 
         }
     }
-
+    
+    public boolean isEmpty(){
+        if(this.raiz==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     private void insertarAdelante(Nodo base, Nodo nuevo) {
         Nodo tmp = base.getSiguiente();
         base.setSiguiente(nuevo);

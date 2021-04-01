@@ -11,6 +11,8 @@ import com.carlos.proyecto1.Analizadores.Lexer.userLexer;
 import com.carlos.proyecto1.Analizadores.Parser.parserCapas;
 import com.carlos.proyecto1.Analizadores.Parser.parserImagenes;
 import com.carlos.proyecto1.Analizadores.Parser.parserUsuario;
+import com.carlos.proyecto1.ED.Pila;
+import com.carlos.proyecto1.Objetos.DatosPrograma;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -22,17 +24,47 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author benjamin
  */
 public class CargaDatos extends javax.swing.JDialog {
-
+    
+    private DatosPrograma datosPrograma;
     /**
      * Creates new form cargaDatos
      */
-    public CargaDatos(java.awt.Frame parent, boolean modal) {
+    public CargaDatos(java.awt.Frame parent, boolean modal,DatosPrograma datosPrograma) {
+        
         super(parent, modal);
         initComponents();
+        this.datosPrograma = datosPrograma;
+        validarCapas();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-
+    private void validarCapas(){
+        System.out.println("Valide Capas");
+        if(this.datosPrograma.getArbolCapas().isEmpty()){
+            this.btnCargarCapas.setEnabled(true);
+        }else{
+            this.btnCargarCapas.setEnabled(false);
+            this.validarImagenes();
+        }
+    }
+    
+    private void validarImagenes(){
+        System.out.println("Valide imagenes");
+        if(this.datosPrograma.getImagenes().isEmpty()){
+            this.btnCargarImg.setEnabled(true);
+        }else{
+            this.btnCargarImg.setEnabled(false);
+            this.validarUsuarios();
+        }
+    }
+    private void validarUsuarios(){
+        System.out.println("Valide usuarios");
+        if(this.datosPrograma.getUsuarios().isEmpty()){
+            this.btnCargarUsers.setEnabled(true);
+        }else{
+            this.btnCargarUsers.setEnabled(false);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,9 +75,9 @@ public class CargaDatos extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,9 +93,13 @@ public class CargaDatos extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jScrollPane1.setViewportView(jTextPane1);
-
         jLabel6.setText("Panel de Errores:");
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setTabSize(3);
+        jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -72,7 +108,7 @@ public class CargaDatos extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -83,8 +119,8 @@ public class CargaDatos extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
 
@@ -101,6 +137,7 @@ public class CargaDatos extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnCargarCapas.setText("Cargar");
+        btnCargarCapas.setEnabled(false);
         btnCargarCapas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarCapasActionPerformed(evt);
@@ -108,6 +145,7 @@ public class CargaDatos extends javax.swing.JDialog {
         });
 
         btnCargarImg.setText("Cargar");
+        btnCargarImg.setEnabled(false);
         btnCargarImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarImgActionPerformed(evt);
@@ -115,6 +153,7 @@ public class CargaDatos extends javax.swing.JDialog {
         });
 
         btnCargarUsers.setText("Cargar");
+        btnCargarUsers.setEnabled(false);
         btnCargarUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarUsersActionPerformed(evt);
@@ -251,6 +290,18 @@ public class CargaDatos extends javax.swing.JDialog {
             capasLexer lex = new capasLexer(new BufferedReader(new FileReader(archivo)));
             parserCapas parser = new parserCapas(lex);
             parser.parse();
+            String tmp ="";
+            
+            if(parser.getErrores().isEmpty()){
+                this.datosPrograma.setArbolCapas(parser.getArbolCapas());
+                this.validarCapas();
+                this.jTextArea1.setText("");
+            }else{
+                while (!parser.getErrores().isEmpty()) {                    
+                    tmp = tmp + (String)parser.getErrores().pop()+"\n";
+                }
+                this.jTextArea1.setText(tmp);
+            }
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -295,7 +346,7 @@ public class CargaDatos extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

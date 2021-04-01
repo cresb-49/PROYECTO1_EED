@@ -711,25 +711,25 @@ public class imagenLexer implements java_cup.runtime.Scanner {
             // fall through
           case 8: break;
           case 3:
-            { System.out.println("Coma: "+yytext());
+            { //System.out.println("Coma: "+yytext());
             return new Symbol (COM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 9: break;
           case 4:
-            { System.out.println("Indentificador: "+yytext());
+            { //System.out.println("Indentificador: "+yytext());
             return new Symbol (NUM,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 10: break;
           case 5:
-            { System.out.println("Llave apertura: "+yytext());
+            { //System.out.println("Llave apertura: "+yytext());
             return new Symbol (L_A,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through
           case 11: break;
           case 6:
-            { System.out.println("Lave Cierre: "+yytext());
+            { //System.out.println("Lave Cierre: "+yytext());
             return new Symbol (L_C,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
             }
             // fall through

@@ -9,6 +9,7 @@ import com.carlos.proyecto1.Analizadores.Lexer.capasLexer;
 import com.carlos.proyecto1.ED.*;
 import com.carlos.proyecto1.Exepciones.*;
 import com.carlos.proyecto1.Tokens.token;
+import com.carlos.proyecto1.Objetos.*;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.XMLElement;
 
@@ -181,7 +182,9 @@ class CUP$parserCapas$actions {
             MatrizDispersa tmp = (MatrizDispersa)e2;
             String tag = ((token)e1).getLexeme();
             try {
-                arbolCapas.agregar(new NodoArbol(tag, tmp));
+                Capa nueva = new Capa(tag, tmp);
+                arbolCapas.agregar(new NodoArbol(tag,nueva));
+                
             } catch (CloneNodeException ex) {
                 System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
                 errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
@@ -242,14 +245,13 @@ class CUP$parserCapas$actions {
                     int y = Integer.parseInt(((token)e1).getLexeme());
                     
                     tmp.agregarNodo(x, y, ((token)e3).getLexeme());
-
-                    RESULT = e4;
                     
                 } catch (InvalidIndexException | CloneNodeException | InvalidStructureException ex) {
                     System.out.println(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn());
                     errores.push(String.valueOf(ex.getMessage()+" ,Linea: "+((token)e1).getLine()+" Columna: "+((token)e1).getColumn()));
                 }
             }
+            RESULT = e4;
             
         
               CUP$parserCapas$result = parser.getSymbolFactory().newSymbol("cont",2, ((java_cup.runtime.Symbol)CUP$parserCapas$stack.elementAt(CUP$parserCapas$top-6)), ((java_cup.runtime.Symbol)CUP$parserCapas$stack.peek()), RESULT);
