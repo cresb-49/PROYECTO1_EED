@@ -18,6 +18,22 @@ public class usuario {
         this.imagenes = imagenes;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public ListaDobleEnlazada getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(ListaDobleEnlazada imagenes) {
+        this.imagenes = imagenes;
+    }
+
     @Override
     public String toString() {
         return "usuario{" + "user=" + user + ", imagenes=" + imagenes + '}';

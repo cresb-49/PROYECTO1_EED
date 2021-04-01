@@ -32,7 +32,7 @@ public class Imagen {
 
     @Override
     public String toString() {
-        return "Imagen{" + "id=" + id + ", capas=" + capas + '}';
+        return "Imagen{" + "id=" + id + '}';
     }
     
 }

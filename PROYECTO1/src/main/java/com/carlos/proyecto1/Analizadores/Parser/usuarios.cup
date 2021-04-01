@@ -1,17 +1,21 @@
 package com.carlos.proyecto1.Analizadores.Parser;
 import com.carlos.proyecto1.Analizadores.Lexer.userLexer;
-import com.carlos.proyecto1.ED.Cola;
-import com.carlos.proyecto1.ED.Pila;
+import com.carlos.proyecto1.ED.*;
+import com.carlos.proyecto1.Tokens.token;
+import com.carlos.proyecto1.Objetos.*;
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
 
 class parserUsuario;
 
 parser code {:
         
-    private Cola errores = new Cola();    
-    private Pila usuarios = new Pila();
+    private Pila errores = new Pila();    
+    private AVL usuarios = new AVL();
+    private ListaDobleEnlazadaCircular listaCircularImagenes;
     
-    public parserUsuario(userLexer lex){
+    public parserUsuario(userLexer lex,ListaDobleEnlazadaCircular listaImagenes){
         super(lex);
+        this.listaCircularImagenes=listaImagenes;
     }
 
     public void report_error(String message, Object info){
@@ -30,11 +34,11 @@ parser code {:
         return 1;
     }
 
-    public Cola getErrores(){
+    public Pila getErrores(){
         return errores;
     }
 
-    public Pila getUsuarios(){
+    public AVL getUsuarios(){
         return usuarios;
     }
 
@@ -43,20 +47,93 @@ parser code {:
 terminal    USER,ID,D_DOT,COMA,DOT_COMA;
 non terminal s,sp,cont,cont2,contenido;
 
-s   ::= USER D_DOT contenido DOT_COMA sp
+s   ::= USER:e1 D_DOT contenido:e2 DOT_COMA sp
+    {:
+        if(e2!=null){
+            Pila pilaTmp = (Pila)e2;
+            token tok = (token)e1;
+            if(pilaTmp.isEmpty()){
+                System.out.println("Pila vacia");
+                usuario nuevo = new usuario(tok.getLexeme(), new);
+                try {
+                    usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
+                } catch (CloneNodeException e) {
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
+            }else{
+                System.out.println("Pila con datos");
+                ListaDobleEnlazada imagenes = new ListaDobleEnlazada();
+                Imagen tmp = null;
+                while (!pilaTmp.isEmpty()) {                    
+                    tmp = (Imagen)pilaTmp.pop();
+                    try{
+                        imagenes.agregar(new Nodo(tmp.getId(),tmp));
+                    }catch(CloneNodeException ex){
+                        System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }
+                    
+                }
+                usuario nuevo = new usuario(tok.getLexeme(), imagenes);
+                try {
+                    usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
+                } catch (CloneNodeException e) {
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
+            }
+        }
+    :}
+    |   error
     ;
 
 sp  ::= s
     |
     ;
 
-contenido ::=   cont
+contenido ::=   cont:e1
+            {:
+                RESULT =e1;
+            :}
             |   
+            {:
+                RESULT = new Pila();
+            :}
             ;
 
-cont    ::= ID cont2
+cont    ::= ID:e1 cont2:e2
+        {:
+            if(e2!=null){
+                Pila tmpPila = (Pila)e2;
+                token tok = (token)e1;
+                Nodo nodoTmp = listaCircularImagenes.buscar(tok.getLexeme());
+                if(nodoTmp!=null){
+                    Imagen imagenTmp = (Imagen)nodoTmp.getContenido();
+                    if (tmpPila.buscar(imagenTmp.getId())==null) {
+                        tmpPila.push(imagenTmp, imagenTmp.getId());
+                        System.out.println("Agrege la imagen a la pila");
+                    }else{
+                        System.out.println("Ya habia asignado la imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push("Ya habia asignado la imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }
+                }else{
+                    System.out.println("No existe una imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push("No existe una imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }   
+            }
+            RESULT = e2;
+        :}
+        |   error
         ;
 
-cont2   ::= COMA cont
+cont2   ::= COMA cont:e1
+        {:
+            RESULT = e1;
+        :}
         |
+        {:
+            RESULT = new Pila();
+        :}
+        |   error
         ;

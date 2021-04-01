@@ -6,8 +6,10 @@
 package com.carlos.proyecto1.Analizadores.Parser;
 
 import com.carlos.proyecto1.Analizadores.Lexer.userLexer;
-import com.carlos.proyecto1.ED.Cola;
-import com.carlos.proyecto1.ED.Pila;
+import com.carlos.proyecto1.ED.*;
+import com.carlos.proyecto1.Tokens.token;
+import com.carlos.proyecto1.Objetos.*;
+import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -33,9 +35,10 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\011\000\002\002\007\000\002\002\004\000\002\003" +
-    "\003\000\002\003\002\000\002\006\003\000\002\006\002" +
-    "\000\002\004\004\000\002\005\004\000\002\005\002" });
+    "\000\014\000\002\002\007\000\002\002\004\000\002\002" +
+    "\003\000\002\003\003\000\002\003\002\000\002\006\003" +
+    "\000\002\006\002\000\002\004\004\000\002\004\003\000" +
+    "\002\005\004\000\002\005\002\000\002\005\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -43,14 +46,16 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\016\000\004\004\005\001\002\000\004\002\020\001" +
-    "\002\000\004\006\006\001\002\000\006\005\007\010\ufffc" +
-    "\001\002\000\006\007\015\010\ufff9\001\002\000\004\010" +
-    "\ufffd\001\002\000\004\010\012\001\002\000\006\002\ufffe" +
-    "\004\005\001\002\000\004\002\uffff\001\002\000\004\002" +
-    "\001\001\002\000\004\005\007\001\002\000\004\010\ufffb" +
-    "\001\002\000\004\010\ufffa\001\002\000\004\002\000\001" +
-    "\002" });
+    "\000\021\000\006\003\004\004\006\001\002\000\004\002" +
+    "\uffff\001\002\000\004\002\023\001\002\000\004\006\007" +
+    "\001\002\000\010\003\012\005\010\010\ufffb\001\002\000" +
+    "\010\003\021\007\017\010\ufff7\001\002\000\004\010\ufffc" +
+    "\001\002\000\004\010\ufff9\001\002\000\004\010\014\001" +
+    "\002\000\010\002\ufffd\003\004\004\006\001\002\000\004" +
+    "\002\ufffe\001\002\000\004\002\001\001\002\000\006\003" +
+    "\012\005\010\001\002\000\004\010\ufffa\001\002\000\004" +
+    "\010\ufff6\001\002\000\004\010\ufff8\001\002\000\004\002" +
+    "\000\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -58,12 +63,13 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\016\000\004\002\003\001\001\000\002\001\001\000" +
-    "\002\001\001\000\006\004\007\006\010\001\001\000\004" +
-    "\005\015\001\001\000\002\001\001\000\002\001\001\000" +
-    "\006\002\012\003\013\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\004\016\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001" });
+    "\000\021\000\004\002\004\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\006\004\010\006\012" +
+    "\001\001\000\004\005\017\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\006\002\014\003\015" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\004" +
+    "\021\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -103,11 +109,13 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
 
 
         
-    private Cola errores = new Cola();    
-    private Pila usuarios = new Pila();
+    private Pila errores = new Pila();    
+    private AVL usuarios = new AVL();
+    private ListaDobleEnlazadaCircular listaCircularImagenes;
     
-    public parserUsuario(userLexer lex){
+    public parserUsuario(userLexer lex,ListaDobleEnlazadaCircular listaImagenes){
         super(lex);
+        this.listaCircularImagenes=listaImagenes;
     }
 
     public void report_error(String message, Object info){
@@ -126,11 +134,11 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
         return 1;
     }
 
-    public Cola getErrores(){
+    public Pila getErrores(){
         return errores;
     }
 
-    public Pila getUsuarios(){
+    public AVL getUsuarios(){
         return usuarios;
     }
 
@@ -164,7 +172,48 @@ class CUP$parserUsuario$actions {
           case 0: // s ::= USER D_DOT contenido DOT_COMA sp 
             {
               Object RESULT =null;
-
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-4)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-4)).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-4)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-2)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-2)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-2)).value;
+		
+        if(e2!=null){
+            Pila pilaTmp = (Pila)e2;
+            token tok = (token)e1;
+            if(pilaTmp.isEmpty()){
+                System.out.println("Pila vacia");
+                usuario nuevo = new usuario(tok.getLexeme(), new ListaDobleEnlazada());
+                try {
+                    usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
+                } catch (CloneNodeException ex) {
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
+            }else{
+                System.out.println("Pila con datos");
+                ListaDobleEnlazada imagenes = new ListaDobleEnlazada();
+                Imagen tmp = null;
+                while (!pilaTmp.isEmpty()) {                    
+                    tmp = (Imagen)pilaTmp.pop();
+                    try{
+                        imagenes.agregar(new Nodo(tmp.getId(),tmp));
+                    }catch(CloneNodeException ex){
+                        System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }
+                }
+                usuario nuevo = new usuario(tok.getLexeme(), imagenes);
+                try {
+                    usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
+                } catch (CloneNodeException ex) {
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
+            }
+        }
+    
               CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-4)), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
@@ -184,7 +233,16 @@ class CUP$parserUsuario$actions {
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // sp ::= s 
+          case 2: // s ::= error 
+            {
+              Object RESULT =null;
+
+              CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
+            }
+          return CUP$parserUsuario$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // sp ::= s 
             {
               Object RESULT =null;
 
@@ -193,7 +251,7 @@ class CUP$parserUsuario$actions {
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // sp ::= 
+          case 4: // sp ::= 
             {
               Object RESULT =null;
 
@@ -202,47 +260,105 @@ class CUP$parserUsuario$actions {
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // contenido ::= cont 
+          case 5: // contenido ::= cont 
             {
               Object RESULT =null;
-
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.peek()).value;
+		
+                RESULT =e1;
+            
               CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("contenido",4, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // contenido ::= 
+          case 6: // contenido ::= 
             {
               Object RESULT =null;
-
+		
+                RESULT = new Pila();
+            
               CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("contenido",4, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // cont ::= ID cont2 
+          case 7: // cont ::= ID cont2 
             {
               Object RESULT =null;
-
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-1)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-1)).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-1)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.peek()).value;
+		
+            if(e2!=null){
+                Pila tmpPila = (Pila)e2;
+                token tok = (token)e1;
+                Nodo nodoTmp = listaCircularImagenes.buscar(tok.getLexeme());
+                if(nodoTmp!=null){
+                    Imagen imagenTmp = (Imagen)nodoTmp.getContenido();
+                    if (tmpPila.buscar(imagenTmp.getId())==null) {
+                        tmpPila.push(imagenTmp, imagenTmp.getId());
+                        System.out.println("Agrege la imagen a la pila");
+                    }else{
+                        System.out.println("Ya habia asignado la imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push("Ya habia asignado la imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }
+                }else{
+                    System.out.println("No existe una imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push("No existe una imagen \""+tok.getLexeme()+"\",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }   
+            }
+            RESULT = e2;
+        
               CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont",2, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-1)), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // cont2 ::= COMA cont 
+          case 8: // cont ::= error 
             {
               Object RESULT =null;
 
+              CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont",2, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
+            }
+          return CUP$parserUsuario$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // cont2 ::= COMA cont 
+            {
+              Object RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parserUsuario$stack.peek()).value;
+		
+            RESULT = e1;
+        
               CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.elementAt(CUP$parserUsuario$top-1)), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // cont2 ::= 
+          case 10: // cont2 ::= 
+            {
+              Object RESULT =null;
+		
+            RESULT = new Pila();
+        
+              CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
+            }
+          return CUP$parserUsuario$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // cont2 ::= error 
             {
               Object RESULT =null;
 
-              CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
+              CUP$parserUsuario$result = parser.getSymbolFactory().newSymbol("cont2",3, ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserUsuario$stack.peek()), RESULT);
             }
           return CUP$parserUsuario$result;
 

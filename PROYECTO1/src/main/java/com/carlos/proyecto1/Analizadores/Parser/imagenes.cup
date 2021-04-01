@@ -52,7 +52,6 @@ s   ::= NUM:e1 L_A conte:e2 L_C sp
             Pila datos = (Pila)e2;
             token tok = (token)e1;
             if(!datos.isEmpty()){
-                System.out.println("La pila tiene datos");
                 ListaDobleEnlazada capas = new ListaDobleEnlazada();
                 Capa tmp = null;
                 while (!datos.isEmpty()) {                    
@@ -66,7 +65,6 @@ s   ::= NUM:e1 L_A conte:e2 L_C sp
                     
                 }       
                 Imagen img =new Imagen(tok.getLexeme(), capas);
-                System.out.println("Genere la lista de capas");
                 try{
                     listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
                 }catch(CloneNodeException ex){
@@ -75,7 +73,6 @@ s   ::= NUM:e1 L_A conte:e2 L_C sp
                 }
                     
             }else{
-                System.out.println("La pila no tiene datos");
                 Imagen img =new Imagen(tok.getLexeme(), new ListaDobleEnlazada());
                 try{
                     listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
@@ -83,7 +80,6 @@ s   ::= NUM:e1 L_A conte:e2 L_C sp
                     System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
-                System.out.println("Genere la lista de capas");    
             }
         }
     :}

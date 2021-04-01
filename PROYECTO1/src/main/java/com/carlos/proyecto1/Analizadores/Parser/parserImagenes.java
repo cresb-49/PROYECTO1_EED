@@ -182,7 +182,6 @@ class CUP$parserImagenes$actions {
             Pila datos = (Pila)e2;
             token tok = (token)e1;
             if(!datos.isEmpty()){
-                System.out.println("La pila tiene datos");
                 ListaDobleEnlazada capas = new ListaDobleEnlazada();
                 Capa tmp = null;
                 while (!datos.isEmpty()) {                    
@@ -196,7 +195,6 @@ class CUP$parserImagenes$actions {
                     
                 }       
                 Imagen img =new Imagen(tok.getLexeme(), capas);
-                System.out.println("Genere la lista de capas");
                 try{
                     listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
                 }catch(CloneNodeException ex){
@@ -205,7 +203,6 @@ class CUP$parserImagenes$actions {
                 }
                     
             }else{
-                System.out.println("La pila no tiene datos");
                 Imagen img =new Imagen(tok.getLexeme(), new ListaDobleEnlazada());
                 try{
                     listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
@@ -213,7 +210,6 @@ class CUP$parserImagenes$actions {
                     System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
-                System.out.println("Genere la lista de capas");    
             }
         }
     

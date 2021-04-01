@@ -316,6 +316,19 @@ public class CargaDatos extends javax.swing.JDialog {
             imagenLexer lex = new imagenLexer(new BufferedReader(new FileReader(archivo)));
             parserImagenes parser = new parserImagenes(lex,this.datosPrograma.getArbolCapas());
             parser.parse();
+            String tmp ="";
+            
+            if(parser.getErrores().isEmpty()){
+                this.datosPrograma.setImagenes(parser.getImagenes());
+                this.validarImagenes();
+                this.jTextArea1.setText("");
+            }else{
+                while (!parser.getErrores().isEmpty()) {                    
+                    tmp = tmp + (String)parser.getErrores().pop()+"\n";
+                }
+                this.jTextArea1.setText(tmp);
+            }
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -327,8 +340,21 @@ public class CargaDatos extends javax.swing.JDialog {
         System.out.println("You chose to open this file: " + archivo.getName());
         try {
             userLexer lex = new userLexer(new BufferedReader(new FileReader(archivo)));
-            parserUsuario parser = new parserUsuario(lex);
+            parserUsuario parser = new parserUsuario(lex,this.datosPrograma.getImagenes());
             parser.parse();
+            
+            String tmp = "";
+            if(parser.getErrores().isEmpty()){
+                this.datosPrograma.setUsuarios(parser.getUsuarios());
+                this.validarUsuarios();
+                this.jTextArea1.setText("");
+            }else{
+                while (!parser.getErrores().isEmpty()) {                    
+                    tmp = tmp + (String)parser.getErrores().pop()+"\n";
+                }
+                this.jTextArea1.setText(tmp);
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
