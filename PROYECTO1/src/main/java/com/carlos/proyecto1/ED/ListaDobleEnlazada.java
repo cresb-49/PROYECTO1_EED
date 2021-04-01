@@ -14,16 +14,18 @@ public class ListaDobleEnlazada {
         this.raiz = raiz;
     }
 
-    public void agregar(Nodo nuevo) throws CloneNodeException{
+    public void agregar(Nodo nuevo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nuevo;
         } else {
             if (this.buscar(nuevo.getTag()) == null) {
                 Nodo tmp = this.raiz;
+                
                 while (tmp != null) {
                     if (tmp.getSiguiente() == null) {
                         tmp.setSiguiente(nuevo);
                         nuevo.setAnterior(tmp);
+                        break;
                     }
                     tmp = tmp.getSiguiente();
                 }
@@ -34,19 +36,21 @@ public class ListaDobleEnlazada {
     }
 
     public Nodo buscar(String tag) {
-        Nodo tmp = this.raiz;
-        if (tmp != null) {
-            while (tmp != null) {
-                if (tmp.getTag().equals(tag)) {
-                    return tmp;
+        if (this.raiz != null) {
+            Nodo tmp = this.raiz;
+            if (tmp != null) {
+                while (tmp != null) {
+                    if (tmp.getTag().equals(tag)) {
+                        return tmp;
+                    }
+                    tmp = tmp.getSiguiente();
                 }
-                tmp = tmp.getSiguiente();
             }
         }
         return null;
     }
 
-    public void eliminar(String tag) throws NotFoundNodeException{
+    public void eliminar(String tag) throws NotFoundNodeException {
 
         if (this.buscar(tag) != null) {
             Nodo tmp = this.raiz;

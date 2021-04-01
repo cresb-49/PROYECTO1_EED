@@ -187,17 +187,32 @@ class CUP$parserImagenes$actions {
                 Capa tmp = null;
                 while (!datos.isEmpty()) {                    
                     tmp = (Capa)datos.pop();
-                    System.out.println(tmp.toString());
-                    //capas.agregar(new Nodo(tmp.getId(),tmp));
+                    try{
+                        capas.agregar(new Nodo(tmp.getId(),tmp));
+                    }catch(CloneNodeException ex){
+                        System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }
+                    
                 }       
                 Imagen img =new Imagen(tok.getLexeme(), capas);
                 System.out.println("Genere la lista de capas");
+                try{
+                    listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
+                }catch(CloneNodeException ex){
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
                     
             }else{
                 System.out.println("La pila no tiene datos");
-
-
                 Imagen img =new Imagen(tok.getLexeme(), new ListaDobleEnlazada());
+                try{
+                    listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
+                }catch(CloneNodeException ex){
+                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                }
                 System.out.println("Genere la lista de capas");    
             }
         }
@@ -286,16 +301,13 @@ class CUP$parserImagenes$actions {
             if(e2!=null){
                 token tok = ((token)e1);
                 Pila datos = (Pila)e2;
-                System.out.println("Capa solicitada: "+tok.getLexeme());
                 Capa capa = (Capa)arbolCapas.buscarNodo(tok.getLexeme()).getContenido();
                 if(capa==null){
                     System.out.println("No existe la capa \""+tok.getLexeme()+"\" ,Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     errores.push("No existe la capa \""+tok.getLexeme()+"\" ,Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }else{
-                    System.out.println(capa.toString());
                     if(datos.buscar(tok.getLexeme())==null){
                         datos.push(capa,capa.getId());
-                        System.out.println("Ingrese la capa en la pila");
                     }else{
                         System.out.println("Ya habia asignado la capa \""+tok.getLexeme()+"\" ,Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                         errores.push("Ya habia asignado la capa \""+tok.getLexeme()+"\" ,Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
