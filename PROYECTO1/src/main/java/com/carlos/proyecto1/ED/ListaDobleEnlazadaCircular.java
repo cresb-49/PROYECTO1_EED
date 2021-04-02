@@ -2,6 +2,9 @@ package com.carlos.proyecto1.ED;
 
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import com.carlos.proyecto1.Exepciones.NotFoundNodeException;
+import com.carlos.proyecto1.Objetos.Capa;
+import com.carlos.proyecto1.Objetos.Imagen;
+import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 
 public class ListaDobleEnlazadaCircular {
 
@@ -132,4 +135,72 @@ public class ListaDobleEnlazadaCircular {
             throw new NotFoundNodeException("No existe un elemento con el tag: " + tag);
         }
     }
+    
+    public parametrosGraphviz obtenerGrafico() {
+        parametrosGraphviz params = new parametrosGraphviz();
+        params.agregarModelo("node[shape = box,height=.1];");
+        if (this.raiz != null) {
+            this.GenerarDot(params, this.raiz);
+        }
+        return params;
+    }
+    
+    private void GenerarDot(parametrosGraphviz parametros,Nodo nodo){
+        String name ="";
+        String tagNode = "";
+        do {
+            
+            if(nodo.getContenido() instanceof Imagen){
+                name = "Imagen";
+                name = name + ((Imagen)nodo.getContenido()).getId();
+                tagNode = "IMG";
+            }
+            parametros.agregarDeclaracion("nodeLC"+tagNode+ nodo.getTag() + "[label = \"" + name + "\",group=1];");
+            parametros.agregarConfRank("nodeLC"+tagNode+ nodo.getTag()+";");
+            parametros.agregarRelacion("\"nodeLC"+tagNode+ nodo.getTag()+"\" -> \"nodeLC"+tagNode+ nodo.getSiguiente().getTag()+"\";");
+            parametros.agregarRelacion("\"nodeLC"+tagNode+ nodo.getTag()+"\" -> \"nodeLC"+tagNode+ nodo.getAnterior().getTag()+"\";");
+            
+            
+            nodo = nodo.getSiguiente();
+        } while (nodo!=this.raiz);
+        parametros.agregarRankReiniciar();
+        
+    }
+    
+    
+    
+    public String obtenerGraficoCapas() {
+        parametrosGraphviz params = new parametrosGraphviz();
+        if (this.raiz != null) {
+            return this.GenerarDotCapas(this.raiz);
+        }
+        return "";
+    }
+    
+    private String GenerarDotCapas(Nodo nodo){
+        String tmpCode = "";
+        parametrosGraphviz paramsTmp;
+                
+        do {
+            
+            if(nodo.getContenido() instanceof Imagen){
+                ListaDobleEnlazada tmpCapa = ((Imagen)nodo.getContenido()).getCapas();
+                
+                if(!tmpCapa.isEmpty()){
+                    paramsTmp = tmpCapa.obtenerGrafico(nodo.getTag());
+                    Nodo tmpNodo = tmpCapa.getRaiz();
+                    paramsTmp.agregarRelacion("\"nodeLC"+"IMG"+ nodo.getTag()+"\" -> \"nodeLED"+nodo.getTag()+"CP"+ tmpNodo.getTag()+"\";");
+                    paramsTmp.agregarRankReiniciar();
+                    tmpCode  = tmpCode + "subgraph {\n"+ paramsTmp.getModeloNodo()+paramsTmp.getDeclaraciones()+paramsTmp.getRelaciones()+"}\n";
+                }
+            }
+            
+            nodo = nodo.getSiguiente();
+        } while (nodo!=this.raiz);
+        
+        return tmpCode;
+    }
+    
+    
+    
 }

@@ -1,0 +1,39 @@
+digraph ImagenesLC {
+subgraph {
+    
+    node[shape = box,height=.1];
+    
+    nodeLCIMG1[label = "1",group=1];
+    nodeLCIMG100[label = "100", group=1];
+    nodeLCIMG2[label = "2", group=1];
+    nodeLCIMG3[label = "3", group=1];
+    nodeLCIMG50[label = "50", group=1];
+    "nodeLCIMG1" -> "nodeLCIMG100";
+    "nodeLCIMG1" -> "nodeLCIMG50";
+    "nodeLCIMG100" -> "nodeLCIMG2";
+    "nodeLCIMG100" -> "nodeLCIMG1";
+    "nodeLCIMG2" -> "nodeLCIMG3";
+    "nodeLCIMG2" -> "nodeLCIMG100";
+    "nodeLCIMG3" -> "nodeLCIMG50";
+    "nodeLCIMG3" -> "nodeLCIMG2";
+    "nodeLCIMG50" -> "nodeLCIMG1";
+    "nodeLCIMG50" -> "nodeLCIMG3";
+
+    { rank = same; 
+    nodeLCIMG1; 
+    nodeLCIMG100; 
+    nodeLCIMG2; 
+    nodeLCIMG3; nodeLCIMG50;}
+}
+
+"nodeLCIMG1" -> b0;
+"nodeLCIMG100" -> c0;
+    subgraph {
+        b0 -> b1 -> b2 -> b3;
+        label = "Capas Imagen 1";
+    }
+    subgraph {
+        c0 -> c1 -> c2 -> c3;
+        label = "Capas Imagen 1";
+    }
+}

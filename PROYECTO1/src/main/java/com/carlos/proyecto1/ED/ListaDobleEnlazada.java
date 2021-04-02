@@ -2,6 +2,8 @@ package com.carlos.proyecto1.ED;
 
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import com.carlos.proyecto1.Exepciones.NotFoundNodeException;
+import com.carlos.proyecto1.Objetos.Capa;
+import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 
 public class ListaDobleEnlazada {
 
@@ -14,13 +16,17 @@ public class ListaDobleEnlazada {
         this.raiz = raiz;
     }
 
+    public Nodo getRaiz() {
+        return raiz;
+    }
+
     public void agregar(Nodo nuevo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nuevo;
         } else {
             if (this.buscar(nuevo.getTag()) == null) {
                 Nodo tmp = this.raiz;
-                
+
                 while (tmp != null) {
                     if (tmp.getSiguiente() == null) {
                         tmp.setSiguiente(nuevo);
@@ -86,6 +92,46 @@ public class ListaDobleEnlazada {
             tmp = tmp.getSiguiente();
         }
         System.out.println("--------------------------");
+    }
+
+    public boolean isEmpty() {
+        if (this.raiz == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public parametrosGraphviz obtenerGrafico(String fatherImage) {
+        parametrosGraphviz params = new parametrosGraphviz();
+        params.agregarModelo("node[shape = ellipse,height=.1];");
+        if (this.raiz != null) {
+            this.GenerarDot(params, this.raiz,fatherImage);
+        }
+        return params;
+    }
+
+    private void GenerarDot(parametrosGraphviz parametros, Nodo nodo,String fatherImage) {
+        String name = "";
+        String tagNode = "";
+        do {
+
+            if (nodo.getContenido() instanceof Capa) {
+                name = "Capa";
+                name = name + ((Capa) nodo.getContenido()).getId();
+                tagNode = "CP";
+            }
+            parametros.agregarDeclaracion("nodeLED" +fatherImage+ tagNode + nodo.getTag() + "[label = \"" + name + "\"];");
+            if (nodo.getSiguiente() != null) {
+                parametros.agregarRelacion("\"nodeLED"+fatherImage + tagNode + nodo.getTag() + "\" -> \"nodeLED"+fatherImage + tagNode + nodo.getSiguiente().getTag() + "\";");
+            }
+            if (nodo.getAnterior() != null) {
+                parametros.agregarRelacion("\"nodeLED"+fatherImage + tagNode + nodo.getTag() + "\" -> \"nodeLED"+fatherImage + tagNode + nodo.getAnterior().getTag() + "\";");
+            }
+
+            nodo = nodo.getSiguiente();
+        } while (nodo != null);
+        parametros.agregarRankReiniciar();
     }
 
     @Override

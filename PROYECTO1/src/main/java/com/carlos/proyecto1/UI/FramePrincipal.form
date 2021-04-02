@@ -29,7 +29,7 @@
             <Property name="text" type="java.lang.String" value="Modificacion de Usuario"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
+        <Menu class="javax.swing.JMenu" name="listaImagenes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Grafico de Estado de Memoria"/>
           </Properties>
@@ -58,6 +58,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verArbolUsuariosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="verListaImagenes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver Lista Imagenes"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verListaImagenesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

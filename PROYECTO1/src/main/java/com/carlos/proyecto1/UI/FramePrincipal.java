@@ -9,6 +9,7 @@ import com.carlos.proyecto1.Exepciones.NullDataException;
 import com.carlos.proyecto1.Graficacion.ObtenerGraficoAVL;
 import com.carlos.proyecto1.Graficacion.ejecutarGraphviz;
 import com.carlos.proyecto1.Graficacion.generarDotFile;
+import com.carlos.proyecto1.Graficacion.obtenerGraficoImagenes;
 import com.carlos.proyecto1.Objetos.DatosPrograma;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,11 +50,12 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        listaImagenes = new javax.swing.JMenu();
         verArbolCapas = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         verArbolUsuarios = new javax.swing.JMenuItem();
+        verListaImagenes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,7 +88,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.setText("Modificacion de Usuario");
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Grafico de Estado de Memoria");
+        listaImagenes.setText("Grafico de Estado de Memoria");
 
         verArbolCapas.setText("Arbol de Capas");
         verArbolCapas.addActionListener(new java.awt.event.ActionListener() {
@@ -94,13 +96,13 @@ public class FramePrincipal extends javax.swing.JFrame {
                 verArbolCapasActionPerformed(evt);
             }
         });
-        jMenu4.add(verArbolCapas);
+        listaImagenes.add(verArbolCapas);
 
         jMenuItem2.setText("Ver una Capa");
-        jMenu4.add(jMenuItem2);
+        listaImagenes.add(jMenuItem2);
 
         jMenuItem3.setText("Imagen y Arbol de Capas");
-        jMenu4.add(jMenuItem3);
+        listaImagenes.add(jMenuItem3);
 
         verArbolUsuarios.setText("Arbol de Usuarios");
         verArbolUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -108,9 +110,17 @@ public class FramePrincipal extends javax.swing.JFrame {
                 verArbolUsuariosActionPerformed(evt);
             }
         });
-        jMenu4.add(verArbolUsuarios);
+        listaImagenes.add(verArbolUsuarios);
 
-        jMenuBar1.add(jMenu4);
+        verListaImagenes.setText("Ver Lista Imagenes");
+        verListaImagenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verListaImagenesActionPerformed(evt);
+            }
+        });
+        listaImagenes.add(verListaImagenes);
+
+        jMenuBar1.add(listaImagenes);
 
         setJMenuBar(jMenuBar1);
 
@@ -193,17 +203,44 @@ public class FramePrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_verArbolUsuariosActionPerformed
 
+    private void verListaImagenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verListaImagenesActionPerformed
+        // TODO add your handling code here:
+        obtenerGraficoImagenes graficoIMG = new obtenerGraficoImagenes();
+        String grap = graficoIMG.GraficoImagenes(datosProgrma.getImagenes());
+        String code = "digraph ImagenesLC {\n";
+        code = code + grap;
+        code = code + "}";
+
+        if (grap == null) {
+            code = null;
+        }
+        
+        try {
+            generarDotFile gen = new generarDotFile();
+            gen.generarArchivo(code, "ImagenesLC");
+
+            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Capas",ejec.ejecutar("ImagenesLC.dot", "ImagenesLC.png"));
+            Escritorio.add(mostrar);
+            mostrar.show();
+
+        } catch (NullDataException | IOException e) {
+            JOptionPane.showMessageDialog(this, "No se puede escribir el archivo .dot para graphviz\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_verListaImagenesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCargarArchivos;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenu listaImagenes;
     private javax.swing.JMenuItem verArbolCapas;
     private javax.swing.JMenuItem verArbolUsuarios;
+    private javax.swing.JMenuItem verListaImagenes;
     // End of variables declaration//GEN-END:variables
 }

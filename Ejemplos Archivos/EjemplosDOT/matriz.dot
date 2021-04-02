@@ -1,0 +1,115 @@
+digraph Sparce_Matrix {
+
+    node [shape=box]
+    
+    /* add group 1 for vertical alignment */
+    C00[ label = "0,0", width = 1.5, group = 1 ];
+    
+    /* empty nodes, needed to override graphiz' default node placement */
+    e0[ shape = point, width = 0 ];
+    e1[ shape = point, width = 0 ];
+
+
+    //(^< ............ ............ ............ ............ ............ U S U A R I O S
+    /* groups added for vertical alignment */ 
+    C01 [label = "0,1" width = 1.5, group = 1 ];
+    C02 [label = "0,2" width = 1.5, group = 1 ];
+    C03 [label = "0,3" width = 1.5, group = 1 ];
+    C04 [label = "0,4" width = 1.5, group = 1 ];
+    C05 [label = "0,5" width = 1.5, group = 1 ];
+
+    //(^< ............ Links
+    C01 -> C02;
+    C02 -> C01;
+    C02 -> C03;
+    C03 -> C02;
+    C03 -> C04;
+    C04 -> C03;
+    C04 -> C05;
+    C05 -> C04;
+
+    //(^< ............ ............ ............ ............ ............ A R C H I V O S
+    /* groups 2 to 6 added for vertical alignment */
+    C10 [label = "1,0" width = 1.5, group = 2 ];
+    C20 [label = "1,2" width = 1.5, group = 3 ];
+    C30 [label = "1,3" width = 1.5, group = 4 ];
+    C40 [label = "1,4" width = 1.5, group = 5 ];
+    C50 [label = "1,5" width = 1.5, group = 6 ];
+
+    //(^< ............ Links
+    C10 -> C20;
+    C20 -> C10;
+    C20 -> C30;
+    C30 -> C20;
+    C30 -> C40;
+    C40 -> C30;
+    C40 -> C50;
+    C50 -> C40;
+
+    C00 -> C01;
+    C00 -> C10;
+
+    { rank = same; C00; C10; C20; C30; C40; C50; }
+
+    //(^< ............ ............ ............ ............ ............ P E R M I S O S
+    //(^< ............ ............ L E V E L   0
+    /* groups 2 to 6 added for vertical alignment */
+    N0_L0 [label = "Jose-Estr" width = 1.5, group = 2 ];
+    N1_L0 [label = "Marc-Estr" width = 1.5, group = 4 ];
+    N2_L0 [label = "Juli-Estr" width = 1.5, group = 5 ];
+
+    //(^< ............ ............ L E V E L   2
+    N0_L2 [label = "Marc-Comp" width = 1.5, group = 4 ];
+    N1_L2 [label = "Juli-Comp" width = 1.5, group = 5 ];
+
+    //(^< ............ ............ L E V E L   4
+    N0_L4 [label = "Marc-Leng" width = 1.5, group = 4 ];
+    N1_L4 [label = "Juli-Leng" width = 1.5, group = 5 ];
+    N2_L4 [label = "Pame-Leng" width = 1.5, group = 6 ];
+
+
+    //(^< ............ ............ ............ ............ ............ L I N K I N G
+    //(^< ............ ............ L E V E L   0
+
+    C01 -> N0_L0;
+    C10 -> N0_L0;
+    N0_L0 -> N1_L0;
+    N1_L0 -> N0_L0;
+    C30 -> N1_L0;
+    N1_L0 -> N2_L0;
+    N2_L0 -> N1_L0;
+    C40 -> N2_L0;
+
+    { rank = same; C01; N0_L0;N1_L0;N2_L0; }
+    //(^< ............ ............ L E V E L   2
+
+    C03 -> N0_L2;
+    N0_L2 ->N1_L0;
+    N1_L0 ->N0_L2;
+    N0_L2 -> N1_L2;
+    N1_L2 -> N0_L2;
+    N1_L2 ->N2_L0;
+    N2_L0 ->N1_L2;
+
+    { rank = same; C03; N0_L2;N1_L2; }
+    //(^< ............ ............ L E V E L   4
+
+    C05 -> N0_L4;
+    N0_L4 -> N0_L2;
+    N0_L2 -> N0_L4;
+    N0_L4 -> N1_L4;
+    N1_L4 -> N0_L4;
+    N1_L4 -> N1_L2;
+    N1_L2 -> N1_L4;
+    N1_L4 -> N2_L4;
+    N2_L4 -> N1_L4;
+
+    { rank = same; C05; N0_L4;N1_L4;N2_L4; }
+    
+    /* we divide the edge from C50 to N2_L4 into 'sub-edges',
+       thus indirectly making sure that the U nodes stay in their place */
+    { rank = same; C03; e0 }
+    { rank = same; C04; e1 }
+    C50 -> e0 -> e1[ dir = none ];
+    e1 -> N2_L4;
+}
