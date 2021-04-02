@@ -196,7 +196,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             generarDotFile gen = new generarDotFile();
             gen.generarArchivo(code, "userAVL");
 
-            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Capas",ejec.ejecutar("userAVL.dot", "userAVL.png"));
+            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Usuarios",ejec.ejecutar("userAVL.dot", "userAVL.png"));
             Escritorio.add(mostrar);
             mostrar.show();
 
@@ -223,8 +223,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         try {
             generarDotFile gen = new generarDotFile();
             gen.generarArchivo(code, "ImagenesLC");
-
-            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Capas",ejec.ejecutar("ImagenesLC.dot", "ImagenesLC.png"));
+            MostrarImagenes mostrar = new MostrarImagenes("Lista Imagenes",ejec.ejecutar("ImagenesLC.dot", "ImagenesLC.png"));
             Escritorio.add(mostrar);
             mostrar.show();
 
@@ -236,13 +235,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void imagenArbolCapasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenArbolCapasActionPerformed
         // TODO add your handling code here:
-        
-        
-        GraficarImagenYArbolCapas gr = new GraficarImagenYArbolCapas();
-        
-        gr.obtenerDotFile("3", this.datosProgrma);
-        
-        
+        if(datosProgrma.getImagenes().isEmpty()){
+            JOptionPane.showMessageDialog(this, "No se puede escribir el archivo .dot para graphviz\n" + "No existen datos sobre imagenes");
+        }else{
+            verImagenArbolCapas img = new verImagenArbolCapas(this.datosProgrma);
+            Escritorio.add(img);
+            img.show();
+        }
     }//GEN-LAST:event_imagenArbolCapasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

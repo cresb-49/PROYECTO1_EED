@@ -73,6 +73,7 @@ public class MostrarImagenes extends javax.swing.JInternalFrame {
         jPanel1.setName(""); // NOI18N
 
         labelImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelImg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jScrollPane1.setViewportView(labelImg);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

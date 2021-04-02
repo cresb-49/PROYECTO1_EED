@@ -14,7 +14,6 @@ public class generarDotFile {
     }
     
     public void generarArchivo(String code, String nombre) throws IOException, NullDataException {
-        //File dotFile = new File();
         if (code == null) {
             throw new NullDataException("No existen datos para Graficar");
         } else {

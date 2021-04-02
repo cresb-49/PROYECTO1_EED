@@ -9,6 +9,7 @@ import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 public class ListaDobleEnlazadaCircular {
 
     private Nodo raiz;
+    private int legth=0;
 
     public ListaDobleEnlazadaCircular() {
     }
@@ -33,10 +34,12 @@ public class ListaDobleEnlazadaCircular {
                         if (nuevo.getTag().compareTo(tmp.getTag()) > 0) {
                             insertarAdelante(tmp, nuevo);
                             insertado = true;
+                            legth++;
                             break;
                         } else if (nuevo.getTag().compareTo(tmp.getTag()) < 0) {
                             insertarPrimero(nuevo);
                             insertado = true;
+                            legth++;
                             break;
                         }
                     }
@@ -45,6 +48,7 @@ public class ListaDobleEnlazadaCircular {
 
                 if (!insertado) {
                     insertarUltimo(nuevo);
+                    legth++;
                 }
             } else {
                 throw new CloneNodeException("Ya existe elemento con la etiqueta: " + nuevo.getTag());
@@ -121,12 +125,14 @@ public class ListaDobleEnlazadaCircular {
                         sig.setAnterior(ant);
                         this.raiz = sig;
                         eliminado = true;
+                        legth--;
                     } else {
                         Nodo ant = tmp.getAnterior();
                         Nodo sig = tmp.getSiguiente();
                         ant.setSiguiente(sig);
                         sig.setAnterior(ant);
                         eliminado = true;
+                        legth--;
                     }
                 }
                 tmp = tmp.getSiguiente();
@@ -164,9 +170,18 @@ public class ListaDobleEnlazadaCircular {
             nodo = nodo.getSiguiente();
         } while (nodo!=this.raiz);
         parametros.agregarRankReiniciar();
-        
     }
     
+    
+    public Object[] getArray(){
+        Object arry[] = new Object[this.legth+1];
+        Nodo tmp = this.raiz;
+        for (int i = 0; i < this.legth+1; i++) {
+            arry[i]=tmp.getContenido();
+            tmp = tmp.getSiguiente();
+        }
+        return arry;
+    }
     
     
     public String obtenerGraficoCapas() {

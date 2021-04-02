@@ -12,7 +12,7 @@ public class GraficarImagenYArbolCapas {
     public GraficarImagenYArbolCapas() {
     }
 
-    public void obtenerDotFile(String nameImage, DatosPrograma datos) {
+    public String obtenerDotFile(String nameImage, DatosPrograma datos) {
 
         Nodo tmp = datos.getImagenes().buscar(nameImage);
 
@@ -58,9 +58,9 @@ public class GraficarImagenYArbolCapas {
 
             code = code + "subgraph{\n" + parametros.getModeloNodo() + parametros.getDeclaraciones() + parametros.getRelaciones() + "}\n";
 
-            System.out.println(code);
+            return code;
 
         }
-
+        return null;
     }
 }

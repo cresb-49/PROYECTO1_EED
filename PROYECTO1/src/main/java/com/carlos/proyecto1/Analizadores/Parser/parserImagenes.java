@@ -196,7 +196,8 @@ class CUP$parserImagenes$actions {
                 }       
                 Imagen img =new Imagen(tok.getLexeme(), capas);
                 try{
-                    listaCircularImagenes.addOrden(new Nodo(img.getId(), img));
+                    listaCircularImagenes.addOrden(new Nodo(tok.getLexeme(), img));
+                    System.out.println("Agrege imagen: "+tok.getLexeme());
                 }catch(CloneNodeException ex){
                     System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());

@@ -5,7 +5,17 @@
  */
 package com.carlos.proyecto1.UI;
 
+import com.carlos.proyecto1.Exepciones.NullDataException;
+import com.carlos.proyecto1.Graficacion.GraficarImagenYArbolCapas;
+import com.carlos.proyecto1.Graficacion.ejecutarGraphviz;
+import com.carlos.proyecto1.Graficacion.generarDotFile;
 import com.carlos.proyecto1.Objetos.DatosPrograma;
+import com.carlos.proyecto1.Objetos.Imagen;
+import java.awt.Image;
+import com.sun.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,16 +23,28 @@ import com.carlos.proyecto1.Objetos.DatosPrograma;
  */
 public class verImagenArbolCapas extends javax.swing.JInternalFrame {
     
-    DatosPrograma dataP;
+    private DatosPrograma dataP;
+    private ejecutarGraphviz ejec;
+    private String pathImg;
     /**
      * Creates new form verImagenArbolCapas
      */
     public verImagenArbolCapas(DatosPrograma data) {
         initComponents();
         this.dataP = data;
+        this.ejec = new ejecutarGraphviz();
+        this.cargarCombo();
     }
     
     private void cargarCombo(){
+        Object options[] = dataP.getImagenes().getArray();
+        
+        this.comboImagenes.removeAllItems();
+        Imagen tmp = null;
+        for (Object option : options) {
+            tmp = (Imagen)option;
+            this.comboImagenes.addItem(tmp.getId());
+        }
         
     }
     
@@ -37,14 +59,17 @@ public class verImagenArbolCapas extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel2 = new javax.swing.JLabel();
+        labelImagen = new javax.swing.JLabel();
         comboImagenes = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnGraficar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jScrollPane1.setViewportView(jLabel2);
+        jScrollPane1.setViewportView(labelImagen);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,11 +88,14 @@ public class verImagenArbolCapas extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        comboImagenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel1.setText("Seleccione el id de imagen");
 
         btnGraficar.setText("Graficar");
+        btnGraficar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,13 +136,52 @@ public class verImagenArbolCapas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
+        // TODO add your handling code here:
+        
+        String id = this.comboImagenes.getItemAt(this.comboImagenes.getSelectedIndex());
+        
+        GraficarImagenYArbolCapas gr = new GraficarImagenYArbolCapas();
+        String code ="",grap="";
+        grap = gr.obtenerDotFile(id, this.dataP);
+        code = "digraph IMGSELECTED {\n"+grap+"}\n";
+        
+        
+        if (grap == null) {
+            code = null;
+        }
+        
+        try {
+            generarDotFile gen = new generarDotFile();
+            gen.generarArchivo(code, "IMGSELECTED"+id);
+            pathImg = ejec.ejecutar("IMGSELECTED"+id+".dot", "IMGSELECTED"+id+".png");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se puede procesar la imagen\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        this.mostrarImagen();
+        
+    }//GEN-LAST:event_btnGraficarActionPerformed
+    private void mostrarImagen(){
+        try {
+            System.out.println(this.pathImg);
+            ImageIcon image = new ImageIcon(this.pathImg);
+            Icon icono = new ImageIcon(image.getImage().getScaledInstance(labelImagen.getWidth(), labelImagen.getHeight(), Image.SCALE_AREA_AVERAGING));
+            this.labelImagen.setIcon(icono);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se puede procesar la imagen\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGraficar;
     private javax.swing.JComboBox<String> comboImagenes;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelImagen;
     // End of variables declaration//GEN-END:variables
 }
