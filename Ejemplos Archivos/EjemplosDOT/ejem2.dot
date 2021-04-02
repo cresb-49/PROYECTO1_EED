@@ -1,20 +1,20 @@
 digraph g {
-	node [shape = record,height=.1];
-	node0[label = "<f0> |<f1> G|<f2> "];
-	node1[label = "<f0> |<f1> E|<f2> "];
-	node2[label = "<f0> |<f1> B|<f2> "];
-	node3[label = "<f0> |<f1> F|<f2> "];
-	node4[label = "<f0> |<f1> R|<f2> "];
-	node5[label = "<f0> |<f1> H|<f2> "];
-	node6[label = "<f0> |<f1> Y|<f2> "];
-	node7[label = "<f0> |<f1> A|<f2> "];
-	node8[label = "<f0> |<f1> C|<f2> "];
-	"node0":f2 -> "node4":f1;
-	"node0":f0 -> "node1":f1;
-	"node1":f0 -> "node2":f1;
-	"node1":f2 -> "node3":f1;
-	"node2":f2 -> "node8":f1;
-	"node2":f0 -> "node7":f1;
-	"node4":f2 -> "node6":f1;
-	"node4":f0 -> "node5":f1;
+	node[shape = record,height=.1];
+	nodeAVL0[label = "<f0> |<f1> G|<f2> "];
+	nodeAVL1[label = "<f0> |<f1> E|<f2> "];
+	nodeAVL2[label = "<f0> |<f1> B|<f2> "];
+	nodeAVL3[label = "<f0> |<f1> F|<f2> "];
+	nodeAVL4[label = "<f0> |<f1> R|<f2> "];
+	nodeAVL5[label = "<f0> |<f1> H|<f2> "];
+	nodeAVL6[label = "<f0> |<f1> Y|<f2> "];
+	nodeAVL7[label = "<f0> |<f1> A|<f2> "];
+	nodeAVL8[label = "<f0> |<f1> C|<f2> "];
+	"nodeAVL0":f2 -> "nodeAVL4":f1;
+	"nodeAVL0":f0 -> "nodeAVL1":f1;
+	"nodeAVL1":f0 -> "nodeAVL2":f1;
+	"nodeAVL1":f2 -> "nodeAVL3":f1;
+	"nodeAVL2":f2 -> "nodeAVL8":f1;
+	"nodeAVL2":f0 -> "nodeAVL7":f1;
+	"nodeAVL4":f2 -> "nodeAVL6":f1;
+	"nodeAVL4":f0 -> "nodeAVL5":f1;
 }

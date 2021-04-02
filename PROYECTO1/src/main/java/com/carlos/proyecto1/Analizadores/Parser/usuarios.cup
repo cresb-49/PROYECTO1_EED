@@ -54,12 +54,12 @@ s   ::= USER:e1 D_DOT contenido:e2 DOT_COMA sp
             token tok = (token)e1;
             if(pilaTmp.isEmpty()){
                 System.out.println("Pila vacia");
-                usuario nuevo = new usuario(tok.getLexeme(), new);
+                usuario nuevo = new usuario(tok.getLexeme(), new ListaDobleEnlazada());
                 try {
                     usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
                 } catch (CloneNodeException e) {
-                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
             }else{
                 System.out.println("Pila con datos");
@@ -69,9 +69,9 @@ s   ::= USER:e1 D_DOT contenido:e2 DOT_COMA sp
                     tmp = (Imagen)pilaTmp.pop();
                     try{
                         imagenes.agregar(new Nodo(tmp.getId(),tmp));
-                    }catch(CloneNodeException ex){
-                        System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                        errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }catch(CloneNodeException e){
+                        System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     }
                     
                 }
@@ -79,8 +79,8 @@ s   ::= USER:e1 D_DOT contenido:e2 DOT_COMA sp
                 try {
                     usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
                 } catch (CloneNodeException e) {
-                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
             }
         }

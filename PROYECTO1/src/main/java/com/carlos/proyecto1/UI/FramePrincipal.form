@@ -34,10 +34,13 @@
             <Property name="text" type="java.lang.String" value="Grafico de Estado de Memoria"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="verArbolCapas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Arbol de Capas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verArbolCapasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
@@ -49,10 +52,13 @@
                 <Property name="text" type="java.lang.String" value="Imagen y Arbol de Capas"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="verArbolUsuarios">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Arbol de Usuarios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verArbolUsuariosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -105,12 +111,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="762" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="877" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="362" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="475" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

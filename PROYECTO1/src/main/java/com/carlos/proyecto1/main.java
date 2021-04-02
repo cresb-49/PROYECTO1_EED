@@ -11,6 +11,7 @@ import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import com.carlos.proyecto1.Exepciones.InvalidIndexException;
 import com.carlos.proyecto1.Exepciones.InvalidStructureException;
 import com.carlos.proyecto1.Graficacion.GraficarImagen;
+import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 import com.carlos.proyecto1.UI.FramePrincipal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,38 @@ public class main {
     public static void main(String[] args) {
         
        FramePrincipal principal = new FramePrincipal();
-        
+       /*
+        try {
+            AVL avl = new AVL();
+            /*
+            avl.agregar(new NodoArbol("userY","userY"));
+            avl.agregar(new NodoArbol("userA","userA"));
+            avl.agregar(new NodoArbol("userB","userB"));
+            avl.agregar(new NodoArbol("userM","userM"));
+            
+            
+            avl.agregar(new NodoArbol("40","40"));
+            avl.agregar(new NodoArbol("50","50"));
+            avl.agregar(new NodoArbol("20","20"));
+            avl.agregar(new NodoArbol("60","60"));
+            avl.agregar(new NodoArbol("30","30"));
+            avl.agregar(new NodoArbol("10","10"));
+            avl.agregar(new NodoArbol("15","15"));
+            avl.agregar(new NodoArbol("12","12"));
+            
+            
+            
+            avl.inOrden();
+            parametrosGraphviz g = avl.obtenerGrafico();
+            String code = g.getModeloNodo()+g.getDeclaraciones()+g.getRelaciones();
+            System.out.println(code);
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+       
+        */
          /*
         try {
             GraficarImagen imagen = new GraficarImagen();

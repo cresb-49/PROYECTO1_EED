@@ -5,16 +5,24 @@
  */
 package com.carlos.proyecto1.UI;
 
+import com.carlos.proyecto1.Exepciones.NullDataException;
+import com.carlos.proyecto1.Graficacion.ObtenerGraficoAVL;
+import com.carlos.proyecto1.Graficacion.ejecutarGraphviz;
+import com.carlos.proyecto1.Graficacion.generarDotFile;
 import com.carlos.proyecto1.Objetos.DatosPrograma;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author benjamin
  */
 public class FramePrincipal extends javax.swing.JFrame {
-    
+
     private DatosPrograma datosProgrma;
-    
+    private ejecutarGraphviz ejec;
+
     /**
      * Creates new form framePrincipal
      */
@@ -22,6 +30,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        this.ejec = new ejecutarGraphviz();
         this.datosProgrma = new DatosPrograma();
     }
 
@@ -41,10 +50,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        verArbolCapas = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        verArbolUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,11 +61,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         Escritorio.setLayout(EscritorioLayout);
         EscritorioLayout.setHorizontalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 762, Short.MAX_VALUE)
+            .addGap(0, 877, Short.MAX_VALUE)
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
 
         jMenuCargarArchivos.setText("Carga de Archivos");
@@ -79,8 +88,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Grafico de Estado de Memoria");
 
-        jMenuItem1.setText("Arbol de Capas");
-        jMenu4.add(jMenuItem1);
+        verArbolCapas.setText("Arbol de Capas");
+        verArbolCapas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verArbolCapasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(verArbolCapas);
 
         jMenuItem2.setText("Ver una Capa");
         jMenu4.add(jMenuItem2);
@@ -88,8 +102,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem3.setText("Imagen y Arbol de Capas");
         jMenu4.add(jMenuItem3);
 
-        jMenuItem4.setText("Arbol de Usuarios");
-        jMenu4.add(jMenuItem4);
+        verArbolUsuarios.setText("Arbol de Usuarios");
+        verArbolUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verArbolUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu4.add(verArbolUsuarios);
 
         jMenuBar1.add(jMenu4);
 
@@ -116,8 +135,63 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        CargaDatos carga = new CargaDatos(this, true,this.datosProgrma);
+        CargaDatos carga = new CargaDatos(this, true, this.datosProgrma);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void verArbolCapasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verArbolCapasActionPerformed
+        // TODO add your handling code here:
+
+        ObtenerGraficoAVL graphAVL = new ObtenerGraficoAVL();
+        String grap = graphAVL.GraficoAVL(datosProgrma.getArbolCapas());
+        String code = "digraph capasAVL {";
+        code = code + grap;
+        code = code + "}";
+
+        if (grap == null) {
+            code = null;
+        }
+
+        try {
+            generarDotFile gen = new generarDotFile();
+            gen.generarArchivo(code, "capasAVL");
+
+            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Capas",ejec.ejecutar("capasAVL.dot", "capasAVL.png"));
+            Escritorio.add(mostrar);
+            mostrar.show();
+
+        } catch (NullDataException | IOException e) {
+            JOptionPane.showMessageDialog(this, "No se puede escribir el archivo .dot para graphviz\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_verArbolCapasActionPerformed
+
+    private void verArbolUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verArbolUsuariosActionPerformed
+        // TODO add your handling code here:
+        ObtenerGraficoAVL graficoAVL = new ObtenerGraficoAVL();
+        String grap = graficoAVL.GraficoAVL(datosProgrma.getUsuarios());
+        String code = "digraph userAVL {";
+        code = code + grap;
+        code = code + "}";
+
+        if (grap == null) {
+            code = null;
+        }
+        
+        try {
+            generarDotFile gen = new generarDotFile();
+            gen.generarArchivo(code, "userAVL");
+
+            MostrarImagenes mostrar = new MostrarImagenes("Arbol de Capas",ejec.ejecutar("userAVL.dot", "userAVL.png"));
+            Escritorio.add(mostrar);
+            mostrar.show();
+
+        } catch (NullDataException | IOException e) {
+            JOptionPane.showMessageDialog(this, "No se puede escribir el archivo .dot para graphviz\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_verArbolUsuariosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
@@ -126,10 +200,10 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCargarArchivos;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem verArbolCapas;
+    private javax.swing.JMenuItem verArbolUsuarios;
     // End of variables declaration//GEN-END:variables
 }

@@ -187,9 +187,9 @@ class CUP$parserUsuario$actions {
                 usuario nuevo = new usuario(tok.getLexeme(), new ListaDobleEnlazada());
                 try {
                     usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
-                } catch (CloneNodeException ex) {
-                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                } catch (CloneNodeException e) {
+                    System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
             }else{
                 System.out.println("Pila con datos");
@@ -199,17 +199,18 @@ class CUP$parserUsuario$actions {
                     tmp = (Imagen)pilaTmp.pop();
                     try{
                         imagenes.agregar(new Nodo(tmp.getId(),tmp));
-                    }catch(CloneNodeException ex){
-                        System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                        errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    }catch(CloneNodeException e){
+                        System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                        errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                     }
+                    
                 }
                 usuario nuevo = new usuario(tok.getLexeme(), imagenes);
                 try {
                     usuarios.agregar(new NodoArbol(nuevo.getUser(),nuevo));
-                } catch (CloneNodeException ex) {
-                    System.out.println(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
-                    errores.push(ex.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                } catch (CloneNodeException e) {
+                    System.out.println(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
+                    errores.push(e.getMessage()+",Linea: "+tok.getLine()+" ,Columna: "+tok.getColumn());
                 }
             }
         }

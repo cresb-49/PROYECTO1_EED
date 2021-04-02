@@ -41,6 +41,9 @@ public class NodoArbol {
 
     public void setIzquierda(NodoArbol izquierda) {
         this.izquierda = izquierda;
+        if(this.izquierda !=null){
+            this.izquierda.setPadre(this);
+        }
     }
 
     public NodoArbol getDerecha() {
@@ -49,6 +52,9 @@ public class NodoArbol {
 
     public void setDerecha(NodoArbol derecha) {
         this.derecha = derecha;
+        if(this.derecha!=null){
+            this.derecha.setPadre(this);
+        }
     }
 
     public NodoArbol getPadre() {
