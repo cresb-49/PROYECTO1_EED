@@ -3,6 +3,7 @@ package com.carlos.proyecto1.Objetos;
 import com.carlos.proyecto1.ED.*;
 
 public class Imagen {
+
     private String id;
     private ListaDobleEnlazada capas;
 
@@ -29,10 +30,11 @@ public class Imagen {
     public void setCapas(ListaDobleEnlazada capas) {
         this.capas = capas;
     }
+    
 
     @Override
     public String toString() {
         return "Imagen{" + "id=" + id + '}';
     }
-    
+
 }

@@ -6,13 +6,13 @@
 package com.carlos.proyecto1.UI;
 
 import com.carlos.proyecto1.Exepciones.NullDataException;
+import com.carlos.proyecto1.Graficacion.GraficarImagenYArbolCapas;
 import com.carlos.proyecto1.Graficacion.ObtenerGraficoAVL;
 import com.carlos.proyecto1.Graficacion.ejecutarGraphviz;
 import com.carlos.proyecto1.Graficacion.generarDotFile;
 import com.carlos.proyecto1.Graficacion.obtenerGraficoImagenes;
 import com.carlos.proyecto1.Objetos.DatosPrograma;
 import java.io.IOException;
-import java.io.InputStream;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,7 +53,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         listaImagenes = new javax.swing.JMenu();
         verArbolCapas = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        imagenArbolCapas = new javax.swing.JMenuItem();
         verArbolUsuarios = new javax.swing.JMenuItem();
         verListaImagenes = new javax.swing.JMenuItem();
 
@@ -101,8 +101,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem2.setText("Ver una Capa");
         listaImagenes.add(jMenuItem2);
 
-        jMenuItem3.setText("Imagen y Arbol de Capas");
-        listaImagenes.add(jMenuItem3);
+        imagenArbolCapas.setText("Imagen y Arbol de Capas");
+        imagenArbolCapas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imagenArbolCapasActionPerformed(evt);
+            }
+        });
+        listaImagenes.add(imagenArbolCapas);
 
         verArbolUsuarios.setText("Arbol de Usuarios");
         verArbolUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -229,14 +234,25 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_verListaImagenesActionPerformed
 
+    private void imagenArbolCapasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenArbolCapasActionPerformed
+        // TODO add your handling code here:
+        
+        
+        GraficarImagenYArbolCapas gr = new GraficarImagenYArbolCapas();
+        
+        gr.obtenerDotFile("3", this.datosProgrma);
+        
+        
+    }//GEN-LAST:event_imagenArbolCapasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem imagenArbolCapas;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCargarArchivos;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu listaImagenes;
     private javax.swing.JMenuItem verArbolCapas;

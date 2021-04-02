@@ -47,10 +47,13 @@
                 <Property name="text" type="java.lang.String" value="Ver una Capa"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="imagenArbolCapas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Imagen y Arbol de Capas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imagenArbolCapasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="verArbolUsuarios">
               <Properties>
