@@ -23,6 +23,10 @@ public class AVL {
         this.raiz = raiz;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+    
     public void agregar(NodoArbol nodo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nodo;

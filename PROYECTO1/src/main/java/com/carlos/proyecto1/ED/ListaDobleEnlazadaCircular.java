@@ -56,6 +56,14 @@ public class ListaDobleEnlazadaCircular {
 
         }
     }
+
+    public Nodo getRaiz() {
+        return raiz;
+    }
+
+    public int getLegth() {
+        return legth;
+    }
     
     public boolean isEmpty(){
         if(this.raiz==null){

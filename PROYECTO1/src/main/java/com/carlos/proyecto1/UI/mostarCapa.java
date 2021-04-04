@@ -5,6 +5,7 @@
  */
 package com.carlos.proyecto1.UI;
 
+import com.carlos.proyecto1.Exepciones.NullDataException;
 import com.carlos.proyecto1.Graficacion.GraficarMatrizDispersa;
 import com.carlos.proyecto1.Graficacion.ejecutarGraphviz;
 import com.carlos.proyecto1.Graficacion.generarDotFile;
@@ -180,7 +181,7 @@ public class mostarCapa extends javax.swing.JInternalFrame {
             pathImg = ejec.ejecutar("matrixDisPersaP" + ".dot", "matrixDisPersaP" + ".png");
             this.mostarPath();
             this.btnMostrar.setEnabled(true);
-        } catch (Exception e) {
+        } catch (NullDataException | IOException e) {
             JOptionPane.showMessageDialog(this, "No se puede procesar la imagen\n" + e.getMessage());
             e.printStackTrace();
         }

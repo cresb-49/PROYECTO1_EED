@@ -48,8 +48,16 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCargarArchivos = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuGenerarImagenes = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         listaImagenes = new javax.swing.JMenu();
         verArbolCapas = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -82,10 +90,51 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuCargarArchivos);
 
-        jMenu2.setText("Seleccion de Usuario");
-        jMenuBar1.add(jMenu2);
+        jMenuGenerarImagenes.setText("Graficar Imagenes");
+
+        jMenuItem1.setText("Recorrido Limitado");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuGenerarImagenes.add(jMenuItem1);
+
+        jMenuItem3.setText("Por Capa");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenuGenerarImagenes.add(jMenuItem3);
+
+        jMenuItem4.setText("Por Usuario");
+        jMenuGenerarImagenes.add(jMenuItem4);
+
+        jMenuItem10.setText("Imagen Predeterminada");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenuGenerarImagenes.add(jMenuItem10);
+
+        jMenuBar1.add(jMenuGenerarImagenes);
 
         jMenu3.setText("Modificacion de Usuario");
+
+        jMenuItem6.setText("Nuevo Usuario");
+        jMenu3.add(jMenuItem6);
+
+        jMenuItem7.setText("Agregar Imagen");
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem8.setText("Eliminar Usuario");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Eliminar Imagen");
+        jMenu3.add(jMenuItem9);
+
         jMenuBar1.add(jMenu3);
 
         listaImagenes.setText("Grafico de Estado de Memoria");
@@ -260,15 +309,56 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        if(datosProgrma.getArbolCapas().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos sobre capas en el programa");
+        }else{
+            GenerarImagenRecorrido gen = new GenerarImagenRecorrido(this.datosProgrma);
+            Escritorio.add(gen);
+            gen.show();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        if(datosProgrma.getArbolCapas().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos sobre capas en el programa");
+        }else{
+            GenerarImagenCapa gen = new GenerarImagenCapa(this.datosProgrma);
+            Escritorio.add(gen);
+            gen.show();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        if(datosProgrma.getImagenes().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos sobre Imagenes en el programa");
+        }else{
+            GraficarImagenPrdeterminada gen = new GraficarImagenPrdeterminada(datosProgrma);
+            Escritorio.add(gen);
+            gen.show();
+        }
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem imagenArbolCapas;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCargarArchivos;
+    private javax.swing.JMenu jMenuGenerarImagenes;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu listaImagenes;
     private javax.swing.JMenuItem verArbolCapas;
     private javax.swing.JMenuItem verArbolUsuarios;
