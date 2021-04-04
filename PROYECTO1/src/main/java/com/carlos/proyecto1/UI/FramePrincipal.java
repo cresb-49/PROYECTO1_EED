@@ -129,15 +129,30 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.setText("Modificacion de Usuario");
 
         jMenuItem6.setText("Nuevo Usuario");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Agregar Imagen");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Eliminar Usuario");
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Eliminar Imagen");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -357,6 +372,40 @@ public class FramePrincipal extends javax.swing.JFrame {
             gen.show();
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here;
+        if(this.datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"El arbol de usuarios esta vacio, el generar un usuario ahora\npodria suponer un duplicado al momento de cargar usuarios al programa");
+        }
+        NuevoUsuario newUser = new NuevoUsuario(datosProgrma);
+        Escritorio.add(newUser);
+        newUser.show();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        if(this.datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos de usuarios en el sistema");
+        }else if(this.datosProgrma.getImagenes().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos de imagenes en el sistema");
+        }else{
+            AgregarImagenUsuario agregar = new AgregarImagenUsuario(datosProgrma);
+            Escritorio.add(agregar);
+            agregar.show();
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        if(this.datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos de usuarios en el sistema");
+        }else{
+            eliminarImagen eli = new eliminarImagen(datosProgrma);
+            this.Escritorio.add(eli);
+            eli.show();
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;

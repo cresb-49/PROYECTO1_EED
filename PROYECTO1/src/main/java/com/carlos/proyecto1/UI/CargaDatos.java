@@ -340,7 +340,7 @@ public class CargaDatos extends javax.swing.JDialog {
         System.out.println("You chose to open this file: " + archivo.getName());
         try {
             userLexer lex = new userLexer(new BufferedReader(new FileReader(archivo)));
-            parserUsuario parser = new parserUsuario(lex,this.datosPrograma.getImagenes());
+            parserUsuario parser = new parserUsuario(lex,this.datosPrograma.getImagenes(),this.datosPrograma.getUsuarios());
             parser.parse();
             
             String tmp = "";

@@ -67,13 +67,21 @@ public class ListaDobleEnlazada {
                     if (tmp == this.raiz) {
                         Nodo ant = this.raiz.getAnterior();
                         Nodo sig = this.raiz.getSiguiente();
-                        sig.setAnterior(ant);
+                        if(sig!=null){
+                            sig.setAnterior(ant);
+                        }
                         this.raiz = sig;
+                        eliminado= true;
+                        break;
                     } else {
                         Nodo ant = tmp.getAnterior();
                         Nodo sig = tmp.getSiguiente();
                         ant.setSiguiente(sig);
-                        sig.setAnterior(ant);
+                        if(sig!=null){
+                            sig.setAnterior(ant);
+                        }
+                        eliminado= true;
+                        break;
                     }
                 }
 

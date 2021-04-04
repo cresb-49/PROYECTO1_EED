@@ -1,0 +1,3 @@
+digraph userAVL {node[shape = record,height=.1];
+nodeAVLCarlos499[label = "<f0> |<f1> Carlos499|<f2> "];
+}

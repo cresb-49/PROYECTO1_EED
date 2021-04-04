@@ -110,12 +110,13 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
 
         
     private Pila errores = new Pila();    
-    private AVL usuarios = new AVL();
+    private AVL usuarios;
     private ListaDobleEnlazadaCircular listaCircularImagenes;
     
-    public parserUsuario(userLexer lex,ListaDobleEnlazadaCircular listaImagenes){
+    public parserUsuario(userLexer lex,ListaDobleEnlazadaCircular listaImagenes, AVL usuariosSistema){
         super(lex);
         this.listaCircularImagenes=listaImagenes;
+        this.usuarios = usuariosSistema;
     }
 
     public void report_error(String message, Object info){
