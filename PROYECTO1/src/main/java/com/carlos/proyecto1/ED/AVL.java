@@ -1,6 +1,7 @@
 package com.carlos.proyecto1.ED;
 
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
+import com.carlos.proyecto1.Exepciones.NotFoundNodeException;
 import com.carlos.proyecto1.Objetos.Capa;
 import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 import com.carlos.proyecto1.Objetos.usuario;
@@ -14,7 +15,7 @@ import com.carlos.proyecto1.Objetos.usuario;
 public class AVL {
 
     private NodoArbol raiz;
-    private int cantidad=0;
+    private int cantidad = 0;
 
     public AVL() {
     }
@@ -26,7 +27,7 @@ public class AVL {
     public int getCantidad() {
         return cantidad;
     }
-    
+
     public void agregar(NodoArbol nodo) throws CloneNodeException {
         if (this.raiz == null) {
             this.raiz = nodo;
@@ -35,8 +36,8 @@ public class AVL {
             this.agregarNodo(this.raiz, nodo);
         }
     }
-
-    private void agregarNodo(NodoArbol padre, NodoArbol nuevo) throws CloneNodeException {
+    
+    private void agregarNodo(NodoArbol padre,NodoArbol nuevo) throws CloneNodeException{
         if (nuevo.getTag().compareTo(padre.getTag()) > 0) {
 
             if (padre.getDerecha() == null) {
@@ -51,8 +52,13 @@ public class AVL {
             int factor = this.alturaArbol(padre.getDerecha()) - this.alturaArbol(padre.getIzquierda());
             padre.setFactorEquilibrio(factor);
             if (factor == 2) {
-
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
+                
+                if(padre.getDerecha()!=null){
+                    factor = this.alturaArbol(padre.getDerecha().getDerecha()) - this.alturaArbol(padre.getDerecha().getIzquierda());
+                    padre.getDerecha().setFactorEquilibrio(factor);
+                }
+                
                 if (((padre.getDerecha() == null) ? 1 : padre.getDerecha().getFactorEquilibrio()) < 0) {
                     System.out.println("Vuelta doble izquierda");
                     this.vueltaDobleIzquierda(padre);
@@ -61,9 +67,14 @@ public class AVL {
                     System.out.println("Vuelta simple izquierda");
                     this.vueltaSimpleIzquierda(padre);
                 }
-            }else if (factor == -2) {
+            } else if (factor == -2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
-
+                
+                if(padre.getIzquierda()!=null){
+                    factor = this.alturaArbol(padre.getIzquierda().getDerecha()) - this.alturaArbol(padre.getIzquierda().getIzquierda());
+                    padre.getIzquierda().setFactorEquilibrio(factor);
+                }
+                
                 if (((padre.getIzquierda() == null) ? -1 : padre.getIzquierda().getFactorEquilibrio()) > 0) {
                     System.out.println("Vuelta doble derecha");
                     this.vueltaDobleDerecha(padre);
@@ -87,9 +98,13 @@ public class AVL {
 
             int factor = this.alturaArbol(padre.getDerecha()) - this.alturaArbol(padre.getIzquierda());
             padre.setFactorEquilibrio(factor);
-            
+
             if (factor == 2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
+                if(padre.getDerecha()!=null){
+                    factor = this.alturaArbol(padre.getDerecha().getDerecha()) - this.alturaArbol(padre.getDerecha().getIzquierda());
+                    padre.getDerecha().setFactorEquilibrio(factor);
+                }
                 if (((padre.getDerecha() == null) ? 1 : padre.getDerecha().getFactorEquilibrio()) < 0) {
                     System.out.println("Vuelta doble izquierda");
                     this.vueltaDobleIzquierda(padre);
@@ -98,8 +113,12 @@ public class AVL {
                     this.vueltaSimpleIzquierda(padre);
                 }
 
-            }else if (factor == -2) {
+            } else if (factor == -2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
+                if(padre.getIzquierda()!=null){
+                    factor = this.alturaArbol(padre.getIzquierda().getDerecha()) - this.alturaArbol(padre.getIzquierda().getIzquierda());
+                    padre.getIzquierda().setFactorEquilibrio(factor);
+                }
                 if (((padre.getIzquierda() == null) ? -1 : padre.getIzquierda().getFactorEquilibrio()) > 0) {
                     System.out.println("Vuelta doble derecha");
                     this.vueltaDobleDerecha(padre);
@@ -155,35 +174,35 @@ public class AVL {
     private void vueltaDobleIzquierda(NodoArbol nodo) {
         if (nodo == this.raiz) {
             NodoArbol nuevaRaiz = this.raiz.getDerecha().getIzquierda();
-            
+
             NodoArbol b = this.raiz.getDerecha();
             NodoArbol IC = nuevaRaiz.getIzquierda();
             NodoArbol DC = nuevaRaiz.getDerecha();
-            
+
             nuevaRaiz.setDerecha(b);
             nuevaRaiz.setIzquierda(this.raiz);
-            
+
             b.setIzquierda(DC);
             this.raiz.setDerecha(IC);
-            
+
             nuevaRaiz.setPadre(null);
             this.raiz = nuevaRaiz;
-            
+
         } else {
             NodoArbol P = nodo.getPadre();
-            
+
             NodoArbol b = nodo.getDerecha();
             NodoArbol c = b.getIzquierda();
-            
+
             NodoArbol IC = c.getIzquierda();
             NodoArbol DC = c.getDerecha();
-            
+
             if (P.getDerecha() == nodo) {
                 P.setDerecha(c);
             } else {
                 P.setIzquierda(c);
             }
-            
+
             c.setDerecha(b);
             c.setIzquierda(nodo);
             b.setIzquierda(DC);
@@ -210,7 +229,7 @@ public class AVL {
             } else {
                 P.setIzquierda(b);
             }
-            
+
             b.setDerecha(nodo);
             nodo.setIzquierda(e);
         }
@@ -219,6 +238,7 @@ public class AVL {
     private void vueltaSimpleIzquierda(NodoArbol nodo) {
 
         if (nodo == this.raiz) {
+            
             NodoArbol nuevaRaiz = this.raiz.getDerecha();
             nuevaRaiz.setPadre(null);
             NodoArbol a = nuevaRaiz.getIzquierda();
@@ -229,13 +249,13 @@ public class AVL {
             NodoArbol P = nodo.getPadre();
             NodoArbol b = nodo.getDerecha();
             NodoArbol e = b.getIzquierda();
-            
+
             if (P.getDerecha() == nodo) {
                 P.setDerecha(b);
             } else {
                 P.setIzquierda(b);
             }
-            
+
             b.setIzquierda(nodo);
             nodo.setDerecha(e);
         }
@@ -328,89 +348,92 @@ public class AVL {
         }
         return params;
     }
-   /**
-    * Recupera los datos del arbol de manera In Orden
-    * @return 
-    */
-    public Object[] AVLtoArrayInOrden(){
-        Object array [] = new Object[this.cantidad+1];
+
+    /**
+     * Recupera los datos del arbol de manera In Orden
+     *
+     * @return
+     */
+    public Object[] AVLtoArrayInOrden() {
+        Object array[] = new Object[this.cantidad + 1];
         Cola data = new Cola();
-        
+
         this.recuperarDataInOrden(this.raiz, data);
         int cont = 0;
         while (!data.isEmpty()) {
-            array[cont]=data.tomar();
+            array[cont] = data.tomar();
             cont++;
         }
         return array;
     }
-   /**
-    * Recupera los datos del arbol de manera Post Orden
-    * @return 
-    */
-    public Object[] AVLtoArrayPostOrden(){
-        Object array [] = new Object[this.cantidad+1];
+
+    /**
+     * Recupera los datos del arbol de manera Post Orden
+     *
+     * @return
+     */
+    public Object[] AVLtoArrayPostOrden() {
+        Object array[] = new Object[this.cantidad + 1];
         Cola data = new Cola();
-        
+
         this.recuperarDataPostOrden(this.raiz, data);
         int cont = 0;
         while (!data.isEmpty()) {
-            array[cont]=data.tomar();
+            array[cont] = data.tomar();
             cont++;
         }
         return array;
     }
+
     /**
      * Recupera los datos del Arbol de manera Pre Orden
-     * @return 
+     *
+     * @return
      */
-    public Object[] AVLtoArrayPreOrden(){
-        Object array [] = new Object[this.cantidad+1];
+    public Object[] AVLtoArrayPreOrden() {
+        Object array[] = new Object[this.cantidad + 1];
         Cola data = new Cola();
-        
+
         this.recuperarDataPreOrden(this.raiz, data);
         int cont = 0;
         while (!data.isEmpty()) {
-            array[cont]=data.tomar();
+            array[cont] = data.tomar();
             cont++;
         }
         return array;
     }
-    
-    private void recuperarDataInOrden(NodoArbol nodo,Cola data) {
+
+    private void recuperarDataInOrden(NodoArbol nodo, Cola data) {
         if (nodo.getIzquierda() != null) {
-            this.recuperarDataInOrden(nodo.getIzquierda(),data);
+            this.recuperarDataInOrden(nodo.getIzquierda(), data);
         }
         data.agregar(nodo.getContenido());
         if (nodo.getDerecha() != null) {
-            this.recuperarDataInOrden(nodo.getDerecha(),data);
+            this.recuperarDataInOrden(nodo.getDerecha(), data);
         }
-        
+
     }
-    
-    
-    private void recuperarDataPostOrden(NodoArbol nodo,Cola data) {
+
+    private void recuperarDataPostOrden(NodoArbol nodo, Cola data) {
         if (nodo.getIzquierda() != null) {
-            this.recuperarDataPostOrden(nodo.getIzquierda(),data);
+            this.recuperarDataPostOrden(nodo.getIzquierda(), data);
         }
         if (nodo.getDerecha() != null) {
-            this.recuperarDataPostOrden(nodo.getDerecha(),data);
+            this.recuperarDataPostOrden(nodo.getDerecha(), data);
         }
         data.agregar(nodo.getContenido());
     }
-    
-    
-    private void recuperarDataPreOrden(NodoArbol nodo,Cola data) {
+
+    private void recuperarDataPreOrden(NodoArbol nodo, Cola data) {
         data.agregar(nodo.getContenido());
         if (nodo.getIzquierda() != null) {
-            this.recuperarDataPreOrden(nodo.getIzquierda(),data);
+            this.recuperarDataPreOrden(nodo.getIzquierda(), data);
         }
         if (nodo.getDerecha() != null) {
-            this.recuperarDataPreOrden(nodo.getDerecha(),data);
+            this.recuperarDataPreOrden(nodo.getDerecha(), data);
         }
     }
-    
-    
+
     private void GenerarDot(parametrosGraphviz parametros, NodoArbol nodo) {
         if (nodo.getIzquierda() != null) {
             this.GenerarDot(parametros, nodo.getIzquierda());
@@ -435,8 +458,115 @@ public class AVL {
         }
     }
 
-    private void eliminar(String tag) {
+    /**
+     * Metodo publico que recibe solamente el tag del arbol
+     *
+     * @param tag
+     */
+    public void eliminar(String tag) throws NotFoundNodeException {
+        this.eliminar(this.raiz, tag);
+    }
 
+    private void eliminar(NodoArbol nodo, String tag) throws NotFoundNodeException {
+        NodoArbol candidato = null;
+        if (nodo == null) {
+            throw new NotFoundNodeException("No existe un nodo con tag \"" + tag + "\"");
+        } else if (nodo.getTag().equals(tag)) {
+
+            System.out.println("Encontre el nodo a eliminar: " + tag);
+            NodoArbol padre = nodo.getPadre();
+            NodoArbol izquierdo = nodo.getIzquierda();
+            NodoArbol derecha = nodo.getDerecha();
+            
+            if(nodo.getIzquierda()==null&&nodo.getDerecha()==null){
+                System.out.println("Eliminacion simple");
+                if(padre.getIzquierda().equals(nodo)){
+                    padre.setIzquierda(null);
+                    nodo.setPadre(null);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }else if(padre.getDerecha().equals(nodo)){
+                    padre.setDerecha(null);
+                    nodo.setPadre(null);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }
+            }else if(nodo.getIzquierda()==null&&nodo.getDerecha()!=null){
+                System.out.println("Se hace cambia por el nodo derecho del eliminado");
+                if(padre.getIzquierda().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setIzquierda(izquierdo);
+                }else if(padre.getDerecha().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setDerecha(derecha);
+                }
+            }else if(nodo.getIzquierda()!=null&&nodo.getDerecha()==null){
+                System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
+                System.out.println("Candidato remplazo: "+candidato.getTag());
+                //Actualizamos los nodos de izquierda y derecha del eliminado
+                izquierdo = nodo.getIzquierda();
+                derecha = nodo.getDerecha();
+                if(padre.getIzquierda().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setIzquierda(candidato);
+                    candidato.setDerecha(derecha);
+                    candidato.setIzquierda(izquierdo);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }else if(padre.getDerecha().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setDerecha(candidato);
+                    candidato.setDerecha(derecha);
+                    candidato.setIzquierda(izquierdo);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }
+            }else if(nodo.getIzquierda()!=null&&nodo.getDerecha()!=null){
+                System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
+                System.out.println("Candidato remplazo: "+candidato.getTag());
+                //Actualizamos los nodos de izquierda y derecha del eliminado
+                izquierdo = nodo.getIzquierda();
+                derecha = nodo.getDerecha();
+                if(padre.getIzquierda().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setIzquierda(candidato);
+                    candidato.setDerecha(derecha);
+                    candidato.setIzquierda(izquierdo);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }else if(padre.getDerecha().equals(nodo)){
+                    nodo.setPadre(null);
+                    padre.setDerecha(candidato);
+                    candidato.setDerecha(derecha);
+                    candidato.setIzquierda(izquierdo);
+                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.cantidad--;
+                }
+            }
+
+        } else if (tag.compareTo(nodo.getTag()) > 0) {
+            this.eliminar(nodo.getDerecha(), tag);
+            int factor = this.alturaArbol(nodo.getDerecha())-this.alturaArbol(nodo.getIzquierda());
+            System.out.println("Factor de nodo: "+nodo.getTag()+" es: "+factor);
+        } else if (tag.compareTo(nodo.getTag()) < 0) {
+            this.eliminar(nodo.getIzquierda(), tag);
+            int factor = this.alturaArbol(nodo.getDerecha())-this.alturaArbol(nodo.getIzquierda());
+            System.out.println("Factor de nodo: "+nodo.getTag()+" es: "+factor);
+        } else {
+            throw new NotFoundNodeException("No existe un nodo con tag \"" + tag + "\"");
+        }
+    }
+    
+    private NodoArbol recupearUltimoDerecha(NodoArbol nodo){
+        if(nodo.getDerecha()==null){
+            NodoArbol padre = nodo.getPadre();
+            padre.setIzquierda(nodo.getIzquierda());
+            return nodo;
+        }else{
+            return this.recupearUltimoDerecha(nodo);
+        }
     }
 
     public boolean isEmpty() {

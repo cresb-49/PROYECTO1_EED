@@ -1,0 +1,24 @@
+digraph avl{
+node[shape = record,height=.1];
+nodeAVL1[label = "<f0> |<f1> 1|<f2> "];
+nodeAVL12[label = "<f0> |<f1> 12|<f2> "];
+nodeAVL14[label = "<f0> |<f1> 14|<f2> "];
+nodeAVL20[label = "<f0> |<f1> 20|<f2> "];
+nodeAVL30[label = "<f0> |<f1> 30|<f2> "];
+nodeAVL5[label = "<f0> |<f1> 5|<f2> "];
+nodeAVL50[label = "<f0> |<f1> 50|<f2> "];
+nodeAVL6[label = "<f0> |<f1> 6|<f2> "];
+nodeAVL60[label = "<f0> |<f1> 60|<f2> "];
+nodeAVL7[label = "<f0> |<f1> 7|<f2> "];
+nodeAVL75[label = "<f0> |<f1> 75|<f2> "];
+"nodeAVL12":f2 -> "nodeAVL14":f1;
+"nodeAVL12":f0 -> "nodeAVL1":f1;
+"nodeAVL20":f2 -> "nodeAVL30":f1;
+"nodeAVL20":f0 -> "nodeAVL12":f1;
+"nodeAVL30":f2 -> "nodeAVL5":f1;
+"nodeAVL50":f2 -> "nodeAVL7":f1;
+"nodeAVL50":f0 -> "nodeAVL20":f1;
+"nodeAVL60":f0 -> "nodeAVL6":f1;
+"nodeAVL7":f2 -> "nodeAVL75":f1;
+"nodeAVL7":f0 -> "nodeAVL60":f1;
+}
