@@ -67,6 +67,7 @@ public class mostarCapa extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Ver Capa Matriz Dispersa");
 
         jTextFieldPath.setEditable(false);
         jTextFieldPath.setVerifyInputWhenFocusTarget(false);
@@ -81,7 +82,7 @@ public class mostarCapa extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,7 +133,7 @@ public class mostarCapa extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -191,6 +192,8 @@ public class mostarCapa extends javax.swing.JInternalFrame {
         this.jTextFieldPath.setText(this.pathImg);
         JOptionPane.showMessageDialog(this, "Se genero con exito la imagen, puede copiar la ruta\n"
                                       + "o mostrar la imagen en el programa precionando el boton \"Mostrar\"");
+        labelImagen.setIcon(null);
+        labelImagen.updateUI();
     }
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         // TODO add your handling code here:

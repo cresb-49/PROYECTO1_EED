@@ -70,6 +70,7 @@ public class GenerarImagenRecorrido extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Grafica de imagen por Recorrido de Arbol");
 
         jComboRecorrido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Preorden", "Inorden", "Postorden" }));
 

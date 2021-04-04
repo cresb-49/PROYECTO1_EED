@@ -9,6 +9,7 @@ import com.carlos.proyecto1.ED.ListaDobleEnlazada;
 import com.carlos.proyecto1.ED.ListaDobleEnlazadaCircular;
 import com.carlos.proyecto1.ED.MatrizDispersa;
 import com.carlos.proyecto1.ED.Nodo;
+import com.carlos.proyecto1.ED.NodoArbol;
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import com.carlos.proyecto1.Exepciones.InvalidIndexException;
 import com.carlos.proyecto1.Exepciones.InvalidStructureException;
@@ -19,11 +20,10 @@ import com.carlos.proyecto1.Graficacion.generarDotFile;
 import com.carlos.proyecto1.Objetos.Capa;
 import com.carlos.proyecto1.Objetos.DatosPrograma;
 import com.carlos.proyecto1.Objetos.Imagen;
+import com.carlos.proyecto1.Objetos.usuario;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -32,20 +32,20 @@ import javax.swing.JOptionPane;
  *
  * @author benjamin
  */
-public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
+public class GraficarImagenPorUsuario extends javax.swing.JInternalFrame {
 
     private String pathImg;
-    private DatosPrograma datosP;
+    private DatosPrograma dataP;
     private ejecutarGraphviz ejec;
 
     /**
-     * Creates new form GraficarImagenPrdeterminada
+     * Creates new form GraficarImagenPorUsuario
      */
-    public GraficarImagenPrdeterminada(DatosPrograma datosP) {
+    public GraficarImagenPorUsuario(DatosPrograma dataP) {
         initComponents();
-        this.datosP = datosP;
+        this.dataP = dataP;
         this.ejec = new ejecutarGraphviz();
-        this.cargarCombo();
+        this.cargarComboUsuarios();
     }
 
     /**
@@ -58,7 +58,7 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jTextFieldPath = new javax.swing.JTextField();
-        jComboImagenes = new javax.swing.JComboBox<>();
+        jComboUsuarios = new javax.swing.JComboBox<>();
         btnMostrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -66,12 +66,25 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
         jLabelImagen = new javax.swing.JLabel();
         btnGenerarImagen = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jComboImagenes = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Graficar Imagen Predeterminada");
+        setTitle("Graficar Imagen Por Usuario");
 
         jTextFieldPath.setEditable(false);
+
+        jComboUsuarios.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboUsuariosItemStateChanged(evt);
+            }
+        });
+        jComboUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboUsuariosActionPerformed(evt);
+            }
+        });
 
         btnMostrar.setText("Mostrar");
         btnMostrar.setEnabled(false);
@@ -81,7 +94,7 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Selec. id de Imagen");
+        jLabel1.setText("Seleccione Usuario");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -106,6 +119,7 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
         );
 
         btnGenerarImagen.setText("Generar Imagen");
+        btnGenerarImagen.setEnabled(false);
         btnGenerarImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarImagenActionPerformed(evt);
@@ -113,6 +127,8 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
         });
 
         jLabel3.setText("Ubicacion:");
+
+        jLabel2.setText("Seleccione Imagen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,31 +141,37 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
                             .addComponent(btnGenerarImagen)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(btnMostrar))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jComboImagenes, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jComboUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jComboImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(btnMostrar)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(12, 12, 12)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
+                        .addGap(28, 28, 28)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14)
                         .addComponent(jComboImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnGenerarImagen)
@@ -179,17 +201,31 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
 
     private void btnGenerarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarImagenActionPerformed
         // TODO add your handling code here:
+        String usuario = jComboUsuarios.getItemAt(jComboUsuarios.getSelectedIndex());
+        String imagen = jComboImagenes.getItemAt(jComboImagenes.getSelectedIndex());
+        this.graficarImagen(usuario,imagen);
 
-        String id = jComboImagenes.getItemAt(jComboImagenes.getSelectedIndex());
-        graficarImagen(id);
     }//GEN-LAST:event_btnGenerarImagenActionPerformed
+
+    private void jComboUsuariosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboUsuariosItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboUsuariosItemStateChanged
+
+    private void jComboUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboUsuariosActionPerformed
+        // TODO add your handling code here:
+        String usuario = jComboUsuarios.getItemAt(jComboUsuarios.getSelectedIndex());
+        this.cargarImagenes(usuario);
+    }//GEN-LAST:event_jComboUsuariosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerarImagen;
     private javax.swing.JButton btnMostrar;
     private javax.swing.JComboBox<String> jComboImagenes;
+    private javax.swing.JComboBox<String> jComboUsuarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JPanel jPanel1;
@@ -197,15 +233,17 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldPath;
     // End of variables declaration//GEN-END:variables
 
-    private void graficarImagen(String id) {
-        Nodo tmp = datosP.getImagenes().buscar(id);
-        Imagen tmpImagen = (Imagen) tmp.getContenido();
+    private void graficarImagen(String user, String img) {
         GraficarImagen graficador = new GraficarImagen();
         generarDotFile gen = new generarDotFile();
-        Capa tmpCapa = null;
-        ListaDobleEnlazada listaCapas = tmpImagen.getCapas();
-
-        if (listaCapas.isEmpty()) {
+        NodoArbol nodoAtmp = dataP.getUsuarios().buscarNodo(user);
+        
+        usuario userTmp = (usuario) nodoAtmp.getContenido();
+        ListaDobleEnlazada listaImagenes = userTmp.getImagenes();
+        
+        Imagen imgSelected = (Imagen) listaImagenes.buscar(img).getContenido();
+        
+       if (imgSelected.getCapas().isEmpty()) {
 
             try {
                 String code = "digraph imagen{\n"
@@ -233,20 +271,17 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
                 this.mostarPath();
                 this.btnMostrar.setEnabled(true);
 
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
-                this.btnMostrar.setEnabled(false);
-            } catch (NullDataException ex) {
+            } catch (IOException | NullDataException ex) {
                 JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
                 this.btnMostrar.setEnabled(false);
             }
 
         } else {
-            Nodo tmpNodo = listaCapas.getRaiz();
+            Nodo tmpNodo = imgSelected.getCapas().getRaiz();
             try {
 
                 MatrizDispersa mt = ((Capa) tmpNodo.getContenido()).getContenido().obtenerCopia();
-
+                Capa tmpCapa = null;
                 while (tmpNodo != null) {
                     tmpCapa = (Capa) tmpNodo.getContenido();
                     mt.mergeMatriz(tmpCapa.getContenido());
@@ -259,43 +294,51 @@ public class GraficarImagenPrdeterminada extends javax.swing.JInternalFrame {
                 this.mostarPath();
                 this.btnMostrar.setEnabled(true);
 
-            } catch (CloneNodeException ex) {
-                JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
-                this.btnMostrar.setEnabled(false);
-            } catch (InvalidStructureException ex) {
-                JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
-                this.btnMostrar.setEnabled(false);
-            } catch (InvalidIndexException ex) {
-                JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
-                this.btnMostrar.setEnabled(false);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
-                this.btnMostrar.setEnabled(false);
-            } catch (NullDataException ex) {
+            } catch (CloneNodeException | InvalidStructureException | InvalidIndexException | IOException | NullDataException ex) {
                 JOptionPane.showMessageDialog(this, "Error al generar la imagen:\n" + ex.getMessage());
                 this.btnMostrar.setEnabled(false);
             }
         }
+    }
 
+    private void cargarImagenes(String user) {
+        NodoArbol nodoAtmp = dataP.getUsuarios().buscarNodo(user);
+        usuario userTmp = (usuario) nodoAtmp.getContenido();
+
+        this.jComboImagenes.removeAllItems();
+        ListaDobleEnlazada listaImagenes = userTmp.getImagenes();
+
+        if (listaImagenes.isEmpty()) {
+            this.btnGenerarImagen.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "El usuario no tiene ninguna imagen asiganda\nno puede graficar imagenes con este usuario");
+        } else {
+            Nodo tmp = listaImagenes.getRaiz();
+            Imagen imgTmp = null;
+            while (tmp != null) {
+                imgTmp = (Imagen) tmp.getContenido();
+                this.jComboImagenes.addItem(imgTmp.getId());
+                tmp = tmp.getSiguiente();
+            }
+            this.btnGenerarImagen.setEnabled(true);
+        }
+
+    }
+
+    private void cargarComboUsuarios() {
+        this.jComboUsuarios.removeAllItems();
+        Object array[] = dataP.getUsuarios().AVLtoArrayInOrden();
+        usuario tmp = null;
+        for (Object object : array) {
+            tmp = (usuario)object;
+            this.jComboUsuarios.addItem(tmp.getUser());
+        }
     }
 
     private void mostarPath() {
         this.jTextFieldPath.setText(this.pathImg);
         JOptionPane.showMessageDialog(this, "Se genero con exito la imagen, puede copiar la ruta\n"
-                + "o mostrar la imagen en el programa precionando el boton \"Mostrar\"");
+                                      + "o mostrar la imagen en el programa precionando el boton \"Mostrar\"");
         jLabelImagen.setIcon(null);
         jLabelImagen.updateUI();
-    }
-
-    private void cargarCombo() {
-        this.jComboImagenes.removeAllItems();
-        ListaDobleEnlazadaCircular listaImagenes = datosP.getImagenes();
-        Imagen imgTmp = null;
-        Nodo tmp = listaImagenes.getRaiz();
-        do {            
-            imgTmp = (Imagen)tmp.getContenido();
-            this.jComboImagenes.addItem(imgTmp.getId());
-            tmp = tmp.getSiguiente();
-        } while (tmp!=listaImagenes.getRaiz());
     }
 }

@@ -61,6 +61,10 @@ public class GenerarImagenCapa extends javax.swing.JInternalFrame {
         btnGenerarImagen = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Imagen por Capa Individual");
+
         jTextFieldPath.setEditable(false);
 
         btnMostrar.setText("Mostrar");

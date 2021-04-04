@@ -73,6 +73,7 @@ public class verImagenArbolCapas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Imagen Y Arbol de Capas");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -211,6 +212,8 @@ public class verImagenArbolCapas extends javax.swing.JInternalFrame {
         this.jTextFieldPath.setText(this.pathImg);
         JOptionPane.showMessageDialog(this, "Se genero con exito la imagen, puede copiar la ruta\n"
                                       + "o mostrar la imagen en el programa precionando el boton \"Mostrar\"");
+        labelImagen.setIcon(null);
+        labelImagen.updateUI();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -109,6 +109,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuGenerarImagenes.add(jMenuItem3);
 
         jMenuItem4.setText("Por Usuario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenuGenerarImagenes.add(jMenuItem4);
 
         jMenuItem10.setText("Imagen Predeterminada");
@@ -341,6 +346,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             gen.show();
         }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        if(datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos sobre usuarios en el programa");
+        }else{
+            GraficarImagenPorUsuario gen = new GraficarImagenPorUsuario(datosProgrma);
+            Escritorio.add(gen);
+            gen.show();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;

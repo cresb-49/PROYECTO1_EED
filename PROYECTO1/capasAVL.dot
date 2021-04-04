@@ -1,9 +1,0 @@
-digraph capasAVL {node[shape = record,height=.1];
-nodeAVL1[label = "<f0> |<f1> capa1|<f2> "];
-nodeAVL2[label = "<f0> |<f1> capa2|<f2> "];
-nodeAVL3[label = "<f0> |<f1> capa3|<f2> "];
-nodeAVL4[label = "<f0> |<f1> capa4|<f2> "];
-"nodeAVL2":f2 -> "nodeAVL3":f1;
-"nodeAVL2":f0 -> "nodeAVL1":f1;
-"nodeAVL3":f2 -> "nodeAVL4":f1;
-}
