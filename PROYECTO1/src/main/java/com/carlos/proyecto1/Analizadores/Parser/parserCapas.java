@@ -183,6 +183,7 @@ class CUP$parserCapas$actions {
             String tag = ((token)e1).getLexeme();
             try {
                 Capa nueva = new Capa(tag, tmp);
+                System.out.println("Agrege la capa: "+tag);
                 arbolCapas.agregar(new NodoArbol(tag,nueva));
                 
             } catch (CloneNodeException ex) {
@@ -241,8 +242,8 @@ class CUP$parserCapas$actions {
             if(e4!=null){
                 MatrizDispersa tmp = (MatrizDispersa)e4;
                 try {
-                    int x = Integer.parseInt(((token)e2).getLexeme());
-                    int y = Integer.parseInt(((token)e1).getLexeme());
+                    int x = Integer.parseInt(((token)e1).getLexeme());
+                    int y = Integer.parseInt(((token)e2).getLexeme());
                     
                     tmp.agregarNodo(x, y, ((token)e3).getLexeme());
                     

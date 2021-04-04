@@ -99,6 +99,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         listaImagenes.add(verArbolCapas);
 
         jMenuItem2.setText("Ver una Capa");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         listaImagenes.add(jMenuItem2);
 
         imagenArbolCapas.setText("Imagen y Arbol de Capas");
@@ -243,6 +248,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             img.show();
         }
     }//GEN-LAST:event_imagenArbolCapasActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        if(datosProgrma.getArbolCapas().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos sobre capas en el programa");
+        }else{
+            mostarCapa capas = new mostarCapa(this.datosProgrma);
+            Escritorio.add(capas);
+            capas.show();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;

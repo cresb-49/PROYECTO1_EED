@@ -55,7 +55,15 @@ public class Cola {
     public Object inicio(){
         return this.raiz.getContenido();
     }
-
+    
+    public boolean isEmpty(){
+        if(this.raiz==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public void imprimirCola(){
         if(raiz==null){
             System.out.println("Cola vacia");

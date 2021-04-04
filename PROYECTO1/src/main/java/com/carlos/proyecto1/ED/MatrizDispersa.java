@@ -3,6 +3,7 @@ package com.carlos.proyecto1.ED;
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
 import com.carlos.proyecto1.Exepciones.InvalidIndexException;
 import com.carlos.proyecto1.Exepciones.InvalidStructureException;
+import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 
 public class MatrizDispersa {
 
@@ -20,12 +21,13 @@ public class MatrizDispersa {
     public NodoMatriz getPrincipal() {
         return principal;
     }
-    
+
     /**
      * Metodo general para agregar un valor a la matriz dispersa
+     *
      * @param X
      * @param Y
-     * @param contenido 
+     * @param contenido
      */
     public void agregarNodo(int X, int Y, Object contenido) throws InvalidIndexException, CloneNodeException, InvalidStructureException {
 
@@ -71,10 +73,13 @@ public class MatrizDispersa {
 
         }
     }
+
     /**
-     * Inserta un nodo en una fila en base a la cabecera de variable X y el nuevo nodo
+     * Inserta un nodo en una fila en base a la cabecera de variable X y el
+     * nuevo nodo
+     *
      * @param cabezaX
-     * @param nuevo 
+     * @param nuevo
      */
     private void insertarX(NodoMatriz cabezaX, NodoMatriz nuevo) throws InvalidStructureException {
         NodoMatriz tmp = cabezaX;
@@ -97,12 +102,15 @@ public class MatrizDispersa {
             insertarAdelanteY(tmp, nuevo);
         }
     }
+
     /**
-     * Inserta un nodo en una fila en base a la cabecera de variable y y el nuevo nodo
+     * Inserta un nodo en una fila en base a la cabecera de variable y y el
+     * nuevo nodo
+     *
      * @param cabezaY
-     * @param nuevo 
+     * @param nuevo
      */
-    private void insertarY(NodoMatriz cabezaY, NodoMatriz nuevo) throws InvalidStructureException{
+    private void insertarY(NodoMatriz cabezaY, NodoMatriz nuevo) throws InvalidStructureException {
         NodoMatriz tmp = cabezaY;
         boolean insertado = false;
 
@@ -122,10 +130,13 @@ public class MatrizDispersa {
             insertarAdelanteX(tmp, nuevo);
         }
     }
+
     /**
-     * Retorna el encabezado de una columna, devuelve null si no existe dicho encabezado
+     * Retorna el encabezado de una columna, devuelve null si no existe dicho
+     * encabezado
+     *
      * @param X
-     * @return 
+     * @return
      */
     private NodoMatriz existeEncabezadoX(int X) {
 
@@ -140,10 +151,13 @@ public class MatrizDispersa {
 
         return null;
     }
+
     /**
-     * Retorna el encabezado de una fila, devuelve null si no existe dicho encabezado
+     * Retorna el encabezado de una fila, devuelve null si no existe dicho
+     * encabezado
+     *
      * @param Y
-     * @return 
+     * @return
      */
     private NodoMatriz existeEncabezadoY(int Y) {
 
@@ -159,9 +173,11 @@ public class MatrizDispersa {
 
         return null;
     }
+
     /**
      * Crea el encabezado en la variable X de la matriz dispersa
-     * @param X 
+     *
+     * @param X
      */
     private void crearEnbezadoX(int X) {
         NodoMatriz tmp = this.principal;
@@ -184,9 +200,11 @@ public class MatrizDispersa {
         }
 
     }
+
     /**
      * Crea el encabezado en la variable Y de la matriz dispersa
-     * @param Y 
+     *
+     * @param Y
      */
     private void crearEnbezadoY(int Y) {
         NodoMatriz tmp = this.principal;
@@ -209,10 +227,12 @@ public class MatrizDispersa {
         }
 
     }
+
     /**
      * Inserta un nodo adelante de nodo base en X
+     *
      * @param nodo
-     * @param nuevo 
+     * @param nuevo
      */
     private void insertarAdelanteX(NodoMatriz nodo, NodoMatriz nuevo) {
         NodoMatriz nodoSig = nodo.getSiguienteX();
@@ -225,8 +245,10 @@ public class MatrizDispersa {
         }
 
     }
+
     /**
      * Inserta un nodo delante del nodo base en Y
+     *
      * @param nodo nodo base
      * @param nuevo nuevo nodo
      */
@@ -241,6 +263,7 @@ public class MatrizDispersa {
         }
 
     }
+
     /**
      * Imprime los encabezados de la variable X
      */
@@ -262,6 +285,7 @@ public class MatrizDispersa {
 
         System.out.println("-----------X----------");
     }
+
     /**
      * Imprime los encabezados de la variable Y
      */
@@ -283,12 +307,14 @@ public class MatrizDispersa {
 
         System.out.println("-----------Y----------");
     }
+
     /**
-     * Obtiene el contenido de la matriz en al cordenada x y asignada
-     * Devolvera nulo si no hay contenido adentro
+     * Obtiene el contenido de la matriz en al cordenada x y asignada Devolvera
+     * nulo si no hay contenido adentro
+     *
      * @param X
      * @param Y
-     * @return 
+     * @return
      */
     public Object buscar(int X, int Y) {
         NodoMatriz tmp = this.existeEncabezadoX(X);
@@ -299,11 +325,13 @@ public class MatrizDispersa {
             return ((tmp == null) ? null : tmp.getContenido());
         }
     }
+
     /**
      * Retorna el valro del nodo cabecera en Y
+     *
      * @param cabezaX
      * @param Y
-     * @return 
+     * @return
      */
     private NodoMatriz buscarY(NodoMatriz cabezaX, int Y) {
         NodoMatriz tmp = cabezaX;
@@ -315,24 +343,29 @@ public class MatrizDispersa {
         }
         return null;
     }
+
     /**
      * Retorna el largo de la matriz en coredena X
-     * @return 
+     *
+     * @return
      */
     public int getTamX() {
         return tamX;
     }
+
     /**
      * Retorna el largo de la matriz en cordendad Y
-     * @return 
+     *
+     * @return
      */
     public int getTamY() {
         return tamY;
     }
-    
+
     /**
      * Obtiene un copia exacta de los valores que contiene la matriz
-     * @return 
+     *
+     * @return
      */
     public MatrizDispersa obtenerCopia() throws CloneNodeException, InvalidStructureException, InvalidIndexException {
         MatrizDispersa copia = new MatrizDispersa();
@@ -370,16 +403,16 @@ public class MatrizDispersa {
             tmp = tmp.getSiguienteX();
         }
     }
-    
-    
+
     /**
-     * Este metodo toma los valores de cordenadas y contenido y sobreescribe la matriz
-     * Se utiliza en el metodo de mergeMatriz
+     * Este metodo toma los valores de cordenadas y contenido y sobreescribe la
+     * matriz Se utiliza en el metodo de mergeMatriz
+     *
      * @param X
      * @param Y
-     * @param contenido 
+     * @param contenido
      */
-    private void ingresarNodo(int X, int Y, Object contenido) throws InvalidStructureException{
+    private void ingresarNodo(int X, int Y, Object contenido) throws InvalidStructureException {
         NodoMatriz refX = this.existeEncabezadoX(X);
         NodoMatriz refY = this.existeEncabezadoY(Y);
 
@@ -391,10 +424,10 @@ public class MatrizDispersa {
             this.crearEnbezadoY(Y);
             refY = this.existeEncabezadoY(Y);
         }
-        
+
         NodoMatriz nodoMa = this.buscarY(refX, Y);
 
-        if ( nodoMa == null) {
+        if (nodoMa == null) {
             NodoMatriz nuevo = new NodoMatriz(X, Y, contenido);
             this.insertarX(refX, nuevo);
             this.insertarY(refY, nuevo);
@@ -409,5 +442,54 @@ public class MatrizDispersa {
             nodoMa.setContenido(contenido);
             System.out.println("Sobre escribi el nodo (" + X + "," + Y + ") en la matriz");
         }
+    }
+
+    public parametrosGraphviz obtenerGrafico() {
+        parametrosGraphviz params = new parametrosGraphviz();
+        params.agregarModelo("node [shape=box];\n");
+        this.generarDot(params);
+        return params;
+    }
+
+    private void generarDot(parametrosGraphviz params) {
+        NodoMatriz tmp = this.principal;
+        NodoMatriz tmp2 = null;
+        do {
+            params.agregarDeclaracion("C" + tmp.getX() + "" + tmp.getY() + "[ label = \"" + ((tmp.getContenido() == null) ? tmp.getX() + "," + tmp.getY() : tmp.getContenido()) + "\", width = 1.5, group = " + (tmp.getX() + 1) + " ];");
+            if (tmp.getAnteriorX() != null) {
+                params.agregarRelacion("C" + tmp.getX() + "" + tmp.getY() + " -> C" + tmp.getAnteriorX().getX() + "" + tmp.getAnteriorX().getY() + ";");
+            }
+            if (tmp.getSiguienteX() != null) {
+                params.agregarRelacion("C" + tmp.getX() + "" + tmp.getY() + " -> C" + tmp.getSiguienteX().getX() + "" + tmp.getSiguienteX().getY() + ";");
+            }
+            if (tmp.getAnteriorY() != null) {
+                params.agregarRelacion("C" + tmp.getX() + "" + tmp.getY() + " -> C" + tmp.getAnteriorY().getX() + "" + tmp.getAnteriorY().getY() + ";");
+            }
+            if (tmp.getSiguienteY() != null) {
+                params.agregarRelacion("C" + tmp.getX() + "" + tmp.getY() + " -> C" + tmp.getSiguienteY().getX() + "" + tmp.getSiguienteY().getY() + ";");
+            }
+            params.agregarConfRank("C" + tmp.getX() + "" + tmp.getY() + ";");
+            tmp2 = tmp.getSiguienteX();
+            do {
+                params.agregarDeclaracion("C" + tmp2.getX() + "" + tmp2.getY() + "[ label = \"" + ((tmp2.getContenido() == null) ? tmp2.getX() + "," + tmp2.getY() : tmp2.getContenido()) + "\", width = 1.5, group = " + (tmp2.getX() + 1) + " ];");
+                if (tmp2.getAnteriorX() != null) {
+                    params.agregarRelacion("C" + tmp2.getX() + "" + tmp2.getY() + " -> C" + tmp2.getAnteriorX().getX() + "" + tmp2.getAnteriorX().getY() + ";");
+                }
+                if (tmp2.getSiguienteX() != null) {
+                    params.agregarRelacion("C" + tmp2.getX() + "" + tmp2.getY() + " -> C" + tmp2.getSiguienteX().getX() + "" + tmp2.getSiguienteX().getY() + ";");
+                }
+                if (tmp2.getAnteriorY() != null) {
+                    params.agregarRelacion("C" + tmp2.getX() + "" + tmp2.getY() + " -> C" + tmp2.getAnteriorY().getX() + "" + tmp2.getAnteriorY().getY() + ";");
+                }
+                if (tmp2.getSiguienteY() != null) {
+                    params.agregarRelacion("C" + tmp2.getX() + "" + tmp2.getY() + " -> C" + tmp2.getSiguienteY().getX() + "" + tmp2.getSiguienteY().getY() + ";");
+                }
+                params.agregarConfRank("C" + tmp2.getX() + "" + tmp2.getY() + ";");
+                tmp2 = tmp2.getSiguienteX();
+            } while (tmp2 != null);
+            params.agregarRankReiniciar();
+
+            tmp = tmp.getSiguienteY();
+        } while (tmp != null);
     }
 }

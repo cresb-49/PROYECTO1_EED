@@ -21,10 +21,37 @@ public class main {
     public static void main(String[] args) {
         
        FramePrincipal principal = new FramePrincipal();
+       
+       /*
+        try {
+            MatrizDispersa matirz = new MatrizDispersa();
+            
+            matirz.agregarNodo(1, 1, "color");
+            matirz.agregarNodo(2, 2, "color");
+            matirz.agregarNodo(3, 3, "color");
+            matirz.agregarNodo(4, 4, "color");
+            matirz.agregarNodo(5, 5, "color");
+            
+            matirz.imprimirEncabezadosX();
+            matirz.imprimirEncabezadosY();
+            
+            /*
+            Se ingreso con exito el valor en la coordenada (1,1) en la matriz
+            Se ingreso con exito el valor en la coordenada (2,2) en la matriz
+            Se ingreso con exito el valor en la coordenada (3,3) en la matriz
+            Se ingreso con exito el valor en la coordenada (4,4) en la matriz
+            Se ingreso con exito el valor en la coordenada (5,5) en la matriz
+            *//*
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+       
        /*
         try {
             AVL avl = new AVL();
-            /*
+            
             avl.agregar(new NodoArbol("userY","userY"));
             avl.agregar(new NodoArbol("userA","userA"));
             avl.agregar(new NodoArbol("userB","userB"));
@@ -52,7 +79,7 @@ public class main {
             System.out.println(e.getMessage());
         }
        
-        */
+     
          /*
         try {
             GraficarImagen imagen = new GraficarImagen();

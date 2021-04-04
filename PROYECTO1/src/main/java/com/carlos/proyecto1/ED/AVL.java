@@ -14,6 +14,7 @@ import com.carlos.proyecto1.Objetos.usuario;
 public class AVL {
 
     private NodoArbol raiz;
+    private int cantidad=0;
 
     public AVL() {
     }
@@ -38,6 +39,7 @@ public class AVL {
                 padre.setDerecha(nuevo);
                 nuevo.setPadre(padre);
                 System.out.println("Se agrego con exito el dato con tag: " + nuevo.getTag());
+                this.cantidad++;
             } else {
                 this.agregarNodo(padre.getDerecha(), nuevo);
             }
@@ -74,6 +76,7 @@ public class AVL {
                 padre.setIzquierda(nuevo);
                 nuevo.setPadre(padre);
                 System.out.println("Se agrego con exito el dato con tag: " + nuevo.getTag());
+                this.cantidad++;
             } else {
                 this.agregarNodo(padre.getIzquierda(), nuevo);
             }
@@ -321,7 +324,89 @@ public class AVL {
         }
         return params;
     }
-
+   /**
+    * Recupera los datos del arbol de manera In Orden
+    * @return 
+    */
+    public Object[] AVLtoArrayInOrden(){
+        Object array [] = new Object[this.cantidad+1];
+        Cola data = new Cola();
+        
+        this.recuperarDataInOrden(this.raiz, data);
+        int cont = 0;
+        while (!data.isEmpty()) {
+            array[cont]=data.tomar();
+            cont++;
+        }
+        return array;
+    }
+   /**
+    * Recupera los datos del arbol de manera Post Orden
+    * @return 
+    */
+    public Object[] AVLtoArrayPostOrden(){
+        Object array [] = new Object[this.cantidad+1];
+        Cola data = new Cola();
+        
+        this.recuperarDataPostOrden(this.raiz, data);
+        int cont = 0;
+        while (!data.isEmpty()) {
+            array[cont]=data.tomar();
+            cont++;
+        }
+        return array;
+    }
+    /**
+     * Recupera los datos del Arbol de manera Pre Orden
+     * @return 
+     */
+    public Object[] AVLtoArrayPreOrden(){
+        Object array [] = new Object[this.cantidad+1];
+        Cola data = new Cola();
+        
+        this.recuperarDataPreOrden(this.raiz, data);
+        int cont = 0;
+        while (!data.isEmpty()) {
+            array[cont]=data.tomar();
+            cont++;
+        }
+        return array;
+    }
+    
+    private void recuperarDataInOrden(NodoArbol nodo,Cola data) {
+        if (nodo.getIzquierda() != null) {
+            this.recuperarDataInOrden(nodo.getIzquierda(),data);
+        }
+        data.agregar(nodo.getContenido());
+        if (nodo.getDerecha() != null) {
+            this.recuperarDataInOrden(nodo.getDerecha(),data);
+        }
+        
+    }
+    
+    
+    private void recuperarDataPostOrden(NodoArbol nodo,Cola data) {
+        if (nodo.getIzquierda() != null) {
+            this.recuperarDataPostOrden(nodo.getIzquierda(),data);
+        }
+        if (nodo.getDerecha() != null) {
+            this.recuperarDataPostOrden(nodo.getDerecha(),data);
+        }
+        data.agregar(nodo.getContenido());
+    }
+    
+    
+    private void recuperarDataPreOrden(NodoArbol nodo,Cola data) {
+        data.agregar(nodo.getContenido());
+        if (nodo.getIzquierda() != null) {
+            this.recuperarDataPreOrden(nodo.getIzquierda(),data);
+        }
+        if (nodo.getDerecha() != null) {
+            this.recuperarDataPreOrden(nodo.getDerecha(),data);
+        }
+    }
+    
+    
     private void GenerarDot(parametrosGraphviz parametros, NodoArbol nodo) {
         if (nodo.getIzquierda() != null) {
             this.GenerarDot(parametros, nodo.getIzquierda());

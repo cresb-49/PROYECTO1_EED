@@ -1,0 +1,72 @@
+digraph matrixDisPersaP {
+node [shape=box];
+
+C00[ label = "0,0", width = 1.5, group = 1 ];
+C10[ label = "1,0", width = 1.5, group = 2 ];
+C20[ label = "2,0", width = 1.5, group = 3 ];
+C30[ label = "3,0", width = 1.5, group = 4 ];
+C40[ label = "4,0", width = 1.5, group = 5 ];
+C50[ label = "5,0", width = 1.5, group = 6 ];
+C01[ label = "0,1", width = 1.5, group = 1 ];
+C51[ label = "#03FFA3", width = 1.5, group = 6 ];
+C02[ label = "0,2", width = 1.5, group = 1 ];
+C42[ label = "#03FFA3", width = 1.5, group = 5 ];
+C03[ label = "0,3", width = 1.5, group = 1 ];
+C33[ label = "#03FFA3", width = 1.5, group = 4 ];
+C04[ label = "0,4", width = 1.5, group = 1 ];
+C24[ label = "#03FFA3", width = 1.5, group = 3 ];
+C05[ label = "0,5", width = 1.5, group = 1 ];
+C15[ label = "#03FFA3", width = 1.5, group = 2 ];
+{ rank = same;C05;C15;}
+
+{ rank = same;C04;C24;}
+
+{ rank = same;C03;C33;}
+
+{ rank = same;C02;C42;}
+
+{ rank = same;C01;C51;}
+
+{ rank = same;C00;C10;C20;C30;C40;C50;}
+
+C00 -> C10;
+C00 -> C01;
+C10 -> C00;
+C10 -> C20;
+C10 -> C15;
+C20 -> C10;
+C20 -> C30;
+C20 -> C24;
+C30 -> C20;
+C30 -> C40;
+C30 -> C33;
+C40 -> C30;
+C40 -> C50;
+C40 -> C42;
+C50 -> C40;
+C50 -> C51;
+C01 -> C51;
+C01 -> C00;
+C01 -> C02;
+C51 -> C01;
+C51 -> C50;
+C02 -> C42;
+C02 -> C01;
+C02 -> C03;
+C42 -> C02;
+C42 -> C40;
+C03 -> C33;
+C03 -> C02;
+C03 -> C04;
+C33 -> C03;
+C33 -> C30;
+C04 -> C24;
+C04 -> C03;
+C04 -> C05;
+C24 -> C04;
+C24 -> C20;
+C05 -> C15;
+C05 -> C04;
+C15 -> C05;
+C15 -> C10;
+}

@@ -1,0 +1,88 @@
+digraph Sparce_Matrix {
+
+    node [shape=box];
+
+    //(^< ............ ............ ............ ............ ............ A R C H I V O S
+    /* groups 2 to 6 added for vertical alignment */
+        C00[label = "0,0", width = 1.5, group = 1 ];
+        C10 [label = "1,0" width = 1.5, group = 2 ];
+        C20 [label = "2,0" width = 1.5, group = 3 ];
+        C30 [label = "3,0" width = 1.5, group = 4 ];
+        C40 [label = "4,0" width = 1.5, group = 5 ];
+        C50 [label = "5,0" width = 1.5, group = 6 ];
+    
+    //(^< ............ ............ ............ ............ ............ P E R M I S O S
+    //(^< ............ ............ L E V E L   0
+    /* groups 2 to 6 added for vertical alignment */
+        C01 [label = "0,1" width = 1.5, group = 1 ];
+        C11 [label = "Jose-Estr" width = 1.5, group = 2 ];
+        C31 [label = "Marc-Estr" width = 1.5, group = 4 ];
+        C41 [label = "Juli-Estr" width = 1.5, group = 5 ];
+    
+
+    //(^< ............ ............ L E V E L   2
+        C03 [label = "0,3" width = 1.5, group = 1 ];
+        C33 [label = "Marc-Comp" width = 1.5, group = 4 ];
+        C43 [label = "Juli-Comp" width = 1.5, group = 5 ];
+    
+    
+
+    //(^< ............ ............ L E V E L   4
+        C05 [label = "0,5" width = 1.5, group = 1 ];
+        C35 [label = "Marc-Leng" width = 1.5, group = 4 ];
+        C45 [label = "Juli-Leng" width = 1.5, group = 5 ];
+        C55 [label = "Pame-Leng" width = 1.5, group = 6 ];
+    
+    
+
+    { rank = same; C00; C10; C20; C30; C40; C50;}
+    { rank = same; C01; C11;C31;C41; }
+    { rank = same; C03; C33;C43;}
+    { rank = same; C05;C35;C45;C55}
+
+ //(^< ............ Links
+    C10 -> C20;
+    C20 -> C10;
+    C20 -> C30;
+    C30 -> C20;
+    C50 -> C55;
+//(^< ............ Links
+
+    C00 -> C01 -> C00;
+    C00 -> C10 -> C00;
+    C01 -> C03
+    C03 -> C05;
+    
+
+
+    //(^< ............ ............ ............ ............ ............ L I N K I N G
+    //(^< ............ ............ L E V E L   0
+
+    C01 -> C11;
+    C10 -> C11;
+    C11 -> C31;
+    C31 -> C11;
+    C30 -> C31;
+    C31 -> C41;
+    C41 -> C31;
+    C40 -> C41;
+    //(^< ............ ............ L E V E L   2
+
+    C03 -> C33;
+    C33 ->C31;
+    C31 ->C33;
+    C33 -> C43;
+    C43 -> C33;
+    C43 ->C41;
+    C41 ->C43;
+    //(^< ............ ............ L E V E L   4
+
+    C05 -> C35 -> C05;
+    C35 -> C45;
+    C45 -> C35;
+    C45 -> C43;
+    C45 -> C55;
+    C55 -> C45;
+    C55 -> C50;
+    
+}
