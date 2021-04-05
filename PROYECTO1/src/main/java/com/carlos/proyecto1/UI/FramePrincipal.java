@@ -389,12 +389,13 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here;
-        if(this.datosProgrma.getUsuarios().isEmpty()){
-            JOptionPane.showMessageDialog(this,"El arbol de usuarios esta vacio, el generar un usuario ahora\npodria suponer un duplicado al momento de cargar usuarios al programa");
+        if(this.datosProgrma.getUsuarios().isEmpty()&&datosProgrma.getImagenes().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existe informacion de imagenes y usuarios no se podra generar usuarios a menos que hayan imagenes en el sistema");
+        }else{
+            NuevoUsuario newUser = new NuevoUsuario(datosProgrma);
+            Escritorio.add(newUser);
+            newUser.show();
         }
-        NuevoUsuario newUser = new NuevoUsuario(datosProgrma);
-        Escritorio.add(newUser);
-        newUser.show();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
