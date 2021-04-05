@@ -4,6 +4,7 @@ import com.carlos.proyecto1.ED.*;
 import com.carlos.proyecto1.Tokens.token;
 import com.carlos.proyecto1.Objetos.*;
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
+import java_cup.runtime.Symbol;
 
 class parserImagenes;
 
@@ -12,10 +13,12 @@ parser code {:
     private Pila errores = new Pila();    
     private AVL arbolCapas = new AVL();
     private ListaDobleEnlazadaCircular listaCircularImagenes = new ListaDobleEnlazadaCircular();
+    private traducErrorParserImagenes traductorError;
     
     public parserImagenes(imagenLexer lex,AVL capas){
         super(lex);
         this.arbolCapas=capas;
+        traductorError = new traducErrorParserImagenes();
     }
 
     public void report_error(String message, Object info){
@@ -24,10 +27,22 @@ parser code {:
     public void report_fatal_error(String message, Object info){
         System.out.println("reportfatal");
     }
-    /*
+    
     public void syntax_error(Symbol cur_token){
-
-    }*/
+        token tok = (token) cur_token.value;
+        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba [";
+        for (int i = 0; i < expected_token_ids().size(); i++) {
+            if (!traductorError.tokenEsperado(expected_token_ids().get(i)).equals("")) {
+                err = err + traductorError.tokenEsperado(expected_token_ids().get(i));
+                if (i < (expected_token_ids().size() - 1)) {
+                    err = err + " ó ";
+                }
+            }
+        }
+        err = err +"] Linea: "+tok.getLine()+",Columna: "+tok.getColumn();
+        System.out.println(err);
+        errores.push(err);
+    }
 
     protected int error_sync_size() {
         return 1;

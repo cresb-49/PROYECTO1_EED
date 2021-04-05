@@ -108,7 +108,7 @@ public class CargaDatos extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -230,13 +230,13 @@ public class CargaDatos extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -292,11 +292,14 @@ public class CargaDatos extends javax.swing.JDialog {
             parser.parse();
             String tmp ="";
             
-            if(parser.getErrores().isEmpty()){
+            if(parser.getErrores().isEmpty()&&lex.gerErrores().isEmpty()){
                 this.datosPrograma.setArbolCapas(parser.getArbolCapas());
                 this.validarCapas();
                 this.jTextArea1.setText("");
             }else{
+                while (!lex.gerErrores().isEmpty()) {                    
+                    tmp = tmp +(String)lex.gerErrores().tomar()+"\n";
+                }
                 while (!parser.getErrores().isEmpty()) {                    
                     tmp = tmp + (String)parser.getErrores().pop()+"\n";
                 }
@@ -318,11 +321,14 @@ public class CargaDatos extends javax.swing.JDialog {
             parser.parse();
             String tmp ="";
             
-            if(parser.getErrores().isEmpty()){
+            if(parser.getErrores().isEmpty()&&lex.gerErrores().isEmpty()){
                 this.datosPrograma.setImagenes(parser.getImagenes());
                 this.validarImagenes();
                 this.jTextArea1.setText("");
             }else{
+                while (!lex.gerErrores().isEmpty()) {                    
+                    tmp = tmp +(String)lex.gerErrores().tomar()+"\n";
+                }
                 while (!parser.getErrores().isEmpty()) {                    
                     tmp = tmp + (String)parser.getErrores().pop()+"\n";
                 }
@@ -344,11 +350,14 @@ public class CargaDatos extends javax.swing.JDialog {
             parser.parse();
             
             String tmp = "";
-            if(parser.getErrores().isEmpty()){
+            if(parser.getErrores().isEmpty()&&lex.gerErrores().isEmpty()){
                 this.datosPrograma.setUsuarios(parser.getUsuarios());
                 this.validarUsuarios();
                 this.jTextArea1.setText("");
             }else{
+                while (!lex.gerErrores().isEmpty()) {                    
+                    tmp = tmp +(String)lex.gerErrores().tomar()+"\n";
+                }
                 while (!parser.getErrores().isEmpty()) {                    
                     tmp = tmp + (String)parser.getErrores().pop()+"\n";
                 }

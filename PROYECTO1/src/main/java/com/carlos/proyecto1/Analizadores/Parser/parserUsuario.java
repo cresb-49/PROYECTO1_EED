@@ -10,6 +10,7 @@ import com.carlos.proyecto1.ED.*;
 import com.carlos.proyecto1.Tokens.token;
 import com.carlos.proyecto1.Objetos.*;
 import com.carlos.proyecto1.Exepciones.CloneNodeException;
+import java_cup.runtime.Symbol;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -112,11 +113,13 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
     private Pila errores = new Pila();    
     private AVL usuarios;
     private ListaDobleEnlazadaCircular listaCircularImagenes;
+    private traducErrorParserUsuario traductorError;
     
     public parserUsuario(userLexer lex,ListaDobleEnlazadaCircular listaImagenes, AVL usuariosSistema){
         super(lex);
         this.listaCircularImagenes=listaImagenes;
         this.usuarios = usuariosSistema;
+        this.traductorError = new traducErrorParserUsuario();
     }
 
     public void report_error(String message, Object info){
@@ -126,10 +129,21 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
         System.out.println("reportfatal");
     }
 
-    /*
     public void syntax_error(Symbol cur_token){
-
-    }*/
+        token tok = (token) cur_token.value;
+        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba [";
+        for (int i = 0; i < expected_token_ids().size(); i++) {
+            if (!traductorError.tokenEsperado(expected_token_ids().get(i)).equals("")) {
+                err = err + traductorError.tokenEsperado(expected_token_ids().get(i));
+                if (i < (expected_token_ids().size() - 1)) {
+                    err = err + " ó ";
+                }
+            }
+        }
+        err = err +"] Linea: "+tok.getLine()+",Columna: "+tok.getColumn();
+        System.out.println(err);
+        errores.push(err);
+    }
 
     protected int error_sync_size() {
         return 1;

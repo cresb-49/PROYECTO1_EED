@@ -111,9 +111,11 @@ public class parserCapas extends java_cup.runtime.lr_parser {
         
     private Pila errores = new Pila();    
     private AVL arbolCapas = new AVL();
+    private traducErrorParserCapas traductorError;
     
     public parserCapas(capasLexer lex){
         super(lex);
+        traductorError = new traducErrorParserCapas();
     }
 
     public void report_error(String message, Object info){
@@ -124,9 +126,19 @@ public class parserCapas extends java_cup.runtime.lr_parser {
     }
 
     public void syntax_error(Symbol cur_token){
-        token tok = ((token)cur_token.value);
-        System.out.println("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
-        errores.push("Parametro inesperado ["+tok.getLexeme()+"] Linea: "+tok.getLine()+" Columna: "+tok.getColumn());
+        token tok = (token) cur_token.value;
+        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba [";
+        for (int i = 0; i < expected_token_ids().size(); i++) {
+            if (!traductorError.tokenEsperado(expected_token_ids().get(i)).equals("")) {
+                err = err + traductorError.tokenEsperado(expected_token_ids().get(i));
+                if (i < (expected_token_ids().size() - 1)) {
+                    err = err + " ó ";
+                }
+            }
+        }
+        err = err +"] Linea: "+tok.getLine()+",Columna: "+tok.getColumn();
+        System.out.println(err);
+        errores.push(err);
     }
 
     protected int error_sync_size() {
