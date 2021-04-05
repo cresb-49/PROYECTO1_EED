@@ -1,3 +1,9 @@
 digraph userAVL {node[shape = record,height=.1];
-nodeAVLCarlos499[label = "<f0> |<f1> Carlos499|<f2> "];
+nodeAVLuserA[label = "<f0> |<f1> userA|<f2> "];
+nodeAVLuserB[label = "<f0> |<f1> userB|<f2> "];
+nodeAVLuserM[label = "<f0> |<f1> userM|<f2> "];
+nodeAVLuserY[label = "<f0> |<f1> userY|<f2> "];
+"nodeAVLuserB":f0 -> "nodeAVLuserA":f1;
+"nodeAVLuserM":f2 -> "nodeAVLuserY":f1;
+"nodeAVLuserM":f0 -> "nodeAVLuserB":f1;
 }

@@ -58,6 +58,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         listaImagenes = new javax.swing.JMenu();
         verArbolCapas = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -136,7 +137,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenuItem7.setText("Agregar Imagen");
+        jMenuItem7.setText("Agregar Imagen Usuario");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -145,15 +146,28 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Eliminar Usuario");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
-        jMenuItem9.setText("Eliminar Imagen");
+        jMenuItem9.setText("Eliminar Imagen Usuario");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem9ActionPerformed(evt);
             }
         });
         jMenu3.add(jMenuItem9);
+
+        jMenuItem11.setText("Modificar Nombre Usuario");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem11);
 
         jMenuBar1.add(jMenu3);
 
@@ -407,6 +421,28 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        if(this.datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos de usuarios en el sistema");
+        }else{
+            EliminarUsuario eli = new EliminarUsuario(datosProgrma);
+            Escritorio.add(eli);
+            eli.show();
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        if(this.datosProgrma.getUsuarios().isEmpty()){
+            JOptionPane.showMessageDialog(this,"No existen datos de usuarios en el sistema");
+        }else{
+            ModificarNombreUsuario mod = new ModificarNombreUsuario(datosProgrma);
+            Escritorio.add(mod);
+            mod.show();
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem imagenArbolCapas;
@@ -416,6 +452,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuGenerarImagenes;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

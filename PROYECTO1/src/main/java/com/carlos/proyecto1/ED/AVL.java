@@ -489,6 +489,8 @@ public class AVL {
                     candidato = nodo.getDerecha();
                     candidato.setPadre(null);
                     this.raiz = candidato;
+                    System.out.println("Se elimino con exito el nodo: " + tag);
+                    this.cantidad--;
 
                 } else if (nodo.getIzquierda() != null && nodo.getDerecha() == null) {
                     System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
@@ -539,10 +541,14 @@ public class AVL {
                     System.out.println("Se hace cambia por el nodo derecho del eliminado");
                     if (padre.getIzquierda() == nodo) {
                         nodo.setPadre(null);
-                        padre.setIzquierda(izquierdo);
+                        padre.setIzquierda(derecha);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
                     } else if (padre.getDerecha() == nodo) {
                         nodo.setPadre(null);
                         padre.setDerecha(derecha);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
                     }
                 } else if (nodo.getIzquierda() != null && nodo.getDerecha() == null) {
                     System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
