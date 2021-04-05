@@ -1,17 +1,13 @@
 package com.carlos.proyecto1;
 
-//import com.carlos.proyecto1.ED.*;
-import com.carlos.proyecto1.ED.AVL;
-import com.carlos.proyecto1.ED.NodoArbol;
-import com.carlos.proyecto1.Objetos.parametrosGraphviz;
 import com.carlos.proyecto1.UI.FramePrincipal;
 
 public class main {
 
     public static void main(String[] args) {
         
-       //FramePrincipal principal = new FramePrincipal();
-       
+       FramePrincipal principal = new FramePrincipal();
+       /*
        try {
             AVL avl = new AVL();
             
@@ -36,12 +32,18 @@ public class main {
             avl.eliminar("10");
             avl.eliminar("15");
             avl.eliminar("40");
-
-            //avl.eliminar("30");
-            
-            //avl.eliminar("40");
-            
-            
+            avl.eliminar("50");
+            avl.eliminar("75");
+            avl.eliminar("30");
+            avl.eliminar("1");
+            avl.eliminar("12");
+            avl.eliminar("20");
+            avl.eliminar("7");
+            avl.eliminar("14");
+            avl.eliminar("60");
+            avl.eliminar("6");
+            avl.eliminar("5");
+            avl.eliminar("4");
             
             
             parametrosGraphviz g = avl.obtenerGrafico();
@@ -53,6 +55,7 @@ public class main {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        */
 
     }
 

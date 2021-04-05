@@ -36,8 +36,8 @@ public class AVL {
             this.agregarNodo(this.raiz, nodo);
         }
     }
-    
-    private void agregarNodo(NodoArbol padre,NodoArbol nuevo) throws CloneNodeException{
+
+    private void agregarNodo(NodoArbol padre, NodoArbol nuevo) throws CloneNodeException {
         if (nuevo.getTag().compareTo(padre.getTag()) > 0) {
 
             if (padre.getDerecha() == null) {
@@ -53,12 +53,12 @@ public class AVL {
             padre.setFactorEquilibrio(factor);
             if (factor == 2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
-                
-                if(padre.getDerecha()!=null){
+
+                if (padre.getDerecha() != null) {
                     factor = this.alturaArbol(padre.getDerecha().getDerecha()) - this.alturaArbol(padre.getDerecha().getIzquierda());
                     padre.getDerecha().setFactorEquilibrio(factor);
                 }
-                
+
                 if (((padre.getDerecha() == null) ? 1 : padre.getDerecha().getFactorEquilibrio()) < 0) {
                     System.out.println("Vuelta doble izquierda");
                     this.vueltaDobleIzquierda(padre);
@@ -69,12 +69,12 @@ public class AVL {
                 }
             } else if (factor == -2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
-                
-                if(padre.getIzquierda()!=null){
+
+                if (padre.getIzquierda() != null) {
                     factor = this.alturaArbol(padre.getIzquierda().getDerecha()) - this.alturaArbol(padre.getIzquierda().getIzquierda());
                     padre.getIzquierda().setFactorEquilibrio(factor);
                 }
-                
+
                 if (((padre.getIzquierda() == null) ? -1 : padre.getIzquierda().getFactorEquilibrio()) > 0) {
                     System.out.println("Vuelta doble derecha");
                     this.vueltaDobleDerecha(padre);
@@ -101,7 +101,7 @@ public class AVL {
 
             if (factor == 2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la derecha");
-                if(padre.getDerecha()!=null){
+                if (padre.getDerecha() != null) {
                     factor = this.alturaArbol(padre.getDerecha().getDerecha()) - this.alturaArbol(padre.getDerecha().getIzquierda());
                     padre.getDerecha().setFactorEquilibrio(factor);
                 }
@@ -115,7 +115,7 @@ public class AVL {
 
             } else if (factor == -2) {
                 System.out.println("El nodo: " + padre.getTag() + " necesita balanceo a la izquierda");
-                if(padre.getIzquierda()!=null){
+                if (padre.getIzquierda() != null) {
                     factor = this.alturaArbol(padre.getIzquierda().getDerecha()) - this.alturaArbol(padre.getIzquierda().getIzquierda());
                     padre.getIzquierda().setFactorEquilibrio(factor);
                 }
@@ -238,7 +238,7 @@ public class AVL {
     private void vueltaSimpleIzquierda(NodoArbol nodo) {
 
         if (nodo == this.raiz) {
-            
+
             NodoArbol nuevaRaiz = this.raiz.getDerecha();
             nuevaRaiz.setPadre(null);
             NodoArbol a = nuevaRaiz.getIzquierda();
@@ -473,99 +473,239 @@ public class AVL {
             throw new NotFoundNodeException("No existe un nodo con tag \"" + tag + "\"");
         } else if (nodo.getTag().equals(tag)) {
 
-            System.out.println("Encontre el nodo a eliminar: " + tag);
-            NodoArbol padre = nodo.getPadre();
-            NodoArbol izquierdo = nodo.getIzquierda();
-            NodoArbol derecha = nodo.getDerecha();
-            
-            if(nodo.getIzquierda()==null&&nodo.getDerecha()==null){
-                System.out.println("Eliminacion simple");
-                if(padre.getIzquierda().equals(nodo)){
-                    padre.setIzquierda(null);
-                    nodo.setPadre(null);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
+            if (nodo == this.raiz) {
+                NodoArbol izquierdo = nodo.getIzquierda();
+                NodoArbol derecha = nodo.getDerecha();
+
+                if (nodo.getIzquierda() == null && nodo.getDerecha() == null) {
+
+                    System.out.println("Eliminacion simple");
+                    this.raiz = candidato;
                     this.cantidad--;
-                }else if(padre.getDerecha().equals(nodo)){
-                    padre.setDerecha(null);
-                    nodo.setPadre(null);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
-                    this.cantidad--;
-                }
-            }else if(nodo.getIzquierda()==null&&nodo.getDerecha()!=null){
-                System.out.println("Se hace cambia por el nodo derecho del eliminado");
-                if(padre.getIzquierda().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setIzquierda(izquierdo);
-                }else if(padre.getDerecha().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setDerecha(derecha);
-                }
-            }else if(nodo.getIzquierda()!=null&&nodo.getDerecha()==null){
-                System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
-                candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
-                System.out.println("Candidato remplazo: "+candidato.getTag());
-                //Actualizamos los nodos de izquierda y derecha del eliminado
-                izquierdo = nodo.getIzquierda();
-                derecha = nodo.getDerecha();
-                if(padre.getIzquierda().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setIzquierda(candidato);
+
+                } else if (nodo.getIzquierda() == null && nodo.getDerecha() != null) {
+
+                    System.out.println("Se hace cambia por el nodo derecho del eliminado");
+                    candidato = nodo.getDerecha();
+                    candidato.setPadre(null);
+                    this.raiz = candidato;
+
+                } else if (nodo.getIzquierda() != null && nodo.getDerecha() == null) {
+                    System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                    candidato = this.recupearUltimoDerecha(this.raiz.getIzquierda());
+                    System.out.println("Candidato remplazo: " + candidato.getTag());
+                    //Actualizamos los nodos de izquierda y derecha del eliminado
+                    izquierdo = nodo.getIzquierda();
+                    derecha = nodo.getDerecha();
                     candidato.setDerecha(derecha);
                     candidato.setIzquierda(izquierdo);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.raiz = candidato;
+                    System.out.println("Se elimino con exito el nodo: " + tag);
                     this.cantidad--;
-                }else if(padre.getDerecha().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setDerecha(candidato);
+
+                } else if (nodo.getIzquierda() != null && nodo.getDerecha() != null) {
+                    System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                    candidato = this.recupearUltimoDerecha(this.raiz.getIzquierda());
+                    System.out.println("Candidato remplazo: " + candidato.getTag());
+                    //Actualizamos los nodos de izquierda y derecha del eliminado
+                    izquierdo = nodo.getIzquierda();
+                    derecha = nodo.getDerecha();
                     candidato.setDerecha(derecha);
                     candidato.setIzquierda(izquierdo);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
+                    this.raiz = candidato;
+                    System.out.println("Se elimino con exito el nodo: " + tag);
                     this.cantidad--;
                 }
-            }else if(nodo.getIzquierda()!=null&&nodo.getDerecha()!=null){
-                System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
-                candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
-                System.out.println("Candidato remplazo: "+candidato.getTag());
-                //Actualizamos los nodos de izquierda y derecha del eliminado
-                izquierdo = nodo.getIzquierda();
-                derecha = nodo.getDerecha();
-                if(padre.getIzquierda().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setIzquierda(candidato);
-                    candidato.setDerecha(derecha);
-                    candidato.setIzquierda(izquierdo);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
-                    this.cantidad--;
-                }else if(padre.getDerecha().equals(nodo)){
-                    nodo.setPadre(null);
-                    padre.setDerecha(candidato);
-                    candidato.setDerecha(derecha);
-                    candidato.setIzquierda(izquierdo);
-                    System.out.println("Se elimino con exito el nodo: "+tag);
-                    this.cantidad--;
+            } else {
+                System.out.println("Encontre el nodo a eliminar: " + tag);
+                NodoArbol padre = nodo.getPadre();
+                NodoArbol izquierdo = nodo.getIzquierda();
+                NodoArbol derecha = nodo.getDerecha();
+
+                if (nodo.getIzquierda() == null && nodo.getDerecha() == null) {
+                    System.out.println("Eliminacion simple");
+                    if (padre.getIzquierda() == nodo) {
+                        padre.setIzquierda(null);
+                        nodo.setPadre(null);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    } else if (padre.getDerecha() == nodo) {
+                        padre.setDerecha(null);
+                        nodo.setPadre(null);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    }
+                } else if (nodo.getIzquierda() == null && nodo.getDerecha() != null) {
+                    System.out.println("Se hace cambia por el nodo derecho del eliminado");
+                    if (padre.getIzquierda() == nodo) {
+                        nodo.setPadre(null);
+                        padre.setIzquierda(izquierdo);
+                    } else if (padre.getDerecha() == nodo) {
+                        nodo.setPadre(null);
+                        padre.setDerecha(derecha);
+                    }
+                } else if (nodo.getIzquierda() != null && nodo.getDerecha() == null) {
+                    System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                    candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
+                    System.out.println("Candidato remplazo: " + candidato.getTag());
+                    //Actualizamos los nodos de izquierda y derecha del eliminado
+                    izquierdo = nodo.getIzquierda();
+                    derecha = nodo.getDerecha();
+                    if (padre.getIzquierda()==(nodo)) {
+                        nodo.setPadre(null);
+                        padre.setIzquierda(candidato);
+                        candidato.setDerecha(derecha);
+                        candidato.setIzquierda(izquierdo);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    } else if (padre.getDerecha()==(nodo)) {
+                        nodo.setPadre(null);
+                        padre.setDerecha(candidato);
+                        candidato.setDerecha(derecha);
+                        candidato.setIzquierda(izquierdo);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    }
+                } else if (nodo.getIzquierda() != null && nodo.getDerecha() != null) {
+                    System.out.println("Buscados el ultimo nodo a la derecha del lado izquierdo");
+                    candidato = this.recupearUltimoDerecha(nodo.getIzquierda());
+                    System.out.println("Candidato remplazo: " + candidato.getTag());
+                    //Actualizamos los nodos de izquierda y derecha del eliminado
+                    izquierdo = nodo.getIzquierda();
+                    derecha = nodo.getDerecha();
+                    if (padre.getIzquierda()==(nodo)) {
+                        nodo.setPadre(null);
+                        padre.setIzquierda(candidato);
+                        candidato.setDerecha(derecha);
+                        candidato.setIzquierda(izquierdo);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    } else if (padre.getDerecha()==(nodo)) {
+                        nodo.setPadre(null);
+                        padre.setDerecha(candidato);
+                        candidato.setDerecha(derecha);
+                        candidato.setIzquierda(izquierdo);
+                        System.out.println("Se elimino con exito el nodo: " + tag);
+                        this.cantidad--;
+                    }
                 }
+            }
+
+            if (candidato != null) {
+                int factor = this.alturaArbol(candidato.getDerecha()) - this.alturaArbol(candidato.getIzquierda());
+                System.out.println("Factor de nodo: " + candidato.getTag() + " es: " + factor);
+
+                if (factor == 2) {
+                    System.out.println("El nodo: " + candidato.getTag() + " necesita balanceo a la derecha");
+                    if (candidato.getDerecha() != null) {
+                        factor = this.alturaArbol(candidato.getDerecha().getDerecha()) - this.alturaArbol(candidato.getDerecha().getIzquierda());
+                        candidato.getDerecha().setFactorEquilibrio(factor);
+                    }
+                    if (((candidato.getDerecha() == null) ? 1 : candidato.getDerecha().getFactorEquilibrio()) < 0) {
+                        System.out.println("Vuelta doble izquierda");
+                        this.vueltaDobleIzquierda(candidato);
+                    } else {
+                        System.out.println("Vuelta simple izquierda");
+                        this.vueltaSimpleIzquierda(candidato);
+                    }
+
+                } else if (factor == -2) {
+                    System.out.println("El nodo: " + candidato.getTag() + " necesita balanceo a la izquierda");
+                    if (candidato.getIzquierda() != null) {
+                        factor = this.alturaArbol(candidato.getIzquierda().getDerecha()) - this.alturaArbol(candidato.getIzquierda().getIzquierda());
+                        candidato.getIzquierda().setFactorEquilibrio(factor);
+                    }
+                    if (((candidato.getIzquierda() == null) ? -1 : candidato.getIzquierda().getFactorEquilibrio()) > 0) {
+                        System.out.println("Vuelta doble derecha");
+                        this.vueltaDobleDerecha(candidato);
+                    } else {
+                        System.out.println("Vuelta simple derecha");
+                        this.vueltaSimpleDerecha(candidato);
+                    }
+                }
+
             }
 
         } else if (tag.compareTo(nodo.getTag()) > 0) {
             this.eliminar(nodo.getDerecha(), tag);
-            int factor = this.alturaArbol(nodo.getDerecha())-this.alturaArbol(nodo.getIzquierda());
-            System.out.println("Factor de nodo: "+nodo.getTag()+" es: "+factor);
+            int factor = this.alturaArbol(nodo.getDerecha()) - this.alturaArbol(nodo.getIzquierda());
+            System.out.println("Factor de nodo: " + nodo.getTag() + " es: " + factor);
+            if (factor == 2) {
+                System.out.println("El nodo: " + nodo.getTag() + " necesita balanceo a la derecha");
+                if (nodo.getDerecha() != null) {
+                    factor = this.alturaArbol(nodo.getDerecha().getDerecha()) - this.alturaArbol(nodo.getDerecha().getIzquierda());
+                    nodo.getDerecha().setFactorEquilibrio(factor);
+                }
+                if (((nodo.getDerecha() == null) ? 1 : nodo.getDerecha().getFactorEquilibrio()) < 0) {
+                    System.out.println("Vuelta doble izquierda");
+                    this.vueltaDobleIzquierda(nodo);
+                } else {
+                    System.out.println("Vuelta simple izquierda");
+                    this.vueltaSimpleIzquierda(nodo);
+                }
+
+            } else if (factor == -2) {
+                System.out.println("El nodo: " + nodo.getTag() + " necesita balanceo a la izquierda");
+                if (nodo.getIzquierda() != null) {
+                    factor = this.alturaArbol(nodo.getIzquierda().getDerecha()) - this.alturaArbol(nodo.getIzquierda().getIzquierda());
+                    nodo.getIzquierda().setFactorEquilibrio(factor);
+                }
+                if (((nodo.getIzquierda() == null) ? -1 : nodo.getIzquierda().getFactorEquilibrio()) > 0) {
+                    System.out.println("Vuelta doble derecha");
+                    this.vueltaDobleDerecha(nodo);
+                } else {
+                    System.out.println("Vuelta simple derecha");
+                    this.vueltaSimpleDerecha(nodo);
+                }
+            }
         } else if (tag.compareTo(nodo.getTag()) < 0) {
             this.eliminar(nodo.getIzquierda(), tag);
-            int factor = this.alturaArbol(nodo.getDerecha())-this.alturaArbol(nodo.getIzquierda());
-            System.out.println("Factor de nodo: "+nodo.getTag()+" es: "+factor);
+            int factor = this.alturaArbol(nodo.getDerecha()) - this.alturaArbol(nodo.getIzquierda());
+            System.out.println("Factor de nodo: " + nodo.getTag() + " es: " + factor);
+            if (factor == 2) {
+                System.out.println("El nodo: " + nodo.getTag() + " necesita balanceo a la derecha");
+                if (nodo.getDerecha() != null) {
+                    factor = this.alturaArbol(nodo.getDerecha().getDerecha()) - this.alturaArbol(nodo.getDerecha().getIzquierda());
+                    nodo.getDerecha().setFactorEquilibrio(factor);
+                }
+                if (((nodo.getDerecha() == null) ? 1 : nodo.getDerecha().getFactorEquilibrio()) < 0) {
+                    System.out.println("Vuelta doble izquierda");
+                    this.vueltaDobleIzquierda(nodo);
+                } else {
+                    System.out.println("Vuelta simple izquierda");
+                    this.vueltaSimpleIzquierda(nodo);
+                }
+
+            } else if (factor == -2) {
+                System.out.println("El nodo: " + nodo.getTag() + " necesita balanceo a la izquierda");
+                if (nodo.getIzquierda() != null) {
+                    factor = this.alturaArbol(nodo.getIzquierda().getDerecha()) - this.alturaArbol(nodo.getIzquierda().getIzquierda());
+                    nodo.getIzquierda().setFactorEquilibrio(factor);
+                }
+                if (((nodo.getIzquierda() == null) ? -1 : nodo.getIzquierda().getFactorEquilibrio()) > 0) {
+                    System.out.println("Vuelta doble derecha");
+                    this.vueltaDobleDerecha(nodo);
+                } else {
+                    System.out.println("Vuelta simple derecha");
+                    this.vueltaSimpleDerecha(nodo);
+                }
+            }
         } else {
             throw new NotFoundNodeException("No existe un nodo con tag \"" + tag + "\"");
         }
     }
-    
-    private NodoArbol recupearUltimoDerecha(NodoArbol nodo){
-        if(nodo.getDerecha()==null){
+
+    private NodoArbol recupearUltimoDerecha(NodoArbol nodo) {
+        if (nodo.getDerecha() == null) {
             NodoArbol padre = nodo.getPadre();
-            padre.setIzquierda(nodo.getIzquierda());
+            if (padre.getDerecha() == nodo) {
+                padre.setDerecha(nodo.getIzquierda());
+            } else if (padre.getIzquierda() == nodo) {
+                padre.setIzquierda(nodo.getIzquierda());
+            }
             return nodo;
-        }else{
-            return this.recupearUltimoDerecha(nodo);
+        } else {
+            return this.recupearUltimoDerecha(nodo.getDerecha());
         }
     }
 
