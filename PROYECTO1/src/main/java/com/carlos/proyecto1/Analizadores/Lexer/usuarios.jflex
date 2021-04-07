@@ -30,7 +30,7 @@ import java_cup.runtime.Symbol;
 /*EXPRECIONES REGULARES*/
 LineTerminator = [\r|\n|\r\n]+
 WhiteSpace = [ \t\n]+
-usuario = ([a-zA-Z])+([0-9])*
+usuario = [0-9]*[a-zA-Z]+([0-9]|[a-zA-Z])*
 id = [0-9]+
 
 %{

@@ -168,7 +168,7 @@ public class ModificarNombreUsuario extends javax.swing.JInternalFrame {
     }
 
     private boolean verificarUsuario(String userName) {
-        Pattern pattern = Pattern.compile("^([a-zA-Z])+([0-9])*$");
+        Pattern pattern = Pattern.compile("^[0-9]*[a-zA-Z]+([0-9]|[a-zA-Z])*$");
         Matcher matcher = pattern.matcher(userName);
         boolean matchFound = matcher.find();
         if (matchFound) {

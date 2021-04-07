@@ -31,9 +31,8 @@ import java_cup.runtime.Symbol;
 LineTerminator = [\r|\n|\r\n]+
 WhiteSpace = [ \t\n]+
 numero = [0-9]+
-hex = ([0-9]|[ABCDEF])
-hex2 = ([0-9]|[abcdef])
-colorHex = [#]({hex}{6}|{hex2}{6})
+hex = ([0-9]|[AaBbCcDdEeFf])
+colorHex = [#]({hex}{6})
 
 %{
     private void error(String lexeme) {
@@ -79,7 +78,10 @@ colorHex = [#]({hex}{6}|{hex2}{6})
     {colorHex}
         {
             //System.out.println("Color: "+yytext()+" Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
-            return new Symbol (COLOR,after_symbl.sym,0, new token(yytext(),yycolumn+1,yyline+1));
+            String color = yytext();
+            color = color.toLowerCase();
+
+            return new Symbol (COLOR,after_symbl.sym,0, new token(color,yycolumn+1,yyline+1));
         }
     {LineTerminator}
         {

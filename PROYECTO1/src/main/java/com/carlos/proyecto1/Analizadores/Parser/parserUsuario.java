@@ -131,7 +131,7 @@ public class parserUsuario extends java_cup.runtime.lr_parser {
 
     public void syntax_error(Symbol cur_token){
         token tok = (token) cur_token.value;
-        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba [";
+        String err = "Parametro inesperado \""+tok.getLexeme()+"\" se esperaba[";
         for (int i = 0; i < expected_token_ids().size(); i++) {
             if (!traductorError.tokenEsperado(expected_token_ids().get(i)).equals("")) {
                 err = err + traductorError.tokenEsperado(expected_token_ids().get(i));
